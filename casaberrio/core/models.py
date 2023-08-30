@@ -66,7 +66,7 @@ class Low (models.Model):
 
 
 class Rent(models.Model):
-    rental_date = models.DateField(null= True, verbose_name='Fecha alquiler') 
+    rental_date = models.DateField( verbose_name='Fecha alquiler') 
     name = models.CharField(max_length=100,verbose_name= 'Nombre')
     amount = models.PositiveIntegerField(verbose_name ='Cantidad')
     total_price = models.PositiveIntegerField(verbose_name='Precio total')
@@ -101,14 +101,14 @@ class Pay(models.Model) :
         ordering=['id']
 
 class Event(models.Model):
-    date = models.DateField.null(black=True, verbose_name='Fecha')
-    hour = models.TimeField.null(black=True,verbose_name='Hora', null=False)
-    event_type = models.CharField(max_length=100, verbose_name='Tipo de evento', null=True)
-    theme = models.CharField(max_length=200, verbose_name='Tematica', null=True)
-    description = models.CharField(max_length=500,  verbose_name='Descripcion', null=True)
-    number_of_invites = models.PositiveIntegerField(verbose_name='Numero de invitados', null=True)
-    special_need = models.CharField(max_length=200, verbose_name='Nesecidad especial', null=True)
-    guest_document = models.CharField(max_length=200, verbose_name='Documento invitado', null=True)
+    date = models.DateField( verbose_name='Fecha')
+    hour = models.TimeField(verbose_name='Hora')
+    event_type = models.CharField(max_length=100, verbose_name='Tipo de evento')
+    theme = models.CharField(max_length=200, verbose_name='Tematica')
+    description = models.CharField(max_length=500,  verbose_name='Descripcion')
+    number_of_invites = models.PositiveIntegerField(verbose_name='Numero de invitados')
+    special_need = models.CharField(max_length=200, verbose_name='Nesecidad especial')
+    guest_document = models.CharField(max_length=200, verbose_name='Documento invitado')
     pay = models.ForeignKey (Pay, on_delete=models.CASCADE)
 
     def __str__(self):
