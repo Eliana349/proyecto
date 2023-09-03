@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'casaberrio.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
  
-DATABASES = db.MYSQL
+DATABASES = db.SQLITE
     
 
 

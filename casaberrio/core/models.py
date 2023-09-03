@@ -65,36 +65,59 @@ class Low (models.Model):
         db_table='bajas'
         ordering=['id']
 
-class RealEstate (models.Model):
-    chairs = models.CharField(max_length=20, verbose_name='Sillas')
-    table = models.CharField(max_length=20, verbose_name='Mesas')
-    chairs_and_tables = models.CharField(max_length=100, verbose_name='Sillas y mesas')
-    
+class Menaje(models.Model):
+    name_menaje = models.CharField(max_length=20, verbose_name='nombre del menaje')
     
     def __str__(self):
-        return self.chairs
+        return self.name_menaje
 
     class Meta:
-        verbose_name='Inmobiliaria'
-        verbose_name_plural = 'Inmobiliarias'
-        db_table='inmobiliaria'
+        verbose_name='Menaje'
+        verbose_name_plural = 'Menajes'
+        db_table='Menaje'
+        ordering=['id']
+
+class Catering(models.Model):
+    name_catering = models.CharField(max_length=20, verbose_name='nombre del menu')
+    
+    def __str__(self):
+        return self.name_catering
+
+    class Meta:
+        verbose_name='Menú'
+        verbose_name_plural = 'Menús'
+        db_table='Menú'
+        ordering=['id']
+
+class Decor(models.Model):
+    name_decor = models.CharField(max_length=20, verbose_name='nombre de la decoracion')
+    
+    def __str__(self):
+        return self.name_decor
+
+    class Meta:
+        verbose_name='Decoracion'
+        verbose_name_plural = 'Decoraciones'
+        db_table='Decoracion'
         ordering=['id']
 
 class Rent(models.Model):
-    rental_date = models.DateField( verbose_name='Fecha alquiler') 
-    name_product = models.CharField(max_length=100,verbose_name= 'Nombre de Producto')
-    unit_price = models.PositiveIntegerField(verbose_name ='Precio Unitario')
-    total_price = models.PositiveIntegerField(verbose_name='Precio total')
-    inventory = models.ForeignKey (Inventory, on_delete=models.CASCADE)
-    real_estate = models.ForeignKey(RealEstate, on_delete=models.CASCADE)
+    Name = models.CharField(max_length=50, verbose_name='Nombre')
+    Phone = models.PositiveIntegerField(verbose_name='Telefono')
+    Email = models.EmailField(verbose_name='Email')
+    Date = models.DateField(verbose_name='Fecha')
+    Hour = models.TimeField(verbose_name='Hora')
+    Catering = models.ManyToManyField('Catering')
+    Menaje = models.ManyToManyField('Menaje')
+    Decor = models.ManyToManyField('Decor')
     
     def __str__(self):
-        return self.rental_date
+        return self.Name
 
     class Meta:
-        verbose_name='Alquier'
+        verbose_name='Alquiler'
         verbose_name_plural='Alquileres'
-        db_table='alquiler'
+        db_table='Alquiler'
         ordering=['id']
         
 

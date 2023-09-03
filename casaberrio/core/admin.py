@@ -1,11 +1,14 @@
 from django.contrib import admin
-from .models import Inventory,InventoryType,Supplier,Low,Rent,Pay,Event,EventType,Menu,Drinks,Campus,Lounge,loyalty,TypePqrsd,StatePqrsd
+from .models import *
 
 admin.site.register(Inventory)
 admin.site.register(InventoryType)
 admin.site.register(Supplier)
 admin.site.register(Low)
 admin.site.register(Rent)
+admin.site.register(Menaje)
+admin.site.register(Catering)
+admin.site.register(Decor)
 admin.site.register(Pay)
 admin.site.register(Event)
 admin.site.register(EventType)
