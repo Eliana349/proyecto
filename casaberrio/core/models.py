@@ -117,14 +117,10 @@ class StateProduct  (models.Model):
         ordering = ['id']
 
 class TypePay(models.Model):
-    nequi = models.CharField(max_length=100,)
-    daviplata= models.CharField (max_length=100,)
-    bamcolombia = models.CharField(max_length=100,)
-    efectivo = models.CharField(max_length=100,)
-    tarjeta = models.CharField(max_length=100,)
-
+    type_pay = models.CharField(max_length=100, verbose_name='Tipo de pago')
+    
     def __str__(self):
-        return self.nequi
+        return self.type_pay
 
     class Meta:
         verbose_name = 'Tipo de pago  '
@@ -138,6 +134,7 @@ class Pay(models.Model) :
     payment_method = models.CharField(max_length=100,verbose_name='Metodo de pago')
     full_payment = models.PositiveIntegerField(verbose_name='Pago total')
     rent = models.ForeignKey (Rent, on_delete=models.CASCADE)
+    type_pay = models.ManyToManyField('TypePay')
 
     def __str__(self):
         return self.subscription_number
@@ -148,7 +145,7 @@ class Pay(models.Model) :
         verbose_name_plural='Pagos'
         db_table='pago'
         ordering=['id']
- 
+        
 class EventType (models.Model):
     wedding = models.CharField(max_length=100, verbose_name='Boda')
     birthday = models.CharField(max_length=100, verbose_name='Cumpleaños')
