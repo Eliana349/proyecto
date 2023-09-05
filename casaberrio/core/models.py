@@ -1,27 +1,7 @@
 from django.db import models
 
-class Property(models.Model):
-    chairs = models.PositiveIntegerField( verbose_name='Sillas')
-    table = models.PositiveIntegerField(verbose_name='Mesas')
-    chairs_and_tables = models.PositiveIntegerField(verbose_name='Sillas y mesas')
-    tents = models.PositiveIntegerField(verbose_name='Carpas')
-    none = models.PositiveIntegerField(verbose_name='Ninguno')
-
-    def __str__(self):
-        return self.chairs
-
-    class Meta:
-        verbose_name = 'Inmueble'
-        verbose_name_plural = 'Inmuebles'
-        db_table = 'inmueble'
-        ordering = ['id']
-
 class Drink(models.Model):
-    schnapps = models.PositiveIntegerField(verbose_name='Aguardiente')
-    rum = models.PositiveIntegerField(verbose_name='Ron')
-    whiskey = models.PositiveIntegerField(verbose_name='Whisky')
-    cocktails = models.PositiveIntegerField(verbose_name='Cócteles')
-    soda = models.PositiveIntegerField(verbose_name='Gaseosa')
+    schnapps = models.CharField(max_length=100,verbose_name='Aguardiente')
 
     def __str__(self):
         return self.schnapps
@@ -33,11 +13,7 @@ class Drink(models.Model):
         ordering = ['id']
 
 class Catering(models.Model):
-    household = models.PositiveIntegerField(verbose_name='Menaje')
-    table_linen = models.PositiveIntegerField(verbose_name='Manteleria')
-    waiters = models.PositiveIntegerField(verbose_name='Meseros')
-    menu = models.TextField(verbose_name='Menu')
-    drink = models.ForeignKey(Drink, on_delete=models.CASCADE)
+    household = models.CharField(max_length=100,verbose_name='Menaje')
 
     def __str__(self):
         return self.household
@@ -49,9 +25,7 @@ class Catering(models.Model):
         ordering = ['id']
 
 class Equipment(models.Model):
-    lightning = models.PositiveIntegerField(verbose_name='Iluminación')
-    sound = models.PositiveIntegerField(verbose_name='Sonido')
-
+    lightning = models.CharField(max_length=100, verbose_name='iluminacion y sonido')
     def __str__(self):
         return self.lightning
 
@@ -63,17 +37,15 @@ class Equipment(models.Model):
 
 class Rent(models.Model):
     rental_date_and_time = models.DateTimeField(verbose_name='Fecha y hora de alquiler')
-    return_date_and_time = models.DateTimeField(verbose_name='Fecha y hora de devolución')
-    description = models.CharField(max_length=500, verbose_name='Descripcion')
+    return_date_and_time =models.DateTimeField(verbose_name='Fecha y hora de alquiler')
+    description = models.TextField(verbose_name='Descripcion')
     unit_price = models.PositiveIntegerField(verbose_name='Precio Unitario')
     total_price = models.PositiveIntegerField(verbose_name='Precio total')
-    property = models.ForeignKey(Property, on_delete=models.CASCADE)
-    drink = models.ForeignKey(Drink, on_delete=models.CASCADE)
-    catering = models.ForeignKey(Catering, on_delete=models.CASCADE)
-    equipment = models.ForeignKey(Equipment, on_delete=models.CASCADE)
-
+    drink = models.ManyToManyField('drink')
+    catering = models.ManyToManyField('Catering')
+    equipment = models.ManyToManyField('Equipment')
     def __str__(self):
-        return self.rental_date_and_time
+        return 'alquiler'
 
     class Meta:
         verbose_name = 'Alquiler'
@@ -84,7 +56,6 @@ class Rent(models.Model):
 
 class ProductType(models.Model):
     equipment = models.OneToOneField(Equipment, on_delete=models.CASCADE)
-    property = models.OneToOneField(Property, on_delete=models.CASCADE)
     drink = models.OneToOneField(Drink, on_delete=models.CASCADE)
     catering = models.OneToOneField(Catering, on_delete=models.CASCADE)
 

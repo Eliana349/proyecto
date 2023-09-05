@@ -6,7 +6,6 @@ from .models import *
 admin.site.register(Equipment)
 admin.site.register(Catering)
 admin.site.register(Drink)
-admin.site.register(Property)
 admin.site.register(ProductType)
 admin.site.register(Inventory)
 admin.site.register(Supplier)
