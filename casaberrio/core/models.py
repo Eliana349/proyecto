@@ -1,5 +1,22 @@
 from django.db import models
 
+class Register(models.Model):
+    name = models.CharField(max_length=100, verbose_name='Nombres')
+    lastname = models.CharField(max_length=100, verbose_name='Apellidos')
+    phone = models.PositiveIntegerField(verbose_name='Numero de telefono')
+    email = models.EmailField(verbose_name='Email')
+    password = models.CharField(max_length=100,verbose_name='Contraseña')
+    confirm_password = models.CharField(max_length=100,verbose_name='Confirmar contraseña')
+    
+    def __str__(self):
+        return self.name
+    
+    class Meta:
+        verbose_name = 'Registro'
+        verbose_name_plural = 'Registros'
+        db_table = 'Registro'
+        ordering = ['id']
+
 class Drink(models.Model):
     schnapps = models.CharField(max_length=100,verbose_name='Aguardiente')
 
@@ -36,6 +53,8 @@ class Equipment(models.Model):
         ordering = ['id']
 
 class Rent(models.Model):
+    name = models.ForeignKey(Register, on_delete=models.CASCADE)
+    phone = models.PositiveIntegerField(verbose_name='Numero Celular')
     rental_date_and_time = models.DateTimeField(verbose_name='Fecha y hora de alquiler')
     return_date_and_time =models.DateTimeField(verbose_name='Fecha y hora de alquiler')
     description = models.TextField(verbose_name='Descripcion')
@@ -44,8 +63,9 @@ class Rent(models.Model):
     drink = models.ManyToManyField('drink')
     catering = models.ManyToManyField('Catering')
     equipment = models.ManyToManyField('Equipment')
+    
     def __str__(self):
-        return 'alquiler'
+        return str(self.name)
 
     class Meta:
         verbose_name = 'Alquiler'
@@ -72,11 +92,11 @@ class Inventory (models.Model):
     availability = models.CharField(max_length=100, verbose_name='Disponibilidad')
     worth = models.PositiveIntegerField(verbose_name ='Valor')
     description = models.CharField( max_length=500, verbose_name='Descripcion')
-    name = models.CharField(max_length=100,verbose_name= 'Nombre')
+    name = models.ForeignKey(Register, on_delete=models.CASCADE)
     productType = models.ForeignKey (ProductType, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.availability
+        return self.name
 
     class Meta:
         verbose_name='Inventario'
@@ -128,7 +148,8 @@ class TypePay(models.Model):
         db_table = 'tipopago'
         ordering = ['id']
 
-class Pay(models.Model) :
+class Pay(models.Model):
+    name = models.ForeignKey(Register, on_delete=models.CASCADE)
     subscription_number = models.PositiveIntegerField(verbose_name='Numero de abono')
     voucher = models.CharField(max_length=500, verbose_name='Comprobante')
     payment_method = models.CharField(max_length=100,verbose_name='Metodo de pago')
@@ -137,7 +158,7 @@ class Pay(models.Model) :
     type_pay = models.ManyToManyField('TypePay')
 
     def __str__(self):
-        return self.subscription_number
+        return str(self.name)
 
 
     class Meta:
