@@ -8,7 +8,7 @@ html {
   body {
     font-family: "Poppins", sans-serif;
     height: 100vh;
-    background-image: url(img/casaberrio4.png);
+    background: linear-gradient(20deg, rgba(57,140,198,1), #fff);
     background-repeat:no-repeat;
     background-attachment: fixed;
     background-size: 100% 100%;
@@ -40,7 +40,7 @@ html {
   #formContent {
     -webkit-border-radius: 10px 10px 10px 10px;
     border-radius: 10px 10px 10px 10px;
-    background: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.178);
     padding: 30px;
     width: 90%;
     max-width: 450px;
@@ -61,14 +61,17 @@ html {
   }
   
   #password{
-    width: 95%;
-    padding: 15px;  
-    text-align: center;  
-    border-radius: 0.5em ;
+    width: 85%;
+    padding: 15px;
+    text-align: center;
+    border-radius: 0.2em ;
     align-items: center;
     justify-content: center;
-
-  }
+    -webkit-border-radius: 0.3em ;
+    -moz-border-radius: 0.2em ;
+    -ms-border-radius: 0.2em ;
+    -o-border-radius: 0.2em ;
+}
 
   
   
@@ -141,12 +144,38 @@ html {
     -webkit-border-radius: 5px 5px 5px 5px;
     border-radius: 5px 5px 5px 5px;
   }
+
+  input[type=password] {
+    background-color: #f6f6f6;
+    border: none;
+    color: #0d0d0d;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 5px;
+    width: 85%;
+    border: 2px solid #f6f6f6;
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -ms-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+    -webkit-border-radius: 5px 5px 5px 5px;
+    border-radius: 5px 5px 5px 5px;
+  }
   
   input[type=text]:focus {
     background-color: #fff;
     border-bottom: 2px solid #5fbae9;
   }
   
+  input[type=password]:focus {
+    background-color: #fff;
+    border-bottom: 2px solid #5fbae9;
+  }
+
   input[type=text]:placeholder {
     color: #cccccc;
   }
