@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/register.css' %}">
+    <title>Casa Berrio</title>
+</head>
+<body>
+    <div class="div1 fadeInDown">
+        <div class="div2">
+            <div class="div-div">
+                <img src="{% static 'img/casaberrio.png' %}" alt="User Icon" class="imagen-div">
+            </div>
+            <form method="post" class="div-form">
+                {% csrf_token %}
+                <input type="text" id="name" class="form-name" name="name" placeholder="Nombre">
+                <input type="text" id="lastname" class="form-name" name="lastname" placeholder="Apellido">
+                <input type="text" id="username" class="form-name" name="username" placeholder="Nombre de usuario">
+                <input type="number" id="phone" class="form-name" name="phone" placeholder="Telefono">
+                <input type="email" id="email" class="form-name" name="email" placeholder="Correo electronico">
+                <input type="password" id="password" class="form-name" name="password" placeholder="Escribe tu Contraseña">
+                <input type="password" id="password_confirm" class="form-name" name="password_confirm" placeholder="Confirmar Contraseña">
+                <input type="submit" class="form-submit" value="Registrar" required>
+            </form>
+            <div class="div-div2">
+                <strong>Si ya estas registrado </strong><a href="login.html">Inicia Sesion</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

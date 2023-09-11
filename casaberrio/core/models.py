@@ -3,6 +3,7 @@ from django.db import models
 class Register(models.Model):
     name = models.CharField(max_length=100, verbose_name='Nombres')
     lastname = models.CharField(max_length=100, verbose_name='Apellidos')
+    username = models.CharField(max_length=100, verbose_name='Nombrre de usuario')
     phone = models.PositiveIntegerField(verbose_name='Numero de telefono')
     email = models.EmailField(verbose_name='Email')
     password = models.CharField(max_length=100,verbose_name='Contraseña')

@@ -6,18 +6,29 @@ from django.contrib import messages
 
 
 def index(request):
-    return render(request, 'login.html')
+    return render(request, 'index.html',{
+    })
 
 def login_view(request):    
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
+
         user = authenticate(username=username, password=password)
+        
         if user:
             login(request, user)
             messages.success(request, 'Bienvenido {}'.format(user.username))
-            return redirect('admin:index')
+            return redirect('index')
         else: 
             messages.error(request, 'Usuario o contraseña incorrectos')
-    return render(request, 'index.html',{
+    return render(request, 'login.html',{
     })
+    
+def register(request):
+    return render(request, 'register.html')
+
+def account(request):
+    return render(request, 'login.html')
+
+

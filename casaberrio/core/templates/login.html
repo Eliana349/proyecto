@@ -22,15 +22,14 @@
           </div>
       
           <!-- Login Form -->
-          <form>
-            <input type="text" id="login" class="fadeIn second" name="login" placeholder="Nombre de usuario" aria-required="true">
-            <input type="password" id="password" class="fadeIn third" name="login" placeholder="Contraseña" aria-required="true">
-            <a href="index.html">
-              <input type="button" class="fadeIn fourth" value="Iniciar Sesion" required>.
-            </a>  
+          <form method="post">
+            {% csrf_token %}
+            <input type="text" id="login" class="fadeIn second" name="username" placeholder="Nombre de usuario" aria-required="true">
+            <input type="password" id="password" class="fadeIn third" name="password" placeholder="Contraseña" aria-required="true">
+            <input type="submit" class="fadeIn fourth" value="Iniciar Sesión" required>
           </form>
       
-          <!-- Remind Passowrd -->
+          <!-- Remind Password -->
           <div id="formFooter">
             <a class="underlineHover" href="#"> Recuperar contraseña?</a>
           </div>
