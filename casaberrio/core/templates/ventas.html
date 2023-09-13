@@ -1,10 +1,11 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ventas</title>
-  <link rel="stylesheet" href="ventas.css">
+  <link rel="stylesheet" href="{% static 'css/ventas.css' %}">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -14,20 +15,21 @@
 <body>
   <script src="js/ventas.js"></script>
   <div class="container py-5">
-
-    <!-- For demo purpose -->
+    
+    
     <div class="row mb-4">
       <div class="col-lg-8 mx-auto text-center">
         <h1 class="display-4">Registro de Pago </h1>
+        {% csrf_token %}
       </div>
     </div>
-    <!-- End -->
+   
   
   
     <div class="row">
       <div class="col-lg-7 mx-auto">
         <div class="bg-white rounded-lg shadow-sm p-5">
-          <!-- Tarjeta de credito  -->
+         
           <ul role="tablist" class="nav bg-light nav-pills rounded-pill nav-fill mb-3">
             <li class="nav-item">
               <a data-toggle="pill" href="#nav-tab-card" class="nav-link active rounded-pill">
@@ -49,10 +51,11 @@
           
           <div class="tab-content">
   
-            <!-- credit card info-->
+     
             <div id="nav-tab-card" class="tab-pane fade show active">
 
               <form role="form">
+               
                 <div class="form-group">
                   <label for="username">Nombre completo </label>
                   <input type="text" name="username"  required class="form-control">
@@ -93,8 +96,9 @@
                 </div>
                 <button type="button" class="subscribe btn btn-primary btn-block rounded-pill shadow-sm"> Confirmar  </button>
               </form>
+              
             </div>
-            <!-- End -->
+            
   
             
             <div id="nav-tab-paypal" class="tab-pane fade">

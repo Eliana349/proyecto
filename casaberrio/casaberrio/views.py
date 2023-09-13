@@ -21,7 +21,7 @@ def login_view(request):
         if user:
             login(request, user)
             messages.success(request, 'Bienvenido {}'.format(user.username))
-            return redirect('home')
+            return redirect('reservas')
         else: 
             messages.error(request, 'Usuario o contraseña incorrectos')
     return render(request, 'login.html',{
@@ -99,7 +99,7 @@ def registerviews(request):
             
             messages.success(request, 'Usuario creado exitosamente')
             
-            return redirect('home')
+            return redirect('reservas')
     else:
         form = RegisterForm()
 
@@ -109,3 +109,11 @@ def registerviews(request):
 
 
 
+def reservas_views(request):
+  
+    return render(request, 'reservas.html',{
+    })
+
+def ventas_views(request):
+    return render(request, 'ventas.html',{
+    })
