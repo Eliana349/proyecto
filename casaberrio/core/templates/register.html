@@ -15,13 +15,8 @@
             </div>
             <form method="post" class="div-form">
                 {% csrf_token %}
-                <input type="text" id="name" class="form-name" name="name" placeholder="Nombre">
-                <input type="text" id="lastname" class="form-name" name="lastname" placeholder="Apellido">
-                <input type="text" id="username" class="form-name" name="username" placeholder="Nombre de usuario">
-                <input type="number" id="phone" class="form-name" name="phone" placeholder="Telefono">
-                <input type="email" id="email" class="form-name" name="email" placeholder="Correo electronico">
-                <input type="password" id="password" class="form-name" name="password" placeholder="Escribe tu Contraseña">
-                <input type="password" id="password_confirm" class="form-name" name="password_confirm" placeholder="Confirmar Contraseña">
+
+                {{ form }}
                 <input type="submit" class="form-submit" value="Registrar" required>
             </form>
             <div class="div-div2">
