@@ -1,0 +1,75 @@
+body {
+    background-color: aqua;
+  }
+  
+  .rounded-lg {
+    border-radius: 1rem;
+  }
+  
+  .nav-pills .nav-link {
+    color: #555;
+  }
+  
+  .nav-pills .nav-link.active {
+    color: #fff;
+  }
+  
+.mediodepago {
+    border: none;
+    padding: 10
+    px 32px;
+    text-decoration: none;
+    margin: 5px;
+    width: 50%;
+    border: 2px solid #f6f6f6;
+}
+.nombre{
+    border: none;
+    padding: 10
+    px 32px;
+    text-decoration: none;
+    margin: 0px;
+    width: 500px;
+    height: 35px;
+    border: 2px solid #f6f6f6;
+}
+.tipodedocumento{
+    border: none;
+    padding: 10
+    px 32px;
+    text-decoration: none;
+    margin: 0px;
+    width: 210px;
+    border: 2px solid #f6f6f6;
+}
+.numerodocumento{
+    border: none;
+    padding: 10
+    px 32px;
+    text-decoration: none;
+    margin: 0px;
+    width: 250px;
+    height: 35px;
+    border: 2px solid #f6f6f6;
+} 
+.email{
+    border: none;
+    padding: 10
+    px 32px;
+    text-decoration: none;
+    margin: 0px;
+    width: 500px;
+    height: 35px;
+    border: 2px solid #f6f6f6;
+}
+.telefono{
+    border: none;
+    padding: 10
+    px 32px;
+    text-decoration: none;
+    margin: 0px;
+    width: 250px;
+    height: 35px;
+    border: 2px solid #f6f6f6;
+}
+

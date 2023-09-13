@@ -1,3 +1,4 @@
+from typing import Any
 from django import forms
 
 from django.contrib.auth.models import User 
@@ -8,7 +9,10 @@ class RegisterForm(forms.Form):
     username = forms.CharField(required=True)
     email = forms.EmailField(required=True)
     phone = forms.IntegerField(required=True)
-    password = forms.CharField(required=True, max_length=10)
+    password = forms.CharField(required=True, max_length=10,
+                               widget=forms.PasswordInput)
+    confirm_password = forms.CharField (required=True, max_length=10,
+                                 widget=forms.PasswordInput)
 
     def clean_username(self):
         username = self.cleaned_data.get('username')
@@ -24,4 +28,5 @@ class RegisterForm(forms.Form):
             if User.objects.filter(email=email).exists():
                 raise forms.ValidationError('El email ya se encuentra en uso')
 
-            return email      
+            return email    
+

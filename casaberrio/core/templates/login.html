@@ -22,14 +22,12 @@
                 </div>
             {% endfor %}
           {% endif %}
-          <!-- Tabs Titles -->
-       
-          <!-- Icon -->
+          
           <div class="fadeIn first">
             <img src="{% static 'img/casaberrio.png' %}" id="icon" alt="User Icon" />
           </div>
       
-          <!-- Login Form -->
+         
           <form method="post">
             {% csrf_token %}
             <input type="text" id="login" class="fadeIn second" name="username" placeholder="Nombre de usuario" aria-required="true">
@@ -37,9 +35,10 @@
             <input type="submit" class="fadeIn fourth" value="Iniciar Sesión" required>
           </form>
       
-          <!-- Remind Password -->
+          
           <div id="formFooter">
-            <a class="underlineHover" href="#"> Recuperar contraseña?</a>
+            <a class="underlineHover" href="#"> Recuperar contraseña?</a><br>
+            <strong> Crear cuenta </strong><a href="register.html">Registrarse </a>
           </div>
       
         </div>

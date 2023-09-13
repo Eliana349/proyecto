@@ -1,0 +1,51 @@
+/* Estilos para el formulario */
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(rgb(76, 214, 238), rgb(241, 230, 73));
+}
+
+h1 {
+    color: #333; /* Color del encabezado */
+}
+
+form {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #fff; /* Color de fondo del formulario */
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para los campos de entrada */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="date"],
+textarea {
+    width: 98%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #000000;
+    border-radius: 2px;
+}
+
+/* Estilos para los botones de radio y casillas de verificación */
+input[type="radio"],
+input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+/* Estilos para el botón de enviar */
+input[type="submit"] {
+    background-color: #007BFF; /* Color de fondo del botón de enviar */
+    color: #fff; /* Color del texto del botón de enviar */
+    padding: 10px 20px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #0056b3; /* Cambiar el color de fondo en el hover */
+}

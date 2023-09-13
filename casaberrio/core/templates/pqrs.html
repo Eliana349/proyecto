@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de PQRS</title>
+    <link rel="stylesheet" type="text/css" href="pqrs.css">
+</head>
+<body>
+    <h1><center>PQRS</center></h1>
+    <form action="procesar.php" method="post" enctype="multipart/form-data">
+        <fieldset>
+            <legend>Información del Remitente</legend>
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" required><br><br>
+            <label for="apellido">Apellido:</label>
+            <input type="text" id="apellido" name="apellido" required><br><br>
+            <label for="email">Correo Electrónico:</label>
+            <input type="email" id="email" name="email" required><br><br>
+            <label for="telefono">Teléfono de Contacto:</label>
+            <input type="tel" id="telefono" name="telefono" required><br><br>
+        </fieldset>
+
+        <fieldset>
+            <legend>Tipo de PQRSD</legend>
+            <label><input type="radio" name="tipo" value="petición"> Petición</label><br>
+            <label><input type="radio" name="tipo" value="queja"> Queja</label><br>
+            <label><input type="radio" name="tipo" value="reclamo"> Reclamo</label><br>
+            <label><input type="radio" name="tipo" value="sugerencia"> Sugerencia</label><br>
+            <label><input type="radio" name="tipo" value="denuncia"> Denuncia</label><br>
+        </fieldset>
+
+        <fieldset>
+            <legend>Detalle de la PQRSD</legend>
+            <label for="fecha">Fecha del Incidente:</label>
+            <input type="date" id="fecha" name="fecha"><br><br>
+            <label for="descripcion">Descripción detallada del evento o solicitud:</label><br>
+            <textarea id="descripcion" name="descripcion" rows="4" cols="50" required></textarea><br><br>
+        </fieldset>
+
+        <fieldset>
+            <legend>Información Adicional (si aplica)</legend>
+            <label for="producto">Nombre del Producto/Servicio:</label>
+            <input type="text" id="producto" name="producto"><br><br>
+            <label for="factura">Número de Factura o Transacción:</label>
+            <input type="text" id="factura" name="factura"><br><br>
+        </fieldset>
+
+        <fieldset>
+            <legend>Adjuntar Documentos (si es necesario)</legend>
+            <input type="file" id="adjunto" name="adjunto"><br><br>
+        </fieldset>
+
+        <fieldset>
+            <legend>Cómo prefiere ser contactado:</legend>
+            <label><input type="checkbox" name="contacto[]" value="email"> Correo Electrónico</label><br>
+            <label><input type="checkbox" name="contacto[]" value="telefono"> Teléfono</label><br>
+            <label><input type="checkbox" name="contacto[]" value="postal"> Correo Postal</label><br>
+        </fieldset>
+
+        <fieldset>
+            <legend>Datos de Contacto Adicionales (si es necesario)</legend>
+            <label for="contacto_adicional">Información adicional de contacto:</label><br>
+            <textarea id="contacto_adicional" name="contacto_adicional" rows="4" cols="50"></textarea><br><br>
+        </fieldset>
+
+        <fieldset>
+            <legend>Estado de la PQRSD</legend>
+            <label><input type="radio" name="estado" value="pendiente" required> Pendiente</label><br>
+            <label><input type="radio" name="estado" value="proceso"> En Proceso</label><br>
+            <label><input type="radio" name="estado" value="resuelto"> Resuelto</label><br>
+            <label><input type="radio" name="estado" value="cerrado"> Cerrado</label><br>
+        </fieldset>
+
+        <fieldset>
+            <legend>Comentarios Adicionales (si es necesario)</legend>
+            <label for="comentarios">Comentarios adicionales o notas internas:</label><br>
+            <textarea id="comentarios" name="comentarios" rows="4" cols="50"></textarea><br><br>
+        </fieldset>
+
+        <input type="submit" value="Enviar">
+    </form>
+</body>
+</html>
