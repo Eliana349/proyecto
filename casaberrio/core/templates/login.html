@@ -16,14 +16,14 @@
         <div id="formContent">
           {% if messages %}
             {% for message in messages %}
-                <div class="alert {% if messages.tags == 'success' %}alert-success{%else%}alert-danger{% endif%}">
+                <div class="alert {% if messages.tags == 'success'%}alert-success{%else%}alert-danger{%endif%}">
                   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close"></button>
                   {{ message }}
                 </div>
             {% endfor %}
           {% endif %}
           <!-- Tabs Titles -->
-      
+       
           <!-- Icon -->
           <div class="fadeIn first">
             <img src="{% static 'img/casaberrio.png' %}" id="icon" alt="User Icon" />
@@ -38,11 +38,8 @@
           </form>
       
           <!-- Remind Password -->
-          <div class="links">
-            <a href="register.html">Registrar</a>
-          </div>
-          <div class="links" id="formFooter">
-            <a class="" href="#"> Recuperar contraseña?</a>
+          <div id="formFooter">
+            <a class="underlineHover" href="#"> Recuperar contraseña?</a>
           </div>
       
         </div>

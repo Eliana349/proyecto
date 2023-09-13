@@ -15,9 +15,14 @@
             </div>
             <form method="post" class="div-form">
                 {% csrf_token %}
-
                 {{ form }}
+                
+                {% if field.errors %}
+                    {{ field.errors }}
+                {% endif %}
+
                 <input type="submit" class="form-submit" value="Registrar" required>
+               
             </form>
             <div class="div-div2">
                 <strong>Si ya estas registrado </strong><a href="login.html">Inicia Sesion</a>

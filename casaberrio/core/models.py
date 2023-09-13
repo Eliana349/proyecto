@@ -1,6 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
-    
+
 class Register(models.Model):
     name = models.CharField(max_length=100, verbose_name='Nombres')
     lastname = models.CharField(max_length=100, verbose_name='Apellidos')
