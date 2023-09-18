@@ -19,19 +19,23 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls, name='admin:home'),
+    path('admin/', admin.site.urls, name='admin:home2'),
     path('', views.index, name='home'),
     path('login/', views.login_view, name='login'),
     path('register/', views.register, name='register'),
-    path('register/login.html', views.login),
-    path('register/logout.html', views.account),
-    path('logout/', views.logout_view, name='logout'),
-    path('login/reservas.html', views.registerviews, name='login'),
-    path('reservas/', views.reservas_views, name='reservas'),
-    path('ventas/', views.ventas_views, name='ventas'),
-    path('reservas/ventas.html', views.ventas_views, name='ventas'),
-    
-    
+    path('login.html', views.login_view, name='home_login'),
+    path('register.html', views.register, name='register_login'),
+    path('home/', views.home_two, name='home2'),
+    path('home/reservas.html', views.reservas_view, name='reservas'),
+    path('home/productos.html', views.productos),
+    path('home/PSE.html', views.pse_view, name='tarjeta'),
+    path('home/tarjetacd.html', views.tajetacd_view),
+    path('home/alquiler.html', views.alquiler_view),
+    path('home/pqrs.html', views.fidelizacion_view),
+    path('home/nosotros.html', views.nosotros),
+    path('home/home2.html', views.home_two),
+    path('home/home2.htmls', views.home_two),
+    path('home/home.html', views.index),
 ]
 
 
