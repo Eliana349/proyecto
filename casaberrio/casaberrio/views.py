@@ -56,7 +56,7 @@ def register(request):
         'form': form
     })
     
-@login_required(login_url='/accounts/login')
+
 def home_two(request):
     return render(request, 'home2.html')
 
@@ -158,9 +158,4 @@ def productos(request):
 def nosotros(request):
     return render(request, 'nosotros.html',{
     })
-
-
-
-
-
 
