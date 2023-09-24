@@ -2,7 +2,7 @@
 body {
     font-family: "Poppins", sans-serif;
     height: 100vh;
-    background: linear-gradient(20deg, rgba(57,140,198,1), #fff);
+    background: linear-gradient(20deg, #F2F7A1, #F2F7A1);
     background-repeat:no-repeat;
     background-attachment: fixed;
     background-size: 100% 100%;
@@ -32,7 +32,7 @@ body {
   
   .div2 {
     border-radius: 10px 10px 10px 10px;
-    background: rgba(255, 255, 255, 0.178);
+    background: #35A29F;
     padding: 50px;
     width: 90%;
     max-width: 550px;
@@ -323,4 +323,91 @@ h2.inactive {
     text-align: center;
   }
 
+select {
+  background-color: #f6f6f6;
+  border: none;
+  color: #0d0d0d;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 5px;
+  width: 97%;
+  border: 2px solid #f6f6f6;
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -ms-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+  -webkit-border-radius: 5px 5px 5px 5px;
+  border-radius: 5px 5px 5px 5px;
 
+}
+
+textarea {
+  background-color: #f6f6f6;
+  border: none;
+  color: #0d0d0d;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 5px;
+  height: 40px;
+  width: 85%;
+  border: 2px solid #f6f6f6;
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -ms-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+  -webkit-border-radius: 5px 5px 5px 5px;
+  border-radius: 5px 5px 5px 5px;
+
+}
+
+
+input[type=date] {
+  background-color: #f6f6f6;
+  border: none;
+  color: #0d0d0d;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 5px;
+  width: 85%;
+  border: 2px solid #f6f6f6;
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -ms-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+  -webkit-border-radius: 5px 5px 5px 5px;
+  border-radius: 5px 5px 5px 5px;
+}
+
+
+input[type=tel] {
+  background-color: #f6f6f6;
+  border: none;
+  color: #0d0d0d;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 5px;
+  width: 85%;
+  border: 2px solid #f6f6f6;
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -ms-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+  -webkit-border-radius: 5px 5px 5px 5px;
+  border-radius: 5px 5px 5px 5px;
+}

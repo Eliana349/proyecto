@@ -4,14 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Productos</title>
+    <title>Casa Berrio</title>
+    <link rel="Icon" href="{% static 'img/LogoCasaBerrio (1).png' %}">
     <link rel="stylesheet" href="{% static 'css/productos.css' %}">
 </head>
 <body>
     <div class="container">
         <h1>Tipo de evento</h1>
         <div class="product">
-            <img src="img/matrimonios.png" alt="Matrimonio">
+            <img src="{% static 'img/matrimonios.png' %}" alt="Matrimonio">
             <div class="product-details">
                 <div class="product-name">Plan Todo Incluido 30 invitados</div>
                 <div class="product-description">
@@ -38,7 +39,7 @@
             </div>
         </div>
         <div class="product">
-            <img src="img/15años.png" alt="15años">
+            <img src="{% static 'img/15años.png' %}" alt="15años">
             <div class="product-details">
                 <div class="product-name">Plan Todo Incluido 50 invitados</div>
                 <div class="product-description">
@@ -86,7 +87,7 @@
             </div>
         </div>
         <div class="product">
-            <img src="img/cumpleaños.png" alt="15años">
+            <img src="{% static 'img/cumpleaños.png' %}" alt="15años">
             <div class="product-details">
                 <div class="product-name">Plan Todo Incluido 100 invitados</div>
                 <div class="product-description">
@@ -134,7 +135,7 @@
             </div>
         </div>
         <div class="product">
-            <img src="img/empresarial.png" alt="15años">
+            <img src="{% static 'img/Comuneros.jpg'%}" alt="15años">
             <div class="product-details">
                 <div class="product-name">Plan Todo Incluido 150 invitados</div>
                 <div class="product-description">
@@ -182,7 +183,7 @@
             </div>
         </div>
         <div class="product">
-            <img src="img/grado.png" alt="15años">
+            <img src="{% static 'img/grados.png' %}" alt="15años">
             <div class="product-details">
                 <div class="product-name">Plan Todo Incluido 200 invitados</div>
                 <div class="product-description">
@@ -226,7 +227,7 @@
                     </ul>
                 </div>
                 <center><div class="product-price">9.280.000</div></center><br>
-                <center><a href="reservas.html">Reservar</a></center>
+                <center class="center"><a href="reservas.html">Reservar</a></center>
             </div>
         </div>
 </body>

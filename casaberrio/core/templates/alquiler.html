@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/alquiler.css' %}">
-    <title>Alquiler</title>
+    <title>Casa Berrio</title>
+    <link rel="Icon" href="{% static 'img/LogoCasaBerrio (1).png' %}">
 </head>
 <body>
     <div class="div1 fadeInDown">
@@ -16,22 +17,11 @@
             <form method="post" class="div-form">
                 {% csrf_token %}
                 {{ form }}
-                
-
-                <input type="submit" class="form-submit" value="Enviar Reserva" onclick="alquilerrealizado()" required>
-       
+                <input type="submit" class="form-submit" value="Enviar Reserva" onclick="alert('su formulario ha sido enviado exitosamente')" required>
             </form>
             
         </div>
     </div>
-    <script>
-        function alquilerrealizado() {
-            // Tu código JavaScript aquí
-            alert("Reserva enviada con éxito");
-            // Puedes agregar más acciones aquí
-        }
-        </script>
-        
 </body>
 </html>
 

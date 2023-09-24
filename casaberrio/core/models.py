@@ -1,86 +1,30 @@
 from django.db import models
+from django import forms
+from phonenumber_field.modelfields import PhoneNumberField
+import random
 
 
-class Lounge (models.Model):
-    lounge  = models.CharField(max_length=100, verbose_name='Numero de salon')
-
-    def __str__(self):
-        return self.lounge
-
-    class Meta:
-        verbose_name='Salon'
-        verbose_name_plural='Salones'
-        db_table='salon'
-        ordering=['id']
-        
-class EventType (models.Model):
-    event_type = models.CharField(max_length=100, verbose_name='Tipo de evento')
-   
-    def __str__(self):
-        return self.event_type
-
-    class Meta:
-        verbose_name='Tipo evento'
-        verbose_name_plural='Tipos de evento'
-        db_table='tipoevento'
-        ordering=['id']
-
-class TypePay(models.Model):
-    type_pay = models.CharField(max_length=100, verbose_name='Tipo de pago')
-    
-    def __str__(self):
-        return self.type_pay
-
-    class Meta:
-        verbose_name = 'Tipo de pago  '
-        verbose_name_plural = 'Tipos de pago '
-        db_table = 'tipopago'
-        ordering = ['id']
-
-class Campus (models.Model):
-    campus = models.CharField(max_length=100,verbose_name='Nombre sede')
-    
-    
-
-    def __str__(self):
-        return self.campus
-
-    class Meta:
-        verbose_name='Sede'
-        verbose_name_plural='Sedes'
-        db_table='sede'
-        ordering=['id']
 
 
-class Gender(models.Model):
-    genero = models.CharField(max_length=15, verbose_name='Genero')
-    
-    def __str__(self):
-        return self.genero
-    
-    
-    class Meta:
-        verbose_name = 'Genero'
-        verbose_name_plural = 'Generos'
-        db_table = 'Genero'
-        ordering = ['id']
+
+
 
 class Reserva(models.Model):
-    name = models.CharField(max_length=50, verbose_name='Nombres')
+    name = models.CharField(max_length=50,verbose_name='Nombres', )
     lastname = models.CharField(max_length=50, verbose_name='Apellidos')
     email = models.EmailField(max_length=50, verbose_name='Correo electronico')
-    phone = models.PositiveIntegerField(verbose_name='Numero de celular')
-    gender = models.ForeignKey(Gender,verbose_name='Genero', on_delete=models.CASCADE)
+    phone = PhoneNumberField(verbose_name='Numero de celular')
+    gender = models.CharField(max_length=30)
     event_date = models.DateTimeField( verbose_name='Fecha de evento')
     event_start_time = models.TimeField(verbose_name='Hora inicial del evento')
     theme = models.CharField(max_length=200, verbose_name='Tematica')
     description = models.CharField(max_length=500,  verbose_name='Descripcion')
     special_need = models.CharField(max_length=200, verbose_name='Necesidad especial (Personas discapacitadas)')
     guest_document = models.CharField(max_length=200, verbose_name='Documento invitado')
-    type_pay = models.ForeignKey(TypePay, on_delete=models.CASCADE)
-    eventType = models.ForeignKey (EventType, on_delete=models.CASCADE)
-    campus = models.ForeignKey (Campus, on_delete=models.CASCADE)
-    lounge = models.ForeignKey (Lounge, on_delete=models.CASCADE)
+    type_pay = models.CharField(max_length=200)
+    eventType = models.CharField (max_length=200)
+    campus = models.CharField (max_length=200 )
+    lounge = models.CharField(max_length=200 )
     
     def __str__(self):
         return self.name
@@ -134,7 +78,7 @@ class PSE(models.Model):
     type_id = models.ForeignKey(TypeId,on_delete=models.CASCADE)
     identification_number= models.PositiveIntegerField(verbose_name='Numero de indentificacion')
     email = models.EmailField(verbose_name='Correo electronico')
-    phone_number = models.PositiveIntegerField(verbose_name='Numero de telefono')
+    phone_number = PhoneNumberField(verbose_name='Numero de telefono')
     
     def __str__(self):
         return self.names_lastnames
@@ -149,7 +93,6 @@ class TarjetaDeCD(models.Model):
     full_name = models.CharField(max_length=100, verbose_name='Nombre Completo')
     card_number= models.PositiveIntegerField(verbose_name='Numero de Tarjeta')
     expiration = models.DateField(verbose_name='Vencimiento')
-    cw = models.PositiveBigIntegerField(verbose_name='CW')
     
     def __str__(self):
         return self.full_name
@@ -159,52 +102,16 @@ class TarjetaDeCD(models.Model):
         verbose_name_plural = 'Tarjetas de credito y debito'
         db_table = 'Tarjeta de credito y debito'
         ordering = ['id']
-        
-    
-class Drink(models.Model):
-    schnapps = models.CharField(max_length=100,verbose_name='Aguardiente')
-
-    def __str__(self):
-        return self.schnapps
-
-    class Meta:
-        verbose_name = 'Bebida'
-        verbose_name_plural = 'Bebidas'
-        db_table = 'bebida'
-        ordering = ['id']
-
-class Catering(models.Model):
-    household = models.CharField(max_length=100,verbose_name='Menaje')
-
-    def __str__(self):
-        return self.household
-
-    class Meta:
-        verbose_name = 'Catering'
-        verbose_name_plural = 'Catering'
-        db_table = 'catering'
-        ordering = ['id']
-
-class Equipment(models.Model):
-    lightning = models.CharField(max_length=100, verbose_name='iluminacion y sonido')
-    def __str__(self):
-        return self.lightning
-
-    class Meta:
-        verbose_name = 'Equipo'
-        verbose_name_plural = 'Equipos'
-        db_table = 'equipos'
-        ordering = ['id']
-
+ 
 class Rent(models.Model):
     full_name = models.CharField(max_length=100, verbose_name='Nombres Completos')
     phone = models.PositiveIntegerField(verbose_name='Numero Celular')
-    rental_date_and_time = models.DateTimeField(verbose_name='Fecha y hora de incio')
-    return_date_and_time_f =models.DateTimeField(verbose_name='Fecha y hora de finalizacion')
+    rental_date_and_time = models.DateField(verbose_name='Fecha y hora de incio')
+    return_date_and_time_f =models.DateField(verbose_name='Fecha y hora de finalizacion')
     description = models.TextField(verbose_name='Descripcion')
-    drink = models.ManyToManyField('drink')
-    catering = models.ManyToManyField('Catering')
-    equipment = models.ManyToManyField('Equipment')
+    drink = models.CharField(max_length=200)
+    catering = models.CharField(max_length=200)
+    equipment = models.CharField(max_length=200 )
     
     def __str__(self):
         return str(self.full_name)
@@ -215,20 +122,6 @@ class Rent(models.Model):
         db_table = 'alquiler'
         ordering = ['id']
 
-
-class ProductType(models.Model):
-    equipment = models.OneToOneField(Equipment, on_delete=models.CASCADE)
-    drink = models.OneToOneField(Drink, on_delete=models.CASCADE)
-    catering = models.OneToOneField(Catering, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return 'Tipo de Producto'
-
-    class Meta:
-        verbose_name = 'Tipo Producto'
-        verbose_name_plural = 'Tipos de Productos'
-        db_table = 'productotipo'
-        ordering = ['id']
 
 class TypeOFinput(models.Model):
     type_of_input = models.CharField(max_length=100,verbose_name= 'Tipo de insumo')
@@ -265,7 +158,7 @@ class Supplier (models.Model):
     inventory = models.ForeignKey (Inventory, on_delete=models.CASCADE)
 
     def __str__ (self):
-        return self.nit
+        return self.company_name
 
     class Meta:
         verbose_name='Proveedor'
@@ -316,27 +209,37 @@ class PreferenceContact(models.Model):
         verbose_name_plural='Como prefire ser contactado'
         db_table='Como prefire ser contactado'
         ordering=['id']
-        
 
-class loyalty (models.Model):
-    full_name =models.CharField(max_length=100,verbose_name= 'Nombres y apellidos')
-    email  =models.EmailField(verbose_name= ' Correo electronico ')
-    phone  =models.PositiveIntegerField(verbose_name= 'Numero de telefono')
-    type_pqrsd =models.ForeignKey(TypePqrsd, on_delete=models.CASCADE)
+
+def generate_random_radicado():
+    return random.randint(100000, 999999)
+
+class loyalty(models.Model):
+    full_name = models.CharField(max_length=100, verbose_name='Nombres y apellidos')
+    email = models.EmailField(verbose_name='Correo electrónico')
+    phone = PhoneNumberField(verbose_name='Número de teléfono', region='CO')
+    type_pqrsd = models.ForeignKey(TypePqrsd, on_delete=models.CASCADE)
     incident_date = models.DateField(verbose_name='Fecha de incidente')
-    detailed_description = models.TextField(max_length=300,verbose_name = 'Descripcion detallada')
-    product_or_services_name  = models.CharField(max_length=50, verbose_name = 'Nombre de producto/servicio')
-    invoice_or_transacion_number = models.PositiveIntegerField(verbose_name='Nombre de factura o transaccion')
+    detailed_description = models.TextField(max_length=300, verbose_name='Descripción detallada')
+    product_or_services_name = models.CharField(max_length=50, verbose_name='Nombre de producto/servicio')
+    filing_number = models.PositiveIntegerField(verbose_name='Número de radicado', default=generate_random_radicado) 
     preference_contact = models.ForeignKey(PreferenceContact, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.full_name
 
+    def save(self, *args, **kwargs):
+        if not self.filing_number:
+          
+            self.filing_number = random.randint(100000, 999999)
+        super().save(*args, **kwargs)
+
     class Meta:
-        verbose_name='Fidelizacion'
-        verbose_name_plural=' Fidelizaciones '
-        db_table='fidelizacion'
-        ordering=['id']
+        verbose_name = 'Fidelizacion'
+        verbose_name_plural = 'Fidelizaciones'
+        db_table = 'fidelizacion'
+        ordering = ['id']
+
 
 
 

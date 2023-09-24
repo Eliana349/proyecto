@@ -1,5 +1,4 @@
 body {
-    font-family: Arial, sans-serif;
     background: linear-gradient(70deg, rgba(57,140,198,1), #fff);
     margin: 1em;
     padding: 0;
@@ -58,4 +57,13 @@ h1 {
     border-radius: 5px 5px 5px 5px;
     margin: 5px 20px 40px 20px;
     transition: all 0.3s ease-in-out;
+}
+
+a {
+    text-decoration: none;
+    font-size: 30px;
+}
+
+img {
+    box-shadow: 0 0 10px 5px black;
 }

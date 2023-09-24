@@ -15,17 +15,24 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from . import views
+from django.urls import path, include
+from django.contrib.auth.views import LogoutView
 from django.conf import settings
 from django.conf.urls.static import static
+from . import views
 
 
 
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin:home2'),
     path('', views.index, name='home'),
+    path('home.html', views.index),
     path('login/', views.login_view, name='login'),
+    path('login/register.html', views.register, name='register2'),
+    path('login/login.html', views.login_view, name='register2'),
+    path('nosotros.html', views.nosotros, name='nosotros'),
+    path('pqrs.html', views.fidelizacion_view, name='pqrs'),
+    path('home2.htmls', views.index),
     path('register/', views.register, name='register'),
     path('login.html', views.login_view, name='home_login'),
     path('register.html', views.register, name='register_login'),
@@ -39,7 +46,10 @@ urlpatterns = [
     path('home/nosotros.html', views.nosotros),
     path('home/home2.html', views.home_two),
     path('home/home2.htmls', views.home_two),
-    path('home/home.html', views.index),
+    path('home/home.html', LogoutView.as_view(), name='logout'),
+    path('', LogoutView.as_view(), name='logout2'),
+
+  
 ]
 
 if settings.DEBUG:

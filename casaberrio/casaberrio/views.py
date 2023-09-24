@@ -22,6 +22,7 @@ def login_view(request):
         
         if user:
             login(request, user)
+            messages.success(request, 'Bienvenido {}'.format(user.username))
             return redirect('home2')
         else: 
             messages.error(request, 'Usuario o contraseña incorrectos')
@@ -55,11 +56,13 @@ def register(request):
     return render(request, 'register.html', {
         'form': form
     })
-    
 
+@login_required 
 def home_two(request):
     return render(request, 'home2.html')
 
+
+@login_required
 def reservas_view(request):
     contact_form = formularioReserva()
     
@@ -75,6 +78,8 @@ def reservas_view(request):
         
     return render(request,  'reservas.html', {'form':contact_form})
 
+
+@login_required
 def pse_view(request):
     contact_form = formularioPSE()
     
@@ -90,6 +95,8 @@ def pse_view(request):
         
     return render(request,  'PSE.html', {'form':contact_form})
 
+
+@login_required
 def tajetacd_view(request):
     contact_form = formularioTarjetaDeCD()
     
@@ -105,6 +112,7 @@ def tajetacd_view(request):
         
     return render(request,  'tarjetacd.html', {'form':contact_form})
 
+
 def fidelizacion_view(request):
     contact_form = formularioFedelizacion()
     
@@ -113,13 +121,15 @@ def fidelizacion_view(request):
         
         if contact_form.is_valid():
             contact_form.save()
-            return redirect('home2')
+            return redirect('home')
             
         else:
             messages.error(request, 'Usuario o contraseña incorrectos')
         
     return render(request,  'pqrs.html', {'form':contact_form})
 
+
+@login_required
 def inventario_view(request):
     contact_form = formularioInventario()
     
@@ -134,7 +144,9 @@ def inventario_view(request):
             messages.error(request, 'Usuario o contraseña incorrectos')
         
     return render(request,  'pqrs.html', {'form':contact_form})
+   
 
+@login_required
 def alquiler_view(request):
     contact_form = formularioAlquiler()
     
@@ -151,11 +163,17 @@ def alquiler_view(request):
     return render(request,  'alquiler.html', {'form':contact_form})
 
 
+@login_required
 def productos(request):
     return render(request, 'productos.html',{
     })
-    
+
 def nosotros(request):
     return render(request, 'nosotros.html',{
     })
+
+
+
+
+
 
