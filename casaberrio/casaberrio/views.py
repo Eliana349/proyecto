@@ -22,7 +22,7 @@ def login_view(request):
         
         if user:
             login(request, user)
-            messages.success(request, 'Bienvenido {}'.format(user.username))
+            messages.success(request, 'Bienvenid@ {}'.format(user.username))
             return redirect('home2')
         else: 
             messages.error(request, 'Usuario o contraseña incorrectos')

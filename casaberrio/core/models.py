@@ -90,7 +90,7 @@ class PSE(models.Model):
     phone_number = PhoneNumberField(verbose_name='Numero de telefono')
     
     def __str__(self):
-        return self.names_lastnames
+        return self.full_name
 
     class Meta:
         verbose_name = 'PSE Cuenta de ahorro y corriente'
