@@ -82,21 +82,35 @@ CAMPUS = (
 )
 
 
+
+
+
 SALON = (
     ('M', 'Salon 1'),
     ('F', 'Salon 2'),
     ('O', 'Salon 3'),
 )
 
+TEMATICA_CHOICES = (
+    ('Campestre', 'Campestre'),
+    ('Neon', 'Neon'),
+    ('Alfombra_Roja', 'Alfombra Roja'),
+    ('Personaje_Disney', 'Personaje Disney'),
+    ('Flores', 'Flores'),
+    ('Noche_estrellas', 'Noche de Estrellas'),
+    ('Tropical', 'Tropical'),
+    ('Mariposas', 'Mariposas'),
+)
+
 class formularioReserva(forms.ModelForm):
     name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Nombres '}),label='')
     lastname = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Apellidos'}), label='')
     email = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Correo electronico'}), label='')
-    phone = forms.IntegerField(widget=forms.NumberInput(attrs={'placeholder': 'Numero de celular'}), label='')
+    phone = PhoneNumberField(label='',widget=forms.TextInput(attrs={'placeholder':'Telefono ','type': 'tel'})   )
     gender = forms.ChoiceField(choices=GENERO_CHOICES,label='')
-    event_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date', 'placeholder': 'Fecha de evento'}),label='Fecha y hora del evento')
+    event_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date', 'placeholder': 'Fecha de evento'}),label='Fecha')
     event_start_time = forms.TimeField(widget=forms.TimeInput(attrs={'type': 'time'}),label='')
-    theme = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Tematica'}), label='')
+    theme = forms.ChoiceField(choices=TEMATICA_CHOICES ,label='Tematica')
     description = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Descripcion'}), label='')
     special_need = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Necesidad especial (Personas discapacitadas)'}), label='')
     eventType = forms.ChoiceField(choices=TIPO_EVENTO,label='Tipo de evento')
@@ -110,12 +124,22 @@ class formularioPSE(forms.ModelForm):
     class Meta:
         model = PSE
         fields = ['type_person','select_bank','full_name','type_id','identification_number','email','phone_number']
+        class Meta:
+            full_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Nombres Completos'}),label='Nombres Completos')
+            
+
+
+
+
         
 class formularioTarjetaDeCD(forms.ModelForm):
-    expiration = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}),label='Vencimiento')
+    expiration = forms.CharField(widget=forms.DateInput(attrs={'placeholder': '25/10'}),label='Vencimiento')
     class Meta:
         model = TarjetaDeCD
         fields = ['full_name','card_number','expiration']     
+
+
+
           
 class formularioFedelizacion(forms.ModelForm):
     incident_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}),label='Fecha de incidente')
@@ -153,6 +177,12 @@ DRINK = (
 )
 
 
+STATEPQRSD = (
+    ('P'), ('Pendiente'),
+    ('R'), ('Resvisado'),
+    ('C'), ('Contestado'),
+)
+
 CATERING = (
     ('Sillas', 'Sillas'),
     ('Mesas', 'Mesas'),
@@ -182,3 +212,6 @@ class formularioAlquiler(forms.ModelForm):
     class Meta:
         model = Rent
         fields = ['full_name','phone','rental_date_and_time','return_date_and_time_f','description','drink','catering','equipment']
+
+
+

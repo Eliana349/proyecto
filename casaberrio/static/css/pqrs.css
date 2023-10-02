@@ -13,7 +13,7 @@ body {
   }
   
   a {
-    color: #0086fb;
+    color: #071952;
     display:inline-block;
     text-decoration: none;
     font-weight: 400;
@@ -47,6 +47,7 @@ body {
     padding: 25px;
     text-align: center;
     border-radius: 0 0 10px 10px;
+    margin-right: 10px;
   }
 
 h2.inactive {
@@ -61,9 +62,9 @@ h2.inactive {
   
   
   input[type=button], input[type=submit], input[type=reset]  {
-    background-color: rgba(57, 140, 198, 1);;
+    background-color: #088395;;
     border: none;
-    color: white;
+    color: rgb(0, 0, 0);
     padding: 15px 80px;
     text-align: center;
     text-decoration: none;
@@ -81,7 +82,7 @@ h2.inactive {
 
   
   input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover  {
-    background-color: #39ace7;
+    background-color: #71a4f0;
   }
 
   
@@ -342,6 +343,7 @@ select {
   transition: all 0.5s ease-in-out;
   -webkit-border-radius: 5px 5px 5px 5px;
   border-radius: 5px 5px 5px 5px;
+  
 
 }
 
@@ -410,4 +412,7 @@ input[type=tel] {
   transition: all 0.5s ease-in-out;
   -webkit-border-radius: 5px 5px 5px 5px;
   border-radius: 5px 5px 5px 5px;
+}
+.add-space-after-label {
+  margin-right: 10px;
 }

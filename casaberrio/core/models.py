@@ -8,26 +8,35 @@ import random
 
 
 
-
 class Reserva(models.Model):
+    TEMATICA_CHOICES = (
+    ('Campestre', 'Campestre'),
+    ('Neon', 'Neon'),
+    ('Alfombra_Roja', 'Alfombra Roja'),
+    ('Personaje_Disney', 'Personaje Disney'),
+    ('Flores', 'Flores'),
+    ('Noche_estrellas', 'Noche de Estrellas'),
+    ('Tropical', 'Tropical'),
+    ('Mariposas', 'Mariposas'),
+)
+
+
     name = models.CharField(max_length=50,verbose_name='Nombres', )
     lastname = models.CharField(max_length=50, verbose_name='Apellidos')
     email = models.EmailField(max_length=50, verbose_name='Correo electronico')
-    phone = PhoneNumberField(verbose_name='Numero de celular')
-    gender = models.CharField(max_length=30)
+    phone = PhoneNumberField(verbose_name='Numero de celular',region='CO')
+    gender = models.CharField(max_length=30, verbose_name='Genero')
     event_date = models.DateTimeField( verbose_name='Fecha de evento')
     event_start_time = models.TimeField(verbose_name='Hora inicial del evento')
-    theme = models.CharField(max_length=200, verbose_name='Tematica')
-    description = models.CharField(max_length=500,  verbose_name='Descripcion')
+    theme = models.CharField(max_length=200, verbose_name='Tematica',choices=TEMATICA_CHOICES,default='Mari´posas')
+    description = models.CharField(max_length=500,  verbose_name='Descripcion', help_text= 'Descipcion del evento Mas detallado ')
     special_need = models.CharField(max_length=200, verbose_name='Necesidad especial (Personas discapacitadas)')
-    guest_document = models.CharField(max_length=200, verbose_name='Documento invitado')
-    type_pay = models.CharField(max_length=200)
-    eventType = models.CharField (max_length=200)
-    campus = models.CharField (max_length=200 )
-    lounge = models.CharField(max_length=200 )
+    eventType = models.CharField (max_length=200, verbose_name='Tipo de evento')
+    campus = models.CharField (max_length=200, verbose_name='Sede' )
+    lounge = models.CharField(max_length=200,verbose_name='Salón' )
     
     def __str__(self):
-        return self.name
+        return str(self.event_date)
     
     class Meta:
         verbose_name = 'Reserva'
@@ -72,10 +81,10 @@ class TypePerson(models.Model):
         ordering = ['id']
     
 class PSE(models.Model):
-    type_person = models.ForeignKey(TypePerson, on_delete=models.CASCADE)
-    select_bank = models.ForeignKey(SelectBank, on_delete=models.CASCADE)
+    type_person = models.ForeignKey(TypePerson, on_delete=models.CASCADE,verbose_name='Tipo de persona')
+    select_bank = models.ForeignKey(SelectBank, on_delete=models.CASCADE, verbose_name='Seleccione su Banco')
     full_name = models.CharField(max_length=100, verbose_name='Nombre Completo')
-    type_id = models.ForeignKey(TypeId,on_delete=models.CASCADE)
+    type_id = models.ForeignKey(TypeId,on_delete=models.CASCADE, verbose_name='Tipo de Identificación')
     identification_number= models.PositiveIntegerField(verbose_name='Numero de indentificacion')
     email = models.EmailField(verbose_name='Correo electronico')
     phone_number = PhoneNumberField(verbose_name='Numero de telefono')
@@ -92,7 +101,7 @@ class PSE(models.Model):
 class TarjetaDeCD(models.Model):
     full_name = models.CharField(max_length=100, verbose_name='Nombre Completo')
     card_number= models.PositiveIntegerField(verbose_name='Numero de Tarjeta')
-    expiration = models.DateField(verbose_name='Vencimiento')
+    expiration = models.CharField(verbose_name='Vencimiento', max_length=5)
     
     def __str__(self):
         return self.full_name
@@ -108,7 +117,7 @@ class Rent(models.Model):
     phone = models.PositiveIntegerField(verbose_name='Numero Celular')
     rental_date_and_time = models.DateField(verbose_name='Fecha y hora de incio')
     return_date_and_time_f =models.DateField(verbose_name='Fecha y hora de finalizacion')
-    description = models.TextField(verbose_name='Descripcion')
+    description = models.TextField(verbose_name='Descripcion',)
     drink = models.CharField(max_length=200)
     catering = models.CharField(max_length=200)
     equipment = models.CharField(max_length=200 )
@@ -167,23 +176,23 @@ class Supplier (models.Model):
         ordering=['id']
 
 
-class StateProduct  (models.Model):
-    asset = models.CharField(max_length=100, verbose_name='Activo ')
-    idle = models.CharField(max_length=100, verbose_name='Inactivo ')
-    amount = models.PositiveIntegerField(verbose_name= 'Cantidad')
-    description = models.CharField(max_length=500,  verbose_name='Descripcion')    
-    inventory = models.ForeignKey (Inventory, on_delete=models.CASCADE)
 
-
+class StateProduct(models.Model):
+    ESTADOP_CHOICES = (
+        ('Activo ', 'Activo '),
+        ('Inactivo ', 'Inactivo '),
+    )
+    estadoP = models.CharField(max_length=20, choices=ESTADOP_CHOICES, default='Activo ')
+    inventory = models.ForeignKey(Inventory, on_delete=models.CASCADE, null=True)
     def __str__(self):
-        return self.asset
+        return self.estadoP
 
     class Meta:
-        verbose_name = 'Estado de producto '
-        verbose_name_plural = 'Estados de producto '
-        db_table = 'estadoproducto'
+        verbose_name = 'Estado Producto'
+        verbose_name_plural = 'Estados productos'
+        db_table = 'estado_producto'
         ordering = ['id']
-        
+
         
 class TypePqrsd(models.Model):
     type_pqrsd = models.CharField(max_length=100,verbose_name= 'Tipo pqrsd')
@@ -218,15 +227,15 @@ class loyalty(models.Model):
     full_name = models.CharField(max_length=100, verbose_name='Nombres y apellidos')
     email = models.EmailField(verbose_name='Correo electrónico')
     phone = PhoneNumberField(verbose_name='Número de teléfono', region='CO')
-    type_pqrsd = models.ForeignKey(TypePqrsd, on_delete=models.CASCADE)
+    type_pqrsd = models.ForeignKey(TypePqrsd, on_delete=models.CASCADE,verbose_name='Tipo de PQRSD')
     incident_date = models.DateField(verbose_name='Fecha de incidente')
     detailed_description = models.TextField(max_length=300, verbose_name='Descripción detallada')
     product_or_services_name = models.CharField(max_length=50, verbose_name='Nombre de producto/servicio')
-    filing_number = models.PositiveIntegerField(verbose_name='Número de radicado', default=generate_random_radicado) 
-    preference_contact = models.ForeignKey(PreferenceContact, on_delete=models.CASCADE)
+    filing_number = models.PositiveIntegerField(verbose_name='Guarde el Número de radicado para consultar el estado de su PQRSD', default=generate_random_radicado,)  
+    preference_contact = models.ForeignKey(PreferenceContact, on_delete=models.CASCADE, verbose_name='Como prefiere ser contactad@', help_text='&nbsp')
 
     def __str__(self):
-        return self.full_name
+        return str(self.filing_number)
 
     def save(self, *args, **kwargs):
         if not self.filing_number:
@@ -240,21 +249,26 @@ class loyalty(models.Model):
         db_table = 'fidelizacion'
         ordering = ['id']
 
+  
 
-
-
-class StatePqrsd (models.Model):
-    wait = models.CharField(max_length=100,verbose_name= ' Espera')
-    reviewed =models.CharField(max_length=100,verbose_name= ' Revisado')
-    answered = models.CharField(max_length=100,verbose_name= ' Contestado')
-    loyalty = models.ForeignKey (loyalty, on_delete=models.CASCADE)
-
-    
+class StatePqrsd(models.Model):
+    ESTADO_CHOICES = (
+        ('Pendiente', 'Pendiente'),
+        ('En proceso', 'En proceso'),
+        ('Resuelto', 'Resuelto'),
+        ('Cerrado', 'Cerrado'),
+    )
+    estado = models.CharField(max_length=20, choices=ESTADO_CHOICES, default='Pendiente')
+    loyalty = models.ForeignKey(loyalty, on_delete=models.CASCADE, null=True)
     def __str__(self):
-        return self.wait
+        return self.estado
 
     class Meta:
-        verbose_name='Estado pqrsd'
-        verbose_name_plural=' Estados pqrsd '
-        db_table='estado pqrsd'
-        ordering=['id']
+        verbose_name = 'Estado pqrsd'
+        verbose_name_plural = 'Estados pqrsd'
+        db_table = 'estado_pqrsd'
+        ordering = ['id']
+
+
+
+    

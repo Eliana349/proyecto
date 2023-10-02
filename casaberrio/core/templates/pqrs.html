@@ -16,11 +16,12 @@
                 <img src="{% static 'img/casaberrio.png' %}" alt="User Icon" class="imagen-div">
             </div>
             <form method="post" class="div-form">
+                
                 {% csrf_token %}
                 {{ form }}
                 
-
-                <input type="submit" class="form-submit" value="Enviar Reserva" onclick="alert('su formulario ha sido enviado exitosamente')" required>
+                
+                <input type="submit" class="form-submit" value="Enviar PQRSD" onclick="alert('su formulario ha sido enviado exitosamente')" required>
                
             </form>
             
