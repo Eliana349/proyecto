@@ -4,7 +4,7 @@ from django.contrib.auth import login
 from django.contrib.auth import authenticate
 from django.contrib import messages
 from django.contrib.auth import logout
-from .forms import RegisterForm,formularioReserva,formularioAlquiler,formularioFedelizacion,formularioInventario,formularioPSE,formularioTarjetaDeCD
+from .forms import *
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
@@ -148,20 +148,22 @@ def inventario_view(request):
 
 @login_required
 def alquiler_view(request):
-    contact_form = formularioAlquiler()
-    
+    contact_form = formularioTipo()
+    contact_form_carrito = formularioCarrito()
     if request.method == 'POST':
-        contact_form = formularioAlquiler(data=request.POST)
-        
-        if contact_form.is_valid():
-            contact_form.save()
-            return redirect('tarjeta')
-            
+        contact_form = formularioTipo(data=request.POST)
+        contact_form_carrito = formularioCarrito(data=request.POST)
+
+        if  contact_form.is_valid():
+            eleccion_seleccionada  = contact_form.cleaned_data['Tipo']
+            carrito = Carrito(nombre_usuario=request.user, elementos_alquilar=eleccion_seleccionada)
+        elif contact_form_carrito.is_valid():
+            contact_form_carrito.save()
+            return redirect('tarjeta')    
         else:
             messages.error(request, 'Usuario o contraseña incorrectos')
         
-    return render(request,  'alquiler.html', {'form':contact_form})
-
+    return render(request,  'alquiler.html', {'Mesas':contact_form , 'Carrito':contact_form_carrito})
 
 @login_required
 def productos(request):

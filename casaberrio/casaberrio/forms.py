@@ -2,7 +2,7 @@ from typing import Any
 from django import forms
 from django.contrib.auth.models import User 
 from phonenumber_field.formfields import PhoneNumberField
-from core.models import Reserva,PSE,TarjetaDeCD,loyalty,Inventory,Rent
+from core.models import Reserva,PSE,TarjetaDeCD,loyalty,Inventory,Carrito
 
 class RegisterForm(forms.Form):
     Names = forms.CharField(required=True, label='Nombres',
@@ -151,7 +151,6 @@ class formularioFedelizacion(forms.ModelForm):
         model = loyalty
         fields = ['full_name','email','phone','type_pqrsd','incident_date','detailed_description','product_or_services_name','filing_number','preference_contact']
         widgets = {
-            'full_name': forms.TextInput(attrs={'placeholder': 'Escribe tu nombre completo aquí'}),
             'email': forms.TextInput(attrs={'placeholder': 'Ejemplo@gmail.com'}),
             
 
@@ -201,17 +200,16 @@ EQUIPAMENT = (
     ('Lanza confetti', 'Lanza confetti'),
 )
 
-class formularioAlquiler(forms.ModelForm):
-    full_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Nombres Completos'}),label='')
-    phone = forms.IntegerField(widget=forms.NumberInput(attrs={'placeholder': 'Numero Celular'}),label='')
-    rental_date_and_time = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}),label='Fecha de incio')
-    return_date_and_time_f = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}),label='Fecha de finalizacion')
-    drink = forms.MultipleChoiceField(choices=DRINK,label='Bebidas')
-    catering = forms.MultipleChoiceField(choices=CATERING,label='Catering')
-    equipment = forms.MultipleChoiceField(choices=EQUIPAMENT,label='Equipamento')
+class formularioTipo(forms.Form):
+    Elementos = (
+        ('opcion1', 'Opción 1'),
+        ('opcion2', 'Opción 2'),
+        ('opcion3', 'Opción 3'),
+    )
+    Tipo = forms.ChoiceField(choices=Elementos)
+    cantidad = forms.IntegerField()
+
+class formularioCarrito(forms.ModelForm):
     class Meta:
-        model = Rent
-        fields = ['full_name','phone','rental_date_and_time','return_date_and_time_f','description','drink','catering','equipment']
-
-
-
+        model = Carrito
+        fields = ['nombre_usuario','elementos_alquilar','precio_total']

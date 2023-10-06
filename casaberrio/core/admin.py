@@ -6,7 +6,7 @@ from django import forms
 
 admin.site.register(Inventory)
 admin.site.register(Supplier)
-admin.site.register(Rent)
+admin.site.register(Carrito)
 admin.site.register(StateProduct)
 admin.site.register(PreferenceContact)
 admin.site.register(TypePqrsd)

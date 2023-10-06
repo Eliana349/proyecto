@@ -9,6 +9,38 @@
     <link rel="Icon" href="{% static 'img/LogoCasaBerrio (1).png' %}">
 </head>
 <body>
+    <header>
+        <div class="container"> 
+            {% if messages %}
+            {% for message in messages %}
+                <div class="alert {% if messages.tags == 'alert-danger'%}alert-danger{%else%}alert-success{%endif%}">
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close"></button>
+                  {{ message }}
+                </div>
+            {% endfor %}
+          {% endif %}
+           <div class="row">
+                <div class="col-lg-2 justify-content-lg-start"><img src="/static/img/casaberrio.png" alt="casaberrio" height="100px"></div>
+                <div class="col-lg-8 d-flex justify-content-center p-4">
+                    <nav>
+                        <ul>
+                            <li><a href="home2.html">Inicio</a></li>
+                            <li><a href="nosotros.html">Nosotros</a></li>
+                            <li><a href="pqrs.html">PQRS</a></li>
+                            <li><a href="productos.html">Reservas</a></li>
+                            <li><a href="alquiler.html">Alquiler</a></li>
+                            <li><a href="home.html">Cerrar sesion</a></li>
+                        </ul>
+                    </nav>        
+                </div>
+                <div class="col-lg-2 p-4">
+                    <a href="https://es-la.facebook.com/EventosCasaBerrio/"><img src="/static/img/Facebook.png" alt="facebook" height="35px"></a>
+                    <a href="https://www.instagram.com/salonescasaberrio/?igshid=YmMyMTA2M2Y%3D"><img src="/static/img/instagram.png" alt="instagram" height="35px"></a>
+                    <a href="https://api.whatsapp.com/send?phone=573202929806&text=%C2%A1Hola%20Casa%20Berrio!%20Deseo%20mas%20informaci%C3%B3n%2C%20me%20gustar%C3%ADa%20hablar%20de%20un%20evento%20que%20quiero%20cotizar."><img src="/static/img/whatsapp.png" alt="whatsapp" height="35px"></a>
+                </div>
+           </div> 
+        </div>
+    </header>
     <div class="div1 fadeInDown">
         <div class="div2">
             <div class="div-div">

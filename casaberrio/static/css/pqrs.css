@@ -2,14 +2,14 @@
 body {
     font-family: "Poppins", sans-serif;
     height: 100vh;
-    background: linear-gradient(20deg, #F2F7A1, #F2F7A1);
+    background: #fff;
     background-repeat:no-repeat;
     background-attachment: fixed;
     background-size: 100% 100%;
   }
 
   img {
-    width: 300px;
+    width: 150px;
   }
   
   a {
@@ -19,22 +19,27 @@ body {
     font-weight: 400;
   }
 
+  
+
   .div1 {
     display: flex;
     align-items: center;
     flex-direction: column; 
     justify-content: center;
-    width: 100%;
     min-height: 100%;
     padding: 20px;
   }
 
+  .fadeInDown {
+    width: 70% !important;
+    height: 50% !important;
+    text-align: center !important;
+  }
   
   .div2 {
     border-radius: 10px 10px 10px 10px;
     background: #35A29F;
     padding: 50px;
-    width: 90%;
     max-width: 550px;
     position: relative;
     box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
@@ -48,6 +53,7 @@ body {
     text-align: center;
     border-radius: 0 0 10px 10px;
     margin-right: 10px;
+    width: 90% !important;
   }
 
 h2.inactive {
@@ -59,7 +65,18 @@ h2.inactive {
     border-bottom: 2px solid #5fbae9;
   }
 
-  
+  input {
+    width: 30% !important;
+    display: inline-block !important  ;
+  }
+
+  textarea {
+    width: 30% !important;
+  }
+
+  select {
+    width: 30% !important;
+  }
   
   input[type=button], input[type=submit], input[type=reset]  {
     background-color: #088395;;
@@ -79,6 +96,62 @@ h2.inactive {
 
  
 
+  header {
+    background: linear-gradient(90deg,rgba(57,140,198,1), rgb(57, 198, 111)),  #EFB810;
+    color: #ffffff;
+    padding: 15px ;
+    position: fixed;
+    top: 0;
+    width: 100%;
+  }
+
+
+#header {
+  transition: .4s;
+}
+
+#header:hover {
+  box-shadow: 0 0 10px black;
+}
+
+.div1 {
+  background:  #FFF;
+  margin-top: 150px;
+
+}
+
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+}
+
+nav li {
+  display: inline;
+  margin: 20px; 
+  text-decoration: none;
+}
+
+nav li:hover{
+  text-decoration: underline;
+}
+
+nav a {
+  text-decoration: none;
+  color: #ffffff;
+}
+
+.imagen-div {
+    width: 300px;
+}
+
+  
+a {
+    color: #0086fb;
+    text-decoration: none;
+    font-weight: 400;
+}
 
   
   input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover  {

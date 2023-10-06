@@ -2,6 +2,8 @@ from django.db import models
 from django import forms
 from phonenumber_field.modelfields import PhoneNumberField
 import random
+from django.contrib.auth.models import User
+
 
 
 
@@ -112,23 +114,18 @@ class TarjetaDeCD(models.Model):
         db_table = 'Tarjeta de credito y debito'
         ordering = ['id']
  
-class Rent(models.Model):
-    full_name = models.CharField(max_length=100, verbose_name='Nombres Completos')
-    phone = models.PositiveIntegerField(verbose_name='Numero Celular')
-    rental_date_and_time = models.DateField(verbose_name='Fecha y hora de incio')
-    return_date_and_time_f =models.DateField(verbose_name='Fecha y hora de finalizacion')
-    description = models.TextField(verbose_name='Descripcion',)
-    drink = models.CharField(max_length=200)
-    catering = models.CharField(max_length=200)
-    equipment = models.CharField(max_length=200 )
+class Carrito(models.Model):
+    nombre_usuario = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Nombre de usuario')
+    elementos_alquilar =  models.TextField(max_length=1000 , verbose_name='Elementos seleccionados')
+    precio_total = models.IntegerField(verbose_name='Precio Total')
     
     def __str__(self):
-        return str(self.full_name)
+        return str(self.nombre_usuario)
 
     class Meta:
-        verbose_name = 'Alquiler'
-        verbose_name_plural = 'Alquileres'
-        db_table = 'alquiler'
+        verbose_name = 'Carrito Alquiler'
+        verbose_name_plural = 'Carrito de Alquileres'
+        db_table = 'Carrito_alquiler'
         ordering = ['id']
 
 
