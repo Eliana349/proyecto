@@ -111,9 +111,13 @@ class formularioReserva(forms.ModelForm):
     event_date = forms.DateField(
         widget=forms.DateInput(attrs={'type': 'date', 'placeholder': 'Fecha de evento'}),
         label='Fecha',
-        
+        input_formats=['%Y-%m-%d'], 
 )  
-    event_start_time = forms.TimeField(widget=forms.TimeInput(attrs={'type': 'time'}), label='Hora de inicio del evento')  
+    event_start_time = forms.TimeField(
+        widget=forms.TimeInput(attrs={'type': 'time'}),
+        label='Hora de inicio del evento',
+        input_formats=['%H:%M %p'],
+)  
     theme = forms.ChoiceField(choices=TEMATICA_CHOICES ,label='Tematica')
     description = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Descripcion'}), label='')
     special_need = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Necesidad especial (Personas discapacitadas)'}), label='')

@@ -77,7 +77,10 @@ def reservas_view(request):
         contact_form = formularioReserva(data=request.POST)
         
         if contact_form.is_valid():
-            contact_form.save()
+            reserva = contact_form.save(commit=False)
+            reserva.event_date = timezone.make_aware(contact_form.cleaned_data['event_date'])
+            reserva.event_start_time = timezone.make_aware(contact_form.cleaned_data['event_start_time'])
+            reserva.save()
             return redirect('tarjeta')
             
         else:
