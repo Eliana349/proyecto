@@ -108,8 +108,12 @@ class formularioReserva(forms.ModelForm):
     email = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Correo electronico'}), label='')
     phone = PhoneNumberField(label='',widget=forms.TextInput(attrs={'placeholder':'Telefono ','type': 'tel'})   )
     gender = forms.ChoiceField(choices=GENERO_CHOICES,label='')
-    event_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date', 'placeholder': 'Fecha de evento'}),label='Fecha')
-    event_start_time = forms.TimeField(widget=forms.TimeInput(attrs={'type': 'time'}),label='')
+    event_date = forms.DateField(
+        widget=forms.DateInput(attrs={'type': 'date', 'placeholder': 'Fecha de evento'}),
+        label='Fecha',
+        
+)  
+    event_start_time = forms.TimeField(widget=forms.TimeInput(attrs={'type': 'time'}), label='Hora de inicio del evento')  
     theme = forms.ChoiceField(choices=TEMATICA_CHOICES ,label='Tematica')
     description = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Descripcion'}), label='')
     special_need = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Necesidad especial (Personas discapacitadas)'}), label='')
@@ -119,6 +123,8 @@ class formularioReserva(forms.ModelForm):
     class Meta:
         model = Reserva  
         fields = ['name','lastname','email', 'phone', 'gender','event_date','event_start_time','theme','description','special_need','eventType','campus','lounge']
+        
+
         
 class formularioPSE(forms.ModelForm):
     class Meta:

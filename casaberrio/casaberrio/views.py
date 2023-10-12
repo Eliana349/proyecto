@@ -7,6 +7,12 @@ from django.contrib.auth import logout
 from .forms import *
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.utils import timezone
+
+
+
+
+
 
 def index(request):
     return render(request, 'home.html',{
@@ -62,6 +68,7 @@ def home_two(request):
     return render(request, 'home2.html')
 
 
+
 @login_required
 def reservas_view(request):
     contact_form = formularioReserva()
@@ -74,9 +81,10 @@ def reservas_view(request):
             return redirect('tarjeta')
             
         else:
-            messages.error(request, 'Usuario o contraseña incorrectos')
+            messages.error(request, 'Hubo un error en el formulario')
         
     return render(request,  'reservas.html', {'form':contact_form})
+
 
 
 @login_required
