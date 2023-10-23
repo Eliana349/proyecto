@@ -13,12 +13,17 @@ admin.site.register(TypePqrsd)
 admin.site.register(loyalty,)
 admin.site.register(StatePqrsd)
 admin.site.register(Reserva)
-admin.site.register(TypeOFinput)
 admin.site.register(TypePerson)
 admin.site.register(SelectBank)
 admin.site.register(TypeId)
+admin.site.register(TipoDeProducto)
+admin.site.register(Category)
 
 
+class ProductAdmin(admin.ModelAdmin):
+    fields = ('imagen', 'Tipo', 'Precio')
+    
+admin.site.register(Product)
 
 
 

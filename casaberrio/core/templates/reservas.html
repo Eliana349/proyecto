@@ -30,82 +30,18 @@
         </div>
     </header>
     <div class="div1 fadeInDown">
-        <div class="div2" style="width: 100%;">
+    
             <div class="div-div">
-                <img src="{% static 'img/casaberrio.png' %}" alt="User Icon" class="imagen-div">
+                <img src="{% static 'img/globos.jpg' %}" alt="User Icon" class="imagen-div">
             </div>
-            <form method="post" class="div-form">
-                {% csrf_token %}
-                <div class="form-group">
-                    {{ form.name.label_tag }}
-                    {{ form.name }}
-                </div>
+            <div id="div-form">    
+                <form method="post" class="div-form">
+                    {% csrf_token %}
+                    {{form}}
                 
-                <div class="form-group">
-                    {{ form.lastname.label_tag }}
-                    {{ form.lastname }}
-                </div>
-                
-                
-                <div class="form-group">
-                    {{ form.email.label_tag }}
-                    {{ form.email }}
-                </div>
-                    
-                <div class="form-group">
-                    {{ form.phone.label_tag }}
-                    {{ form.phone }}
-                </div>
-                
-                <div class="form-group">
-                    {{ form.gender.label_tag }}
-                    {{ form.gender }}
-                </div>
-
-                <div class="form-group">
-                    {{ form.event_date.label_tag }}
-                    {{ form.event_date }}
-                </div>
-
-                <div class="form-group">
-                    {{ form.event_start_time.label_tag }}
-                    {{ form.event_start_time }}
-                </div>
-
-                <div class="form-group">
-                    {{ form.theme.label_tag }}
-                    {{ form.theme }}
-                </div>
-
-                <div class="form-group">
-                    {{ form.description.label_tag }}
-                    {{ form.description }}
-                </div>
-
-                <div class="form-group">
-                    {{ form.special_need.label_tag }}
-                    {{ form.special_need }}
-                </div>
-
-                <div class="form-group">
-                    {{ form.event_type.label_tag }}
-                    {{ form.event_type }}
-                </div>
-
-                <div class="form-group">
-                    {{ form.campus.label_tag }}
-                    {{ form.campus }}
-                </div>
-
-                <div class="form-group">
-                    {{ form.lounge.label_tag }}
-                    {{ form.lounge }}
-                </div>
-
-
-                <input type="submit" class="btn btn-primary" value="Enviar Reserva" onclick="alert('Su reserva se ha registrado')" required>
-            </form>
-        </div>
+                    <input type="submit" class="btn btn-primary" value="Enviar Reserva" onclick="alert('Su reserva se ha registrado')" required>
+                </form>
+            </div>
     </div>
 </body>
 </html>

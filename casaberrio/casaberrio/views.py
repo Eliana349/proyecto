@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate
 from django.contrib import messages
 from django.contrib.auth import logout
 from .forms import *
+from core.models import *
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
@@ -67,27 +68,26 @@ def register(request):
 def home_two(request):
     return render(request, 'home2.html')
 
-
-
 @login_required
 def reservas_view(request):
-    contact_form = formularioReserva()
-    
     if request.method == 'POST':
         contact_form = formularioReserva(data=request.POST)
-        
+
         if contact_form.is_valid():
             reserva = contact_form.save(commit=False)
-            reserva.event_date = timezone.make_aware(contact_form.cleaned_data['event_date'])
-            reserva.event_start_time = timezone.make_aware(contact_form.cleaned_data['event_start_time'])
+            reserva.event_date = contact_form.cleaned_data['event_date']
+            reserva.event_start_time = contact_form.cleaned_data['event_start_time']
+            reserva.end_time_of_the_event = contact_form.cleaned_data['end_time_of_the_event']
             reserva.save()
             return redirect('tarjeta')
-            
+
         else:
             messages.error(request, 'Hubo un error en el formulario')
-        
-    return render(request,  'reservas.html', {'form':contact_form})
 
+    else:
+        contact_form = formularioReserva()
+
+    return render(request, 'reservas.html', {'form': contact_form})
 
 
 @login_required
@@ -159,22 +159,27 @@ def inventario_view(request):
 
 @login_required
 def alquiler_view(request):
-    contact_form = formularioTipo()
-    contact_form_carrito = formularioCarrito()
-    if request.method == 'POST':
-        contact_form = formularioTipo(data=request.POST)
-        contact_form_carrito = formularioCarrito(data=request.POST)
+    contact_formcategoria = Category.objects.all()
+    contact_formtipo = Product.objects.all()
+    contact_form = formularioTipo(request.POST or None)
+    contact_form_carrito = formularioCarrito(request.POST or None)
+    if contact_form.is_valid():
+        tipo = contact_form.cleaned_data.get('Tipo')
+        number = contact_form.cleaned_data.get('cantidad')
+        opciones_nuevas = f'{tipo}  :  {number}'
+        opciones_anteriores = contact_form_carrito.data.get('elementos_alquilar', opciones_nuevas)
+        opciones_actualizadas = f'{opciones_anteriores}\n{opciones_anteriores}'
+        contact_form_carrito = formularioCarrito({'elementos_alquilar': opciones_actualizadas})
+    else:
+        messages.error(request, 'Las opciones son invalidas')
 
-        if  contact_form.is_valid():
-            eleccion_seleccionada  = contact_form.cleaned_data['Tipo']
-            carrito = Carrito(nombre_usuario=request.user, elementos_alquilar=eleccion_seleccionada)
-        elif contact_form_carrito.is_valid():
-            contact_form_carrito.save()
-            return redirect('tarjeta')    
-        else:
-            messages.error(request, 'Usuario o contraseña incorrectos')
         
-    return render(request,  'alquiler.html', {'Mesas':contact_form , 'Carrito':contact_form_carrito})
+    return render(request,  'alquiler.html', {
+        'Mesas':contact_form, 
+        'Carrito':contact_form_carrito,
+        'products': contact_formtipo,
+        'Categoria':contact_formcategoria,
+    })
 
 @login_required
 def productos(request):

@@ -30,11 +30,12 @@
     </header>
     <div id="carrito" class="carro">
         <div class="carrito-div">
-
             <h2>CARRITO</h2>
             <form method="post" class="form">
                 {% csrf_token %}
-                {{ Carrito }}
+                {{ Carrito.nombre_usuario }}
+                {{ Carrito.elementos_alquilar }}
+                {{ Carrito.precio_total }}
                 <input type="submit" value="Enviar">
                 <div class="deslis">
                     <h5 class="abrir">Abrir Carrito</h5>
@@ -46,192 +47,26 @@
         <h1>CATALOGO</h1>
         <section>
             <div>
-                <h3 id="h3">MOBILIARIO</h3>
+            {% for category in Categoria %}
+                <h3 id="h3">{{ category.titulo }}</h3>
+            {% endfor %}
                 <ul class="ul-mobiliario">
-                    <li class="mobiliario"><img class="img-mobiliario" id="mesas" src="{% static 'img/mesas.jpg' %}" alt=""><br><h6>Mesas</h6>
+            {% for product in products %}
+                    <li class="mobiliario">
+                      {% if product.imagen %}
+                        <img class="img-mobiliario" id="mesas" src="{{ product.imagen.url }}" alt=""><br><h6>{{ product.nombre }}</h6>
+                      {% endif %}
+                      
                         <form class="form-catalogo" method="post">
-                                {% csrf_token %}
-                                {{ Mesas }}
-                                <input type="submit" value="Agregar al carrito">
-                        </form>
-                    </li>
-                    <li class="mobiliario"><img class="img-mobiliario" id="sillas" src="{% static 'img/sillascasa.jpg' %}" alt=""><br><h6>Sillas</h6>
-                        <form class="form-catalogo" method="post">
-                                {% csrf_token %}
-                                {{ Mesas }}
-                                <input type="submit" value="Agregar al carrito">
-                        </form>
-                    </li>
-                    <li class="mobiliario"><img class="img-mobiliario" id="sofas" src="{% static 'img/sofas_sillones.jpeg' %}" alt=""><br><h6>Sofas y sillones</h6>
-                        <form class="form-catalogo" method="post">
-                                {% csrf_token %}
-                                {{ Mesas }}
-                                <input type="submit" value="Agregar al carrito">
-                        </form>
-                    </li>
-                    <li class="mobiliario"><img class="img-mobiliario" id="taburetes" src="{% static 'img/taburetes_bancos.jpg' %}" alt=""><br><h6>Taburetes y bancos</h6>
-                        <form class="form-catalogo" method="post">
-                                {% csrf_token %}
-                                {{ Mesas }}
+                            {% csrf_token %}
+                            {{ Mesas }}
+                            {{ product.Precio }}
                                 <input type="submit" value="Agregar al carrito">
                         </form>
                     </li>
                 </ul>
+            {% endfor %}
             </div>
-            <div>
-                <h3 id="h3">DECORACION</h3>
-                <ul class="ul-mobiliario">
-                    <li class="mobiliario"><img class="img-mobiliario" id="mesas" src="{% static 'img/guirnaldas.jpg' %}" alt=""><br><h6>Guirnaldas y decoraciones</h6>
-                        <form class="form-catalogo" method="post">
-                                {% csrf_token %}
-                                {{ Mesas }}
-                                <input type="submit" value="Agregar al carrito">
-                        </form>
-                    </li>
-                    <li class="mobiliario"><img class="img-mobiliario" id="sillas" src="{% static 'img/globos.jpg' %}" alt=""><br><h6>Globos y arreglos florales</h6>
-                        <form class="form-catalogo" method="post">
-                                {% csrf_token %}
-                                {{ Mesas }}
-                                <input type="submit" value="Agregar al carrito">
-                        </form>
-                    </li>
-                    <li class="mobiliario"><img class="img-mobiliario" id="sofas" src="{% static 'img/telones.jpg' %}" alt=""><br><h6>Cortinas y telones de fondo</h6>
-                        <form class="form-catalogo" method="post">
-                                {% csrf_token %}
-                                {{ Mesas }}
-                                <input type="submit" value="Agregar al carrito">
-                        </form>
-                    </li>
-                    <li class="mobiliario"><img class="img-mobiliario" id="taburetes" src="{% static 'img/iluminacion.jpg' %}" alt=""><br><h6>Iluminación decorativa</h6>
-                        <form class="form-catalogo" method="post">
-                                {% csrf_token %}
-                                {{ Mesas }}
-                                <input type="submit" value="Agregar al carrito">
-                        </form>
-                    </li>
-                </ul>
-            </div>
-            <div>
-                <h3 id="h3">VAJILLA Y UTENSILIOS</h3>
-                <ul class="ul-mobiliario">
-                    <li class="mobiliario"><img class="img-mobiliario" id="mesas" src="{% static 'img/platos.jpg' %}" alt=""><br><h6>Platos, cubiertos y vasos</h6>
-                        <form class="form-catalogo" method="post">
-                                {% csrf_token %}
-                                {{ Mesas }}
-                                <input type="submit" value="Agregar al carrito">
-                        </form>
-                    </li>
-                    <li class="mobiliario"><img class="img-mobiliario" id="sillas" src="{% static 'img/manteles_servilletas.jpeg' %}" alt=""><br><h6>Mantelería y servilletas</h6>
-                        <form class="form-catalogo" method="post">
-                                {% csrf_token %}
-                                {{ Mesas }}
-                                <input type="submit" value="Agregar al carrito">
-                        </form>
-                    </li>
-                    <li class="mobiliario"><img class="img-mobiliario" id="taburetes" src="{% static 'img/utencilios_cocina.jpg' %}" alt=""><br><h6>Utensilios de cocina</h6>
-                        <form class="form-catalogo" method="post">
-                                {% csrf_token %}
-                                {{ Mesas }}
-                                <input type="submit" value="Agregar al carrito">
-                        </form>
-                    </li>
-                </ul>
-            </div>
-            <div>
-                <h3 id="h3">EQUIPO DE SONIDO Y AUDIOVISUAL</h3>
-                <ul class="ul-mobiliario">
-                    <li class="mobiliario"><img class="img-mobiliario" id="mesas" src="{% static 'img/altavoces.jpg' %}" alt=""><br><h6>Altavoces y sistemas de sonido</h6>
-                        <form class="form-catalogo" method="post">
-                                {% csrf_token %}
-                                {{ Mesas }}
-                                <input type="submit" value="Agregar al carrito">
-                        </form>
-                    </li>
-                    <li class="mobiliario"><img class="img-mobiliario" id="sillas" src="{% static 'img/proyectores.jpg' %}" alt=""><br><h6>Proyectores y pantallas</h6>
-                        <form class="form-catalogo" method="post">
-                                {% csrf_token %}
-                                {{ Mesas }}
-                                <input type="submit" value="Agregar al carrito">
-                        </form>
-                    </li>
-                </ul>
-            </div>
-            <div>
-                <h3 id="h3">CATERING Y COCINA</h3>
-                <ul class="ul-mobiliario">
-                    <li class="mobiliario"><img class="img-mobiliario" id="mesas" src="{% static 'img/hornos.jpg' %}" alt=""><br><h6>Hornos y estufas industriales</h6>
-                        <form class="form-catalogo" method="post">
-                                {% csrf_token %}
-                                {{ Mesas }}
-                                <input type="submit" value="Agregar al carrito">
-                        </form>
-                    </li>
-                </ul>
-            </div>
-            <div>
-                <h3 id="h3">ROPA Y ACCESORIOS PARA EVENTOS</h3>
-                <ul class="ul-mobiliario">
-                    <li class="mobiliario"><img class="img-mobiliario" id="mesas" src="{% static 'img/disfrases.jpeg' %}" alt=""><br><h6>Vestuario y disfraces</h6>
-                        <form class="form-catalogo" method="post">
-                                {% csrf_token %}
-                                {{ Mesas }}
-                                <input type="submit" value="Agregar al carrito">
-                        </form>
-                    </li>
-                    <li class="mobiliario"><img class="img-mobiliario" id="sillas" src="{% static 'img/accesorios.jpg' %}" alt=""><br><h6>Accesorios de decoración personal</h6>
-                        <form class="form-catalogo" method="post">
-                                {% csrf_token %}
-                                {{ Mesas }}
-                                <input type="submit" value="Agregar al carrito">
-                        </form>
-                    </li>
-                </ul>
-            </div>
-            <div>
-                <h3 id="h3">JUEGOS Y ENTRETENIMIENTO</h3>
-                <ul class="ul-mobiliario">
-                    <li class="mobiliario"><img class="img-mobiliario" id="mesas" src="{% static 'img/inflables.jpg' %}" alt=""><br><h6>Inflables y juegos para niños</h6>
-                        <form class="form-catalogo" method="post">
-                                {% csrf_token %}
-                                {{ Mesas }}
-                                <input type="submit" value="Agregar al carrito">
-                        </form>
-                    </li>
-                    <li class="mobiliario"><img class="img-mobiliario" id="sillas" src="{% static 'img/mesaspinpon.jpg' %}" alt=""><br><h6>Mesas de juego</h6>
-                        <form class="form-catalogo" method="post">
-                                {% csrf_token %}
-                                {{ Mesas }}
-                                <input type="submit" value="Agregar al carrito">
-                        </form>
-                    </li>
-                    <li class="mobiliario"><img class="img-mobiliario" id="sofas" src="{% static 'img/karaoke.jpg' %}" alt=""><br><h6>Equipos de karaoke</h6>
-                        <form class="form-catalogo" method="post">
-                                {% csrf_token %}
-                                {{ Mesas }}
-                                <input type="submit" value="Agregar al carrito">
-                        </form>
-                    </li>
-                </ul>
-            </div>
-            <div>
-                <h3 id="h3">SUMINISTROS DE SEGURIDAD Y PRIMEROS AUXILIOS</h3>
-                <ul class="ul-mobiliario">
-                    <li class="mobiliario"><img class="img-mobiliario" id="mesas" src="{% static 'img/extintores.jpg' %}" alt=""><br><h6>Extintores y equipos de seguridad</h6>
-                        <form class="form-catalogo" method="post">
-                                {% csrf_token %}
-                                {{ Mesas }}
-                                <input type="submit" value="Agregar al carrito">
-                        </form>
-                    </li>
-                    <li class="mobiliario"><img class="img-mobiliario" id="sillas" src="{% static 'img/botiquin.jpg' %}" alt=""><br><h6>Botiquines de primeros auxilios</h6>
-                        <form class="form-catalogo" method="post">
-                                {% csrf_token %}
-                                {{ Mesas }}
-                                <input type="submit" value="Agregar al carrito">
-                        </form>
-                    </li>
-            </div>
-
         </section>
     </div>
     

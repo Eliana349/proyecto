@@ -2,7 +2,7 @@ from typing import Any
 from django import forms
 from django.contrib.auth.models import User 
 from phonenumber_field.formfields import PhoneNumberField
-from core.models import Reserva,PSE,TarjetaDeCD,loyalty,Inventory,Carrito
+from core.models import Reserva,PSE,TarjetaDeCD,loyalty,Inventory,Carrito,Product
 
 class RegisterForm(forms.Form):
     Names = forms.CharField(required=True, label='Nombres',
@@ -101,8 +101,13 @@ TEMATICA_CHOICES = (
     ('Tropical', 'Tropical'),
     ('Mariposas', 'Mariposas'),
 )
+NECECIDAD_CHOICES = (
+    ('Campo_silla_de_redas', 'Campo silla de redas'),
+    ('Comunicador_de_lenguaje_de_señas ', 'Comunicador de lenguaje de señas '),
 
+    )
 class formularioReserva(forms.ModelForm):
+    
     name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Nombres '}),label='')
     lastname = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Apellidos'}), label='')
     email = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Correo electronico'}), label='')
@@ -115,18 +120,31 @@ class formularioReserva(forms.ModelForm):
 )  
     event_start_time = forms.TimeField(
         widget=forms.TimeInput(attrs={'type': 'time'}),
-        label='Hora de inicio del evento',
-        input_formats=['%H:%M %p'],
-)  
+        label='Hora de inicio '
+       
+    )
+
+    end_time_of_the_event = forms.TimeField(
+        widget=forms.TimeInput(attrs={'type': 'time'}),
+        label='Hora final '
+    )
+
     theme = forms.ChoiceField(choices=TEMATICA_CHOICES ,label='Tematica')
-    description = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Descripcion'}), label='')
-    special_need = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Necesidad especial (Personas discapacitadas)'}), label='')
+    description = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Descripcion','rows': 5, 'cols': 100}), label='')
+    special_need = forms.ChoiceField(choices=NECECIDAD_CHOICES ,label='Necesidad especial ')
     eventType = forms.ChoiceField(choices=TIPO_EVENTO,label='Tipo de evento')
-    campus = forms.ChoiceField(choices=CAMPUS,label='Lugar')
+    campus = forms.ChoiceField(choices=CAMPUS,label='Lugar del evento')
     lounge = forms.ChoiceField(choices=SALON,label='Numero de salon')
+    def cleand(self):
+        cleaned_data = super().clean()
+        start_time = cleaned_data.get('event_start_time')
+        end_time = cleaned_data.get('end_time_of_the_event')
+        if start_time >= end_time:
+            self.add_error('event_start_time', 'La hora de inicio debe ser anterior a la hora final del evento')
+
     class Meta:
         model = Reserva  
-        fields = ['name','lastname','email', 'phone', 'gender','event_date','event_start_time','theme','description','special_need','eventType','campus','lounge']
+        fields = ['name','lastname','email', 'phone', 'gender','event_date','event_start_time','end_time_of_the_event','theme','special_need','eventType','campus','lounge','description']
         
 
         
@@ -210,16 +228,29 @@ EQUIPAMENT = (
     ('Lanza confetti', 'Lanza confetti'),
 )
 
-class formularioTipo(forms.Form):
-    Elementos = (
-        ('opcion1', 'Opción 1'),
-        ('opcion2', 'Opción 2'),
-        ('opcion3', 'Opción 3'),
-    )
-    Tipo = forms.ChoiceField(choices=Elementos)
-    cantidad = forms.IntegerField()
-
 class formularioCarrito(forms.ModelForm):
+    elementos_alquilar = forms.CharField(widget=forms.Textarea(attrs={'readonly': 'readonly'}))
     class Meta:
         model = Carrito
         fields = ['nombre_usuario','elementos_alquilar','precio_total']
+        
+        def save(opciones_actualizadas):
+            return formularioCarrito({'elementos_alquilar': opciones_actualizadas})
+        
+
+class formularioTipo(forms.Form):
+    TEMATICA_CHOICES = (
+        ('Campestre', 'Campestre'),
+        ('Neon', 'Neon'),
+        ('Alfombra_Roja', 'Alfombra Roja'),
+        ('Personaje_Disney', 'Personaje Disney'),
+        ('Flores', 'Flores'),
+        ('Noche_estrellas', 'Noche de Estrellas'),
+        ('Tropical', 'Tropical'),
+        ('Mariposas', 'Mariposas'),
+    )
+    Tipo = forms.ChoiceField(choices=TEMATICA_CHOICES)
+    cantidad = forms.IntegerField()
+    class Meta:
+        model = Product
+        fields = ['Tipo','cantidad']

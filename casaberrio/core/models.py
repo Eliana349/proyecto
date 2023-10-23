@@ -21,21 +21,26 @@ class Reserva(models.Model):
     ('Tropical', 'Tropical'),
     ('Mariposas', 'Mariposas'),
 )
-
+    NECECIDAD_CHOICES = (
+    ('Campo_silla_de_redas', 'Campo silla de redas'),
+    ('Comunicador_de_lenguaje_de_señas ', 'Comunicador de lenguaje de señas '),
+)
 
     name = models.CharField(max_length=50,verbose_name='Nombres', )
     lastname = models.CharField(max_length=50, verbose_name='Apellidos')
     email = models.EmailField(max_length=50, verbose_name='Correo electronico')
     phone = PhoneNumberField(verbose_name='Numero de celular',region='CO')
     gender = models.CharField(max_length=30, verbose_name='Genero')
-    event_date = models.DateTimeField( verbose_name='Fecha de evento')
+    event_date = models.DateField( verbose_name='Fecha de evento')
     event_start_time = models.TimeField(verbose_name='Hora inicial del evento')
+    end_time_of_the_event = models.TimeField(verbose_name='Hora final del evento')
     theme = models.CharField(max_length=200, verbose_name='Tematica',choices=TEMATICA_CHOICES,default='Mariposas')
-    description = models.CharField(max_length=500,  verbose_name='Descripcion', help_text= 'Descipcion del evento Mas detallado ')
-    special_need = models.CharField(max_length=200, verbose_name='Necesidad especial (Personas discapacitadas)')
+    description = models.CharField(max_length=500,  verbose_name='Descripcion', help_text= 'Descipcion  ')
+    special_need = models.CharField( max_length=200,verbose_name='Necesidad especial', choices=NECECIDAD_CHOICES,default='Campo_silla_de_redas' )
     eventType = models.CharField (max_length=200, verbose_name='Tipo de evento')
     campus = models.CharField (max_length=200, verbose_name='Sede' )
     lounge = models.CharField(max_length=200,verbose_name='Salón' )
+    
     
     def __str__(self):
         return str(self.event_date)
@@ -113,7 +118,65 @@ class TarjetaDeCD(models.Model):
         verbose_name_plural = 'Tarjetas de credito y debito'
         db_table = 'Tarjeta de credito y debito'
         ordering = ['id']
- 
+
+class Inventory(models.Model):
+    product_name = models.CharField(max_length=100,verbose_name ='Nombre del producto')
+    product_code = models.PositiveIntegerField(verbose_name='Codigo de producto')
+    product_price = models.PositiveIntegerField (verbose_name='Precio de producto')
+    amount = models.PositiveIntegerField(verbose_name='Cantidad')
+    product_characteristics = models.TextField(max_length=300, verbose_name='Caracterista de producto')
+
+    def __str__(self):
+        return self.product_name
+
+    class Meta:
+        verbose_name='Inventario'
+        verbose_name_plural='Inventarios'
+        db_table='inventario'
+        ordering=['id']
+
+class TipoDeProducto(models.Model):
+    nombre = models.CharField(max_length=20)
+    
+    def __str__(self):
+        return str(self.nombre)
+
+    class Meta:
+        verbose_name = 'Tipo de producto'
+        verbose_name_plural = 'Tipos de productos'
+        db_table = 'Tipo de producto'
+        ordering = ['id']
+
+class Product(models.Model):
+    imagen = models.ImageField(upload_to='products/', null=False, unique=True)
+    nombre = models.ForeignKey(Inventory, on_delete=models.CASCADE)
+    Tipo = models.ManyToManyField(TipoDeProducto)
+    Precio = models.DecimalField(max_digits=8, decimal_places=2)
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return str(self.nombre)
+
+    class Meta:
+        verbose_name = 'Producto'
+        verbose_name_plural = 'Productos'
+        db_table = 'Producto'
+        ordering = ['id']
+        
+class Category(models.Model):
+    titulo = models.CharField(max_length=50)
+    products = models.ManyToManyField(Product, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return str(self.titulo)
+
+    class Meta:
+        verbose_name = 'Categoria'
+        verbose_name_plural = 'Categorias'
+        db_table = 'categoria'
+        ordering = ['id']       
+
 class Carrito(models.Model):
     nombre_usuario = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Nombre de usuario')
     elementos_alquilar =  models.TextField(max_length=1000 , verbose_name='Elementos seleccionados')
@@ -129,34 +192,7 @@ class Carrito(models.Model):
         ordering = ['id']
 
 
-class TypeOFinput(models.Model):
-    type_of_input = models.CharField(max_length=100,verbose_name= 'Tipo de insumo')
-    
-    def __str__(self):
-        return self.type_of_input
 
-    class Meta:
-        verbose_name='Tipo de insumo'
-        verbose_name_plural='Tipo de insumos'
-        db_table='Tipo de insumo'
-        ordering=['id']
-
-class Inventory(models.Model):
-    type_of_input = models.ForeignKey(TypeOFinput, on_delete=models.CASCADE)
-    product_name = models.CharField(max_length=100,verbose_name ='Nombre del producto')
-    product_code = models.PositiveIntegerField(verbose_name='Codigo de producto')
-    product_price = models.PositiveIntegerField (verbose_name='Precio de producto')
-    amount = models.PositiveIntegerField(verbose_name='Cantidad')
-    product_characteristics = models.TextField(max_length=300, verbose_name='Caracterista de producto')
-
-    def __str__(self):
-        return self.product_name
-
-    class Meta:
-        verbose_name='Inventario'
-        verbose_name_plural='Inventarios'
-        db_table='inventario'
-        ordering=['id']
 
 class Supplier (models.Model):
     nit = models.PositiveIntegerField(verbose_name = 'NIT')
