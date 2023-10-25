@@ -3,6 +3,7 @@ from django import forms
 from django.contrib.auth.models import User 
 from phonenumber_field.formfields import PhoneNumberField
 from core.models import Reserva,PSE,TarjetaDeCD,loyalty,Inventory,Carrito,Product
+from core.models import *
 
 class RegisterForm(forms.Form):
     Names = forms.CharField(required=True, label='Nombres',
@@ -20,8 +21,7 @@ class RegisterForm(forms.Form):
                                     'id': 'email',
                                     'placeholder': 'Ejemplo@gmail.com'
                                  }))
-    phone =PhoneNumberField(required=True, label='Numero de celular',
-                                widget=forms.TextInput, region="CO")
+    phone =PhoneNumberField()
     password = forms.CharField(required=True, max_length=10,label=' contraseña',
                                widget=forms.PasswordInput(attrs={
                                 'class': 'form-control'
@@ -111,7 +111,7 @@ class formularioReserva(forms.ModelForm):
     name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Nombres '}),label='')
     lastname = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Apellidos'}), label='')
     email = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Correo electronico'}), label='')
-    phone = PhoneNumberField(label='',widget=forms.TextInput(attrs={'placeholder':'Telefono ','type': 'tel'})   )
+    phone = PhoneNumberField()
     gender = forms.ChoiceField(choices=GENERO_CHOICES,label='')
     event_date = forms.DateField(
         widget=forms.DateInput(attrs={'type': 'date', 'placeholder': 'Fecha de evento'}),
@@ -171,10 +171,7 @@ class formularioTarjetaDeCD(forms.ModelForm):
           
 class formularioFedelizacion(forms.ModelForm):
     incident_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}),label='Fecha de incidente')
-    phone = PhoneNumberField(
-        label='Teléfono',
-        widget=forms.TextInput(attrs={'type': 'tel'}) 
-    )
+    phone = PhoneNumberField()
     class Meta:
         model = loyalty
         fields = ['full_name','email','phone','type_pqrsd','incident_date','detailed_description','product_or_services_name','filing_number','preference_contact']
@@ -192,7 +189,8 @@ class formularioFedelizacion(forms.ModelForm):
 class formularioInventario(forms.ModelForm):
     class Meta:
         model = Inventory
-        fields = ['type_of_input','product_name','product_code','product_price','amount','product_characteristics']
+        fields = [
+            'product_name','product_code','product_price','amount','product_characteristics']
         
 
 DRINK = (
@@ -254,3 +252,56 @@ class formularioTipo(forms.Form):
     class Meta:
         model = Product
         fields = ['Tipo','cantidad']
+
+
+
+
+class CotizacionForm(forms.ModelForm):
+    
+
+    TIPOS_DE_EVENTO_CHOICES = (
+        ('evento1', 'Matrimonio'),
+        ('evento2', '15 años'),
+        ('evento3', 'Bautizos'),
+        ('evento4', 'Grados'),
+        ('evento5', 'Cumpleaños'),
+        ('evento6', 'Despedidas Empresariales'),
+    )
+    
+    event_type = forms.ChoiceField(
+        choices=TIPOS_DE_EVENTO_CHOICES,
+        label="Tipo de Evento"
+    )
+    
+    event_date = forms.DateField(
+        widget=forms.DateInput(attrs={'type': 'date'}),
+        label="Fecha del Evento"
+    )
+    
+    SEDES_CHOICES = (
+        ('sede1', 'Santa Isabel'),
+        ('sede2', 'Teusaquillo'),
+        ('sede3', 'Comuneros'),
+    )
+    
+    event_location = forms.ChoiceField(
+        choices=SEDES_CHOICES,
+        label="Sede del Evento"
+    )
+    
+    required_services = forms.MultipleChoiceField(
+        choices=[
+            ('servicio1', 'Catering'),
+            ('servicio2', 'Decoración'),
+            ('servicio3', 'Música'),
+            ('servicio4', 'Mobiliario y Equipamiento'),
+            ('servicio5', 'Personal de Servicio'),
+            ('servicio6', 'Fotografía y Video'),
+        ],
+        widget=forms.CheckboxSelectMultiple,
+        label="Servicios Requeridos"
+    )
+    class Meta:
+        model = Cotizacion
+        fields = '__all__'
+   

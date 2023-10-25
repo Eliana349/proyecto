@@ -47,6 +47,7 @@ urlpatterns = [
     path('home/home2.html', views.home_two),
     path('home/home2.htmls', views.home_two),
     path('home/home.html', LogoutView.as_view(), name='logout'),
+    path('cotizacion', views.crear_cotizacion, name='cotizaciones.html'),
     
 ]
 
