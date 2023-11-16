@@ -272,3 +272,52 @@ class formularioTipo(forms.ModelForm):
     class Meta:
         model = Product
         fields = ['Tipo'] 
+
+class CotizacionForm(forms.ModelForm):
+    
+
+    TIPOS_DE_EVENTO_CHOICES = (
+        ('evento1', 'Matrimonio'),
+        ('evento2', '15 años'),
+        ('evento3', 'Bautizos'),
+        ('evento4', 'Grados'),
+        ('evento5', 'Cumpleaños'),
+        ('evento6', 'Despedidas Empresariales'),
+    )
+    
+    event_type = forms.ChoiceField(
+        choices=TIPOS_DE_EVENTO_CHOICES,
+        label="Tipo de Evento"
+    )
+    
+    event_date = forms.DateField(
+        widget=forms.DateInput(attrs={'type': 'date'}),
+        label="Fecha del Evento"
+    )
+    
+    SEDES_CHOICES = (
+        ('sede1', 'Santa Isabel'),
+        ('sede2', 'Teusaquillo'),
+        ('sede3', 'Comuneros'),
+    )
+    
+    event_location = forms.ChoiceField(
+        choices=SEDES_CHOICES,
+        label="Sede del Evento"
+    )
+    
+    required_services = forms.MultipleChoiceField(
+        choices=[
+            ('servicio1', 'Catering'),
+            ('servicio2', 'Decoración'),
+            ('servicio3', 'Música'),
+            ('servicio4', 'Mobiliario y Equipamiento'),
+            ('servicio5', 'Personal de Servicio'),
+            ('servicio6', 'Fotografía y Video'),
+        ],
+        widget=forms.CheckboxSelectMultiple,
+        label="Servicios Requeridos"
+    )
+    class Meta:
+        model = Cotizacion
+        fields = '__all__'
