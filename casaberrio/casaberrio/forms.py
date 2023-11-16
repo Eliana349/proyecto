@@ -2,10 +2,9 @@ from typing import Any
 from django import forms
 from django.contrib.auth.models import User 
 from phonenumber_field.formfields import PhoneNumberField
-from core.models import Reserva,PSE,TarjetaDeCD,loyalty,Inventory,Carrito,Product
+from core.models import Reserva,PSE,TarjetaDeCD,loyalty,Inventory,Carrito,Product, Cotizacion
 import re
 from django.utils import timezone
-from core.models import *
 
 
 class RegisterForm(forms.Form):
@@ -24,8 +23,7 @@ class RegisterForm(forms.Form):
                                     'id': 'email',
                                     'placeholder': 'Ejemplo@gmail.com'
                                  }))
-    phone =PhoneNumberField(required=True, label='Numero de celular',
-                                widget=forms.TextInput, region="CO")
+    phone =PhoneNumberField(required=True, label='Numero de celular', widget=forms.TextInput, region="CO")
     password = forms.CharField(required=True, max_length=10,label=' contraseña',
                                widget=forms.PasswordInput(attrs={
                                 'class': 'form-control'
