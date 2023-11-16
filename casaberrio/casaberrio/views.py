@@ -203,16 +203,7 @@ def nosotros(request):
     return render(request, 'nosotros.html',{
     })
 
-def crear_cotizacion(request):
-    if request.method == 'POST':
-        form = CotizacionForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('cotizaciones.html')  # Redirige a una página de éxito
-    else:
-        form = CotizacionForm()
-    
-    return render(request, 'cotizacion.html', {'form': form})
+
 
 
 
