@@ -5,6 +5,7 @@ from phonenumber_field.formfields import PhoneNumberField
 from core.models import Reserva,PSE,TarjetaDeCD,loyalty,Inventory,Carrito,Product, Cotizacion
 import re
 from django.utils import timezone
+from django.core.exceptions import ValidationError 
 
 
 class RegisterForm(forms.Form):
@@ -124,23 +125,18 @@ class formularioReserva(forms.ModelForm):
         label='Fecha',
         input_formats=['%Y-%m-%d']
     )
+    def clean(self):
+        cleaned_data = super().clean()
+        event_date = cleaned_data.get('event_date')
 
-    def __init__(self, *args, **kwargs):
-        reservas_anteriores = kwargs.pop('reservas_anteriores', None)
-        super().__init__(*args, **kwargs)
+        reservas_exist = Reserva.objects.filter(event_date=event_date).exists()
 
-        today = timezone.now().date()
+        if reservas_exist:
+            self.add_error('event_date', 'Ya existe una reserva para esta fecha. Por favor, elige otra fecha.')
 
-       
-        self.fields['event_date'].widget.attrs['min'] = today.strftime('%Y-%m-%d')
-
-        if reservas_anteriores:
-            
-            fechas_reservas_anteriores = [reserva.strftime('%Y-%m-%d') for reserva in reservas_anteriores]
-
-          
-            self.fields['event_date'].widget.attrs['disabled_dates'] = ','.join(fechas_reservas_anteriores)
-
+        start_time = cleaned_data.get('event_start_time')
+        end_time = cleaned_data.get('end_time_of_the_event')
+    
 
     event_start_time = forms.TimeField(
         widget=forms.TimeInput(attrs={'type': 'time'}),

@@ -13,10 +13,6 @@
 <div>
     {% if messages %}
         {% for message in messages %}
-            <div class="alert {% if messages.tags == 'success' %}alert-success{%else%}alert-success{% endif%}">
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close"></button>
-              {{ message }}
-            </div>
         {% endfor %}
       {% endif %}
 </div>
@@ -46,12 +42,12 @@
                 <img src="{% static 'img/globos.jpg' %}" alt="User Icon" class="imagen-div">
             </div>
             <form method="post" class="div-form">
-                <h1>Realiza Tu Reserva </h1><br>
+                <h1>Realiza Tu Reserva</h1><br>
                 {% csrf_token %}
-                {{form}}
-               
-                <input type="submit" class="btn btn-primary" value="Enviar Reserva" onclick="alert('Su reserva se ha registrado')" required>
+                {{ form }}
+                <input type="submit" class="btn btn-primary" value="Enviar Reserva" required>
             </form>
-    </div>
+            
+           
 </body>
 </html>

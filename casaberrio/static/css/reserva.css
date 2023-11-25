@@ -285,3 +285,8 @@ input[type="date"], input[type="time"], input[type="tel"] {
  
 }
 
+
+.reserved-dates {
+  background-color: #FFCCCC; /* Cambia el color de fondo a rojo claro */
+  color: #555; /* Cambia el color del texto */
+}
