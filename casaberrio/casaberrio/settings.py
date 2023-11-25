@@ -143,3 +143,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 PHONENUMBER_DEFAULT_REGION = 'CO'
+# 
+
+# settings.py
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'  # Corregido aquí
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'casaberrio823@gmail.com'
+EMAIL_HOST_PASSWORD = 'thqa evqu xpgd halm'
+
+
