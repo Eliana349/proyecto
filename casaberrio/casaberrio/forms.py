@@ -125,6 +125,14 @@ class formularioReserva(forms.ModelForm):
         label='Fecha',
         input_formats=['%Y-%m-%d']
     )
+    def __init__(self, *args, **kwargs):
+        reservas_anteriores = kwargs.pop('reservas_anteriores', None)
+        super().__init__(*args, **kwargs)
+
+        today = timezone.now().date()
+
+
+        self.fields['event_date'].widget.attrs['min'] = today.strftime('%Y-%m-%d')
     def clean(self):
         cleaned_data = super().clean()
         event_date = cleaned_data.get('event_date')
@@ -132,11 +140,9 @@ class formularioReserva(forms.ModelForm):
         reservas_exist = Reserva.objects.filter(event_date=event_date).exists()
 
         if reservas_exist:
-            self.add_error('event_date', 'Ya existe una reserva para esta fecha. Por favor, elige otra fecha.')
+            raise ValidationError('Ya existe una reserva para esta fecha. Por favor, elige otra fecha.')
 
-        start_time = cleaned_data.get('event_start_time')
-        end_time = cleaned_data.get('end_time_of_the_event')
-    
+       
 
     event_start_time = forms.TimeField(
         widget=forms.TimeInput(attrs={'type': 'time'}),
@@ -155,20 +161,30 @@ class formularioReserva(forms.ModelForm):
     eventType = forms.ChoiceField(choices=TIPO_EVENTO,label='Tipo de evento')
     campus = forms.ChoiceField(choices=CAMPUS,label='Lugar del evento')
     lounge = forms.ChoiceField(choices=SALON,label='Numero de salon')
-    def cleand(self):
-        cleaned_data = super().clean()
-        start_time = cleaned_data.get('event_start_time')
-        end_time = cleaned_data.get('end_time_of_the_event')
-        if start_time >= end_time:
-            self.add_error('event_start_time', 'La hora de inicio debe ser anterior a la hora final del evento')
     
 
     
     class Meta:
         model = Reserva  
         fields = ['name','lastname','email', 'phone', 'gender','event_date','event_start_time','end_time_of_the_event','theme','special_need','eventType','campus','lounge','description']
-        
+    def clean(self):
+        cleaned_data = super().clean()
+        event_start_time = cleaned_data.get('event_start_time')
+        end_time_of_the_event = cleaned_data.get('end_time_of_the_event')
 
+        if event_start_time and end_time_of_the_event:
+            # Convertir horas a minutos para facilitar la comparación
+            start_minutes = event_start_time.hour * 60 + event_start_time.minute
+            end_minutes = end_time_of_the_event.hour * 60 + end_time_of_the_event.minute
+
+            # Verificar si la hora final es después de la medianoche y ajustar
+            if end_time_of_the_event.hour < event_start_time.hour:
+                end_minutes += 24 * 60  # Agregar 24 horas si la hora final es antes de la hora de inicio
+
+            # Permitir una brecha máxima de 7 horas entre la hora de inicio y la hora final
+            if end_minutes - start_minutes > 7 * 60:
+                raise ValidationError('La brecha entre la hora de inicio y la hora final no puede ser mayor a 7 horas')
+   
         
 class formularioPSE(forms.ModelForm):
     class Meta:
