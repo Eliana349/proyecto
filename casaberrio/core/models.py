@@ -268,10 +268,23 @@ class PreferenceContact(models.Model):
         verbose_name_plural='Como prefire ser contactado'
         db_table='Como prefire ser contactado'
         ordering=['id']
-
-
+    
 def generate_random_radicado():
     return random.randint(100000, 999999)
+
+class product_or_services_name(models.Model):
+    product_or_services_name = models.CharField(max_length= 100, verbose_name= 'Nombre del producto/servicio')
+
+    def __str__(self):
+        return self.product_or_services_name
+    
+    class Meta:
+        verbose_name= 'Nombre de producto/servicio'
+        verbose_name_plural='Nombre de productos/servicios'
+        db_table= 'Nombre de producto/servicio'
+        ordering= ['id']
+        
+
 
 class loyalty(models.Model):
     full_name = models.CharField(max_length=100, verbose_name='Nombres y apellidos')
@@ -318,6 +331,8 @@ class StatePqrsd(models.Model):
         verbose_name_plural = 'Estados pqrsd'
         db_table = 'estado_pqrsd'
         ordering = ['id']
+
+
 
 class Cotizacion(models.Model):
     name = models.CharField(max_length=100, verbose_name="Nombre Completo")

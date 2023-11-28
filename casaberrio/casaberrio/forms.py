@@ -8,6 +8,7 @@ from django.utils import timezone
 from django.core.exceptions import ValidationError 
 
 
+
 class RegisterForm(forms.Form):
     Names = forms.CharField(required=True, label='Nombres',
                                 max_length=50, min_length=4)
@@ -218,7 +219,7 @@ class formularioFedelizacion(forms.ModelForm):
         fields = ['full_name','email','phone','type_pqrsd','incident_date','detailed_description','product_or_services_name','filing_number','preference_contact']
         widgets = {
             'email': forms.TextInput(attrs={'placeholder': 'Ejemplo@gmail.com'}),
-            
+            'detailed_description': forms.TextInput(attrs={'placeholder': 'Descripción de lo sucedido'})
 
 
             }
