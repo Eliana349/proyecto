@@ -22,6 +22,11 @@ from django.conf.urls.static import static
 from . import views
 from django.contrib.auth import views as auth_views
 
+from .views import generate_excel_report
+
+
+
+
 
 
 urlpatterns = [
@@ -53,7 +58,12 @@ urlpatterns = [
     path('reset_password_sent/', auth_views.PasswordResetDoneView.as_view(), name='password_reset_done'),
     path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
     path('reset_password_complete/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
-    
+    path('generate-excel-report/', generate_excel_report, name='generate_excel_report'),
+
+
+
+
+
 ]
 
 

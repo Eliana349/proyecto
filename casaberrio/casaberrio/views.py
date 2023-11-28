@@ -11,6 +11,42 @@ from django.utils import timezone
 from core.models import *
 
 
+import openpyxl
+from django.http import HttpResponse
+
+
+def generate_excel_report(request):
+    # Crear un nuevo libro de Excel y una hoja de cálculo
+    workbook = openpyxl.Workbook()
+    sheet = workbook.active
+
+    # Escribir encabezados en la primera fila
+    headers = ['Nombres', 'Apellidos', 'Correo electrónico', 'Número de celular', 'Género', 'Fecha de evento', 'Hora inicial', 'Hora final', 'Tematica', 'Descripción', 'Necesidad especial', 'Tipo de evento', 'Sede', 'Salón']
+    for col_num, header in enumerate(headers, 1):
+        sheet.cell(row=1, column=col_num, value=header)
+
+    # Obtener datos de la base de datos y escribir en el archivo Excel
+    reservations = Reserva.objects.all()
+    for row_num, reservation in enumerate(reservations, 1):
+        data = [
+            reservation.name, reservation.lastname, reservation.email,
+            str(reservation.phone),  # Convertir PhoneNumber a cadena
+            reservation.gender, reservation.event_date, reservation.event_start_time,
+            reservation.end_time_of_the_event, reservation.theme, reservation.description,
+            reservation.special_need, reservation.eventType, reservation.campus, reservation.lounge
+        ]
+
+        # Escribir los datos en las celdas de Excel
+        for col_num, value in enumerate(data, 1):
+            sheet.cell(row=row_num + 1, column=col_num, value=value)
+
+    # Crear la respuesta HTTP con el archivo adjunto
+    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = 'attachment; filename=reporte_reservas.xlsx'
+    workbook.save(response)
+
+    return response
+
 
 
 
