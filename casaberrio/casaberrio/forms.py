@@ -245,7 +245,7 @@ DRINK = (
 
 STATEPQRSD = (
     ('P'), ('Pendiente'),
-    ('R'), ('Resvisado'),
+    ('R'), ('Revisado'),
     ('C'), ('Contestado'),
 )
 
