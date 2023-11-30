@@ -85,7 +85,13 @@ CAMPUS = (
     ('O', 'Teusaquillo'),
 )
 
-
+PROD_SER_CHOICES = (
+    ('Atencion al cliente', 'Atencion al cliente'),
+    ('bebidas ', 'bebidas'),
+    ('banquetes','banquetes'),
+    ('decoracion','decoracion'),
+    
+)
 
 
 
@@ -214,6 +220,8 @@ class formularioFedelizacion(forms.ModelForm):
         label='Teléfono',
         widget=forms.TextInput(attrs={'type': 'tel'}) 
     )
+    product_or_services_name = forms.ChoiceField(choices=PROD_SER_CHOICES ,label='Producto o servicio ')
+
     class Meta:
         model = loyalty
         fields = ['full_name','email','phone','type_pqrsd','incident_date','detailed_description','product_or_services_name','filing_number','preference_contact']

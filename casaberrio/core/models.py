@@ -287,17 +287,29 @@ class product_or_services_name(models.Model):
 
 
 class loyalty(models.Model):
+    PROD_SER_CHOICES = (
+    ('Atencion al cliente', 'Atencion al cliente'),
+    ('bebidas ', 'bebidas'),
+    ('banquetes','banquetes'),
+    ('decoracion','decoracion'),
+    
+)
+
+
     full_name = models.CharField(max_length=100, verbose_name='Nombres y apellidos')
     email = models.EmailField(verbose_name='Correo electrónico')
     phone = PhoneNumberField(verbose_name='Número de teléfono', region='CO')
     type_pqrsd = models.ForeignKey(TypePqrsd, on_delete=models.CASCADE,verbose_name='Tipo de PQRSD')
     incident_date = models.DateField(verbose_name='Fecha de incidente')
     detailed_description = models.TextField(max_length=300, verbose_name='Descripción detallada')
-    product_or_services_name = models.CharField(max_length=50, verbose_name='Nombre de producto/servicio')
+    product_or_services_name = models.CharField( max_length=200,verbose_name='Producto o servicio', choices=PROD_SER_CHOICES,default='Atencion_al _cliente' )    
     filing_number = models.PositiveIntegerField(verbose_name='Guarde el Número de radicado para consultar el estado de su PQRSD', default=generate_random_radicado,)  
     preference_contact = models.ForeignKey(PreferenceContact, on_delete=models.CASCADE, verbose_name='Como prefiere ser contactad@', help_text='&nbsp')
 
-    def __str__(self):
+        
+
+
+    def _str_(self):
         return str(self.filing_number)
 
     def save(self, *args, **kwargs):
@@ -311,7 +323,6 @@ class loyalty(models.Model):
         verbose_name_plural = 'Fidelizaciones'
         db_table = 'fidelizacion'
         ordering = ['id']
-
   
 
 class StatePqrsd(models.Model):
