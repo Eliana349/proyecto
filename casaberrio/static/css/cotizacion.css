@@ -73,6 +73,39 @@ nav a {
     font-size: 20px;
 }
 
+#paquete_base_carousel{
+    margin-top:100px;
+    justify-content: flex-start;
+}
+
+#paquete_base_carousel img{
+    border-radius: 10%;
+}
+
+#paquete_base{
+    margin-top: 30px;
+    text-align: center;
+}
+
+#lista_paquete{
+    text-align: start;
+    max-width: 400px;
+}
+
+#titulo_servicios_adicionales{
+    margin-top: 20px;
+    text-align: center;
+}
+
+#titulo_menus{
+    text-align: center;
+}
+
+.accordion{
+    width: 600px;
+    margin-left: 280px;
+    margin-top: 50px;
+}
 
 #titulo{
     margin-left: 480px;
