@@ -37,35 +37,35 @@ nav a {
 
 .carousel-caption {
     background-color: rgba(0, 0, 0, 0.5);
-    margin-left: -300px;
-    margin-right: -300px;
-    margin-bottom: -20px;
+    margin-inline-start: -300px;
+    margin-inline-end: -300px;
+    margin-block-end: -20px;
 }
 
 .carousel-caption h5{
     display: flex;
     color: white;
     font-size: 80px;
-    margin-top: 500px;
-    margin-left: 500px;
-    margin-right: 500px;
+    margin-block-start: 500px;
+    margin-inline-start: 500px;
+    margin-inline-end: 500px;
 }
 
 .carousel-caption p{
     color: white;
     font-size: 20px;
-    margin-left: 150px;
+    margin-inline-start: 150px;
     margin-right: 150px;
-    margin-bottom: 150px;
+    margin-block-end: 150px;
 }
 
 #carouseleventos img{
-    height: 400px;
+    block-size: 400px;
     border-radius: 10%;
 }
 
 #cotiza{
-    margin-top: 150px;
+    margin-block-start: 150px;
     text-align: center;
 }
 
@@ -74,7 +74,7 @@ nav a {
 }
 
 #paquete_base_carousel{
-    margin-top:100px;
+    margin-block-start:100px;
     justify-content: flex-start;
 }
 
@@ -83,17 +83,17 @@ nav a {
 }
 
 #paquete_base{
-    margin-top: 30px;
+    margin-block-start: 30px;
     text-align: center;
 }
 
 #lista_paquete{
     text-align: start;
-    max-width: 400px;
+    max-inline-size: 400px;
 }
 
 #titulo_servicios_adicionales{
-    margin-top: 20px;
+    margin-block-start: 20px;
     text-align: center;
 }
 
@@ -102,10 +102,15 @@ nav a {
 }
 
 .accordion{
-    width: 600px;
-    margin-left: 280px;
-    margin-top: 50px;
+    inline-size: 500px;
+    margin-block-start: 5px;
 }
+
+#menus img{
+    justify-content: start;
+    border-radius: 10px;
+}
+
 
 #titulo{
     margin-left: 480px;
