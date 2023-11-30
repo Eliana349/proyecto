@@ -244,7 +244,7 @@ def crear_cotizacion(request):
         form = CotizacionForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('cotizacion.html')  # Redirige a una página de éxito
+            return redirect('reservas.html')  # Redirige a una página de éxito
     else:
         form = CotizacionForm()
     
