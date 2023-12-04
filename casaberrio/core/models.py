@@ -353,8 +353,12 @@ class Cotizacion(models.Model):
     event_date = models.DateField(verbose_name="Fecha del Evento")
     event_duration = models.PositiveIntegerField(verbose_name="Duración del Evento (en horas)")
     event_location = models.CharField(max_length=100, verbose_name="Sede del Evento")
+    salon_number = models.CharField(max_length=100, verbose_name='Número del salon')
     number_of_guests = models.PositiveIntegerField(verbose_name="Cantidad de Invitados")
-    required_services = models.CharField(max_length=200, verbose_name="Servicios Requeridos")
+    required_services = models.CharField(max_length=200, verbose_name="Servicios Requeridos del Paquete Base")
+    menu = models.CharField(max_length=20, verbose_name="Menú")
+    childrens_menu = models.CharField(max_length=20, verbose_name="Menú Infantil")
+    additional_services = models.CharField(max_length=200, verbose_name="Servicios Adicionales")
     additional_comments = models.TextField(verbose_name="Comentarios Adicionales")
 
     def __str__(self):
