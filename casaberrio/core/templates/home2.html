@@ -31,6 +31,10 @@
                             <li><a href="alquiler.html">Alquiler</a></li>
                             <li><a href="pqrs.html">PQRS</a></li>
                             <li><a href="home.html">Cerrar sesion</a></li>
+                            <li><a href="home.html">Cerrar sesion</a></li>
+                            {% if user.is_staff %}
+                            <li><a href="{% url 'redireccionar_admin' %}">Ir al admin </a></li>
+                            {% endif %}
                         </ul>
                     </nav>        
                 </div>

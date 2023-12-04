@@ -23,6 +23,8 @@ from . import views
 from django.contrib.auth import views as auth_views
 
 from .views import generate_excel_report
+from .views import custom_excel_report, redireccionar_admin
+
 
 
 
@@ -59,6 +61,9 @@ urlpatterns = [
     path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
     path('reset_password_complete/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
     path('generate-excel-report/', generate_excel_report, name='generate_excel_report'),
+    path('redireccionar_admin/', redireccionar_admin, name='redireccionar_admin'),
+    path('custom_excel_report/', custom_excel_report, name='custom_excel_report'),
+
 
 
 

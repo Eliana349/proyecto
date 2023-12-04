@@ -138,6 +138,8 @@ class Product(models.Model):
     nombre = models.CharField(max_length=50)
     created_at = models.DateTimeField(auto_now_add=True)
     categoria = models.ForeignKey(Category, on_delete=models.CASCADE)
+    precio =  models.PositiveIntegerField ()
+    cantidad = models.PositiveIntegerField()
     
     
     def __str__(self):
@@ -148,6 +150,7 @@ class Product(models.Model):
         verbose_name_plural = 'Producto alquiler'
         db_table = 'Producto_alquiler'
         ordering = ['id']
+
 
 
 class TipoDeProducto(models.Model):
