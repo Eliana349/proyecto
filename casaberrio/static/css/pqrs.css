@@ -53,10 +53,10 @@ nav ul li a {
   margin: 0 150px;
 }
 
-/* Estilos para imágenes dentro de la clase imagen-div */
+
 .imagen-div {
-  width: 600px;
-  height: 600px;
+  width: 500px;
+  height: 500px;
   margin-left: 20px;
 }
 
@@ -81,9 +81,6 @@ form {
   cursor: pointer;
 }
 
-.form-submit:hover {
-  background-color: rgb(113, 240, 155);
-}
 
 /* Estilos de los inputs, selects y textarea */
 input[type="text"],
@@ -96,7 +93,7 @@ textarea {
   background-color: #fcfcfc;
   border: 2px solid #7e7e7e;
   color: #0d0d0d;
-  padding: 15px 35px;
+  padding: 9px 20px;
   text-align: left;
   font-size: 15px;
   display: inline-block;
@@ -107,40 +104,18 @@ textarea {
 }
 
 input[type="number"] {
-  padding: 20px 15px;
+  padding: 10px 5px;
 }
 
 input[type="date"],
 input[type="time"] {
   background-color: #ffffff;
   display: inline-block;
-  padding: 15px 35px;
-}
-
-input[type="tel"] {
-  background-color: #ffffff;
-  padding: 15px 45px;
-  font-size: 15px;
-}
-textarea {
-  display: inline-block;
-  background-color: #f11717;
-  padding: 10px; /* Estableciendo un valor igual para el padding */
-  text-align: left;
-  font-size: 12px;
-}
-
-
-/* Estilos específicos para ciertos tipos de entrada */
-input[type="date"],
-input[type="time"] {
-  background-color: #ffffff;
-  display: inline-block;
-  padding: 15px 35px;
+  padding: 15px 5px;
 }
 
 input[type="tel"] {
   background-color: rgb(255, 255, 255);
-  padding: 15px 45px;
+  padding: 10px 4px;
   font-size: 15px;
 }
