@@ -85,7 +85,13 @@ CAMPUS = (
     ('O', 'Teusaquillo'),
 )
 
-
+PROD_SER_CHOICES = (
+    ('Atencion al cliente', 'Atencion al cliente'),
+    ('bebidas ', 'bebidas'),
+    ('banquetes','banquetes'),
+    ('decoracion','decoracion'),
+    
+)
 
 
 
@@ -214,6 +220,8 @@ class formularioFedelizacion(forms.ModelForm):
         label='Teléfono',
         widget=forms.TextInput(attrs={'type': 'tel'}) 
     )
+    product_or_services_name = forms.ChoiceField(choices=PROD_SER_CHOICES ,label='Producto o servicio ')
+
     class Meta:
         model = loyalty
         fields = ['full_name','email','phone','type_pqrsd','incident_date','detailed_description','product_or_services_name','filing_number','preference_contact']
@@ -245,7 +253,7 @@ DRINK = (
 
 STATEPQRSD = (
     ('P'), ('Pendiente'),
-    ('R'), ('Resvisado'),
+    ('R'), ('Revisado'),
     ('C'), ('Contestado'),
 )
 
@@ -313,24 +321,71 @@ class CotizacionForm(forms.ModelForm):
         ('sede2', 'Teusaquillo'),
         ('sede3', 'Comuneros'),
     )
-    
+
     event_location = forms.ChoiceField(
         choices=SEDES_CHOICES,
         label="Sede del Evento"
     )
     
+    SALON_CHOICES ={
+        ('salon1', 'Salón 1'),
+        ('salon2', 'Salón 2'),
+        ('salon3', 'Salón 3'),
+    }
+
+    salon_number = forms.ChoiceField(
+        choices=SALON_CHOICES,
+        label="Número de Salon"
+    )
+    
+
     required_services = forms.MultipleChoiceField(
         choices=[
-            ('servicio1', 'Catering'),
-            ('servicio2', 'Decoración'),
-            ('servicio3', 'Música'),
-            ('servicio4', 'Mobiliario y Equipamiento'),
-            ('servicio5', 'Personal de Servicio'),
-            ('servicio6', 'Fotografía y Video'),
+            ('servicio1', 'Buffet'),
+            ('servicio2', 'Pastel'),
+            ('servicio3', 'Sonido Dj - Animación'),
+            ('servicio4', 'Sillas'),
+            ('servicio5', 'Centros de Mesa'),
+            ('servicio6', 'Fotografía Digital'),
+            ('servicio7', 'Mezcladores, hielos y gaseosas'),
+            ('servicio8', 'Coctel'),
+            ('servicio9', 'Servicio de meseros por 7 horas'),
+            ('servicio10', 'Champañas'),
         ],
         widget=forms.CheckboxSelectMultiple,
-        label="Servicios Requeridos"
+        label="Servicios Requeridos del Paquete Base"
     )
+
+    MENU_CHOICES = (
+        ('evento1', 'Menú #1'),
+        ('evento2', 'Menú #2'),
+        ('evento3', 'Menú #3'),
+        ('evento4', 'Menú #4'),
+        ('evento5', 'Menú #5'),
+        ('evento6', 'Menú #6'),
+    )
+
+    menu= forms.ChoiceField(
+        choices=MENU_CHOICES,
+        label="Menu"
+    )
+
+    additional_services= forms.MultipleChoiceField(
+        choices=[
+            ('servicio1', 'Decoración Escalera en Flores Naturales'),
+            ('servicio2', 'Kit Hora de Carnaval con Accesorios'),
+            ('servicio3', 'Fiesta Temática'),
+            ('servicio4', 'Otros - Filmación'),
+            ('servicio5', 'Foto Registro Enmarcado 40x50 cms'),
+            ('servicio6', 'Libro de Firmas'),
+            ('servicio7', 'Videos Retrospectivos'),
+            ('servicio8', 'Video Beam - Telón'),
+            ('servicio9', 'Whisky'),
+        ],
+        widget=forms.CheckboxSelectMultiple,
+        label="Servicios Adicionales"
+    )
+
     class Meta:
         model = Cotizacion
         fields = '__all__'

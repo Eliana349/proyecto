@@ -1,15 +1,23 @@
+html {
+  height: 9vh;
+  }
+  
+#link{
+    margin-left: 5px;
+    padding: 5px;
+  }
 
 body {
     font-family: "Poppins", sans-serif;
-    height: 100vh;
-    background: linear-gradient(20deg, #F2F7A1, #F2F7A1);
+    height: 9vh;
+    background: linear-gradient(20deg, #011c40, #0378a6, #04b2d9, #04d9b2, #04d98b);
     background-repeat:no-repeat;
     background-attachment: fixed;
     background-size: 100% 100%;
   }
 
   img {
-    width: 300px;
+    width: 200px;
   }
   
   a {
@@ -26,14 +34,14 @@ body {
     justify-content: center;
     width: 100%;
     min-height: 100%;
-    padding: 20px;
+    padding: 50px;
   }
 
   
   .div2 {
     border-radius: 10px 10px 10px 10px;
-    background: #35A29F;
-    padding: 20px;
+    background: #ffffff46;
+    padding: 35px;
     width: 90%;
     max-width: 450px;
     position: relative;
@@ -94,7 +102,7 @@ h2.inactive {
     background-color: #f6f6f6;
     border: none;
     color: #0d0d0d;
-    padding: 15px 32px;
+    padding: 10px 30px;
     text-align: center;
     text-decoration: none;
     display: inline-block;

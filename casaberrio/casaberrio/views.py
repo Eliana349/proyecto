@@ -13,6 +13,55 @@ from core.models import *
 
 import openpyxl
 from django.http import HttpResponse
+from django.contrib.auth.decorators import user_passes_test
+from django.urls import reverse
+from openpyxl import Workbook
+from core.models import Product
+from openpyxl.styles import NamedStyle
+
+
+def es_admin(user):
+    return user.is_authenticated and user.is_staff
+
+def redireccionar_admin(request):
+    admin_url = reverse('admin:index')
+    return redirect(admin_url)
+
+def custom_excel_report(request):
+    # Crear un libro de trabajo y obtener la hoja activa
+    workbook = Workbook()
+    sheet = workbook.active
+
+    date_style = NamedStyle(name='date_style', number_format='YYYY-MM-DD HH:MM:SS')
+
+    # Añadir encabezados a la hoja de cálculo
+    headers = ['ID', 'Imagen', 'Nombre', 'Fecha de Creación', 'Categoría', 'Precio', 'Cantidad']
+    for col_num, header in enumerate(headers, 1):
+        sheet.cell(row=1, column=col_num, value=header)
+
+    # Obtener datos del modelo
+    products = Product.objects.all()
+
+    # Llenar la hoja de cálculo con los datos del modelo
+    for row_num, product in enumerate(products, 2):
+        sheet.cell(row=row_num, column=1, value=product.id)
+        sheet.cell(row=row_num, column=2, value=str(product.imagen))
+        sheet.cell(row=row_num, column=3, value=product.nombre)
+        
+        created_at_formatted = product.created_at.strftime('%Y-%m-%d %H:%M:%S')
+        sheet.cell(row=row_num, column=4, value=created_at_formatted).style = date_style
+
+        sheet.cell(row=row_num, column=5, value=str(product.categoria))
+        sheet.cell(row=row_num, column=6, value=product.precio)
+        sheet.cell(row=row_num, column=7, value=product.cantidad)
+        
+
+    # Crear una respuesta de Django con el contenido del libro de trabajo
+    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = 'attachment; filename=custom_excel_report.xlsx'
+    workbook.save(response)
+
+    return response
 
 
 def generate_excel_report(request):
@@ -244,7 +293,7 @@ def crear_cotizacion(request):
         form = CotizacionForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('cotizacion.html')  # Redirige a una página de éxito
+            return redirect('reservas.html')  # Redirige a una página de éxito
     else:
         form = CotizacionForm()
     
