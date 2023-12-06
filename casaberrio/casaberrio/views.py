@@ -297,8 +297,11 @@ def crear_cotizacion(request):
     else:
         form = CotizacionForm()
     
-    return render(request, 'cotizacion.html', {'form': form})
+    return render(request, 'cotizaciones.html', {'form': form})
 
+def cotizacion_vista(request):
+    return render(request, 'cotizacion.html',{
+    })
 
 
 

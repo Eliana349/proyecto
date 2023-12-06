@@ -357,17 +357,30 @@ class CotizacionForm(forms.ModelForm):
     )
 
     MENU_CHOICES = (
-        ('evento1', 'Menú #1'),
-        ('evento2', 'Menú #2'),
-        ('evento3', 'Menú #3'),
-        ('evento4', 'Menú #4'),
-        ('evento5', 'Menú #5'),
-        ('evento6', 'Menú #6'),
+        ('menu1', 'Menú #1'),
+        ('menu2', 'Menú #2'),
+        ('menu3', 'Menú #3'),
+        ('menu4', 'Menú #4'),
+        ('menu5', 'Menú #5'),
+        ('menu6', 'Menú #6'),
     )
 
     menu= forms.ChoiceField(
         choices=MENU_CHOICES,
         label="Menu"
+    )
+
+    ADDITIONAL_ENTRIES_CHOICES={
+        ('entrada1', 'Vol au vent de atún o pollo'),
+        ('entrada2', 'Melón con fresas a la miel'),
+        ('entrada3', 'Macedoniod de fruta variada'),
+        ('entrada4', 'Canapés de atún o pollo'),
+        ('entrada5', 'Ninguna'),
+    }
+
+    additional_entries=forms.ChoiceField(
+        choices=ADDITIONAL_ENTRIES_CHOICES,
+        label="Entradas Adicionales"
     )
 
     additional_services= forms.MultipleChoiceField(

@@ -65,7 +65,8 @@ nav a {
 }
 
 #cotiza{
-    margin-block-start: 150px;
+    margin-block-start: 65px;
+    margin-left: 120px;
     text-align: center;
 }
 
@@ -74,8 +75,8 @@ nav a {
 }
 
 #paquete_base_carousel{
-    margin-block-start:100px;
-    justify-content: flex-start;
+    margin-block-start:125px;
+    justify-content: start;
 }
 
 #paquete_base_carousel img{
@@ -85,6 +86,20 @@ nav a {
 #paquete_base{
     margin-block-start: 30px;
     text-align: center;
+}
+
+#paquete_base button{
+    text-decoration: none;
+    border-radius: 10px;
+    font-size: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    transition: background-color 0.3s ease;
+}
+
+#paquete_base button:hover{
+    background-color: black;
+    color: white;
 }
 
 #lista_paquete{
