@@ -10,13 +10,26 @@
 </head>
 <body>
     <div class="div1 fadeInDown">
+          {% if messages %}
+          {% for message in messages %}
+              <div class="alert {% if messages.tags == 'success'%}alert-success{%else%}alert-danger{%endif%}">
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close"></button>
+                {{ message }}
+              </div>
+          {% endfor %}
+        {% endif %}
+        
         <div class="div2">
+            <div id="link">
+                <a id="link-div"  href="home.html"><img  id="imagen-font" src="{% static 'img/house_icon-removebg-preview.png' %}" alt=""><label for="">Regresar</label></a>
+            </div>
             <div class="div-div">
                 <img src="{% static 'img/casaberrio.png' %}" alt="User Icon" class="imagen-div">
             </div>
             <form method="post" class="div-form">
                 {% csrf_token %}
                 {{ form }}
+                
                 
                 {% if field.errors %}
                     {{ field.errors }}

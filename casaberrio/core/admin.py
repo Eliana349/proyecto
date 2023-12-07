@@ -20,6 +20,7 @@ admin.site.register(TypeId)
 admin.site.register(Product)
 admin.site.register(TipoDeProducto)
 admin.site.register(Category)
+admin.site.register(Cotizacion)
 
 
 

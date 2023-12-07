@@ -1,15 +1,23 @@
+html {
+  height: 9vh;
+  }
+  
+#link{
+    margin-left: 5px;
+    padding: 5px;
+  }
 
 body {
     font-family: "Poppins", sans-serif;
-    height: 100vh;
-    background: linear-gradient(20deg, #F2F7A1, #F2F7A1);
+    height: 9vh;
+    background: linear-gradient(20deg, #011c40, #0378a6, #04b2d9, #04d9b2, #04d98b);
     background-repeat:no-repeat;
     background-attachment: fixed;
     background-size: 100% 100%;
   }
 
   img {
-    width: 300px;
+    width: 200px;
   }
   
   a {
@@ -26,75 +34,60 @@ body {
     justify-content: center;
     width: 100%;
     min-height: 100%;
-    padding: 20px;
+    padding: 50px;
   }
 
   
   .div2 {
     border-radius: 10px 10px 10px 10px;
-    background: #35A29F;
-    padding: 20px;
-    width: 90%;
-    max-width: 450px;
+    background: #ffffff46;
+    padding: 35px;
+    width: 25%;
     position: relative;
     box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
     text-align: center;
   }
 
-  .div-div2 {
-    background-color: rgba(255, 255, 255, 0.0);
-    border-top: 1px rgba(255, 255, 255, 0.0);
-    padding: 25px;
-    text-align: center;
-    border-radius: 0 0 10px 10px;
-  }
-
-h2.inactive {
-    color: #000000;
-  }
-  
-  h2.active {
-    color: #0d0d0d;
-    border-bottom: 2px solid #5fbae9;
-  }
-
-  
   
   input[type=button], input[type=submit], input[type=reset]  {
-    background-color: #56baed;
+    background-color: #0CA3F0;
     border: none;
-    color: black;
+    color: rgb(245, 245, 245);
     padding: 15px 80px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     text-transform: uppercase;
     font-size: 13px;
+    -webkit-box-shadow: 0 10px 30px 0 rgba(95,186,233,0.4);
     box-shadow: 0 10px 30px 0 rgba(95,186,233,0.4);
+    -webkit-border-radius: 5px 5px 5px 5px;
     border-radius: 5px 5px 5px 5px;
     margin: 5px 20px 40px 20px;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
   }
-
- 
-
-
   
   input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover  {
-    background-color: #39ace7;
+    background-color: #71a4f0;
   }
 
-  
   input[type=button]:active, input[type=submit]:active, input[type=reset]:active  {
+    -moz-transform: scale(0.95);
+    -webkit-transform: scale(0.95);
+    -o-transform: scale(0.95);
+    -ms-transform: scale(0.95);
     transform: scale(0.95);
   }
-
     
   input[type=text] {
     background-color: #f6f6f6;
     border: none;
     color: #0d0d0d;
-    padding: 15px 32px;
+    padding: 15px 33px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -345,4 +338,28 @@ h2.inactive {
     -webkit-border-radius: 5px 5px 5px 5px;
     border-radius: 5px 5px 5px 5px;
   }
+
+  #link{
+    margin-left: 50px;
+  }
   
+  #imagen-font{
+    width: 60px;
+    height: 35px;
+    margin-left: -370px;
+    padding: 5px;
+    cursor: pointer;
+  }
+  
+  #link-div{
+    color: black;
+    text-decoration: underline;
+    padding: 5px;
+  }
+  
+  label{
+    cursor: pointer;
+  }
+  div{
+    text-align: center;
+  }  

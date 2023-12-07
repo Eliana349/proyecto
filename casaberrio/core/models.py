@@ -138,6 +138,8 @@ class Product(models.Model):
     nombre = models.CharField(max_length=50)
     created_at = models.DateTimeField(auto_now_add=True)
     categoria = models.ForeignKey(Category, on_delete=models.CASCADE)
+    precio =  models.PositiveIntegerField ()
+    cantidad = models.PositiveIntegerField()
     
     
     def __str__(self):
@@ -148,6 +150,7 @@ class Product(models.Model):
         verbose_name_plural = 'Producto alquiler'
         db_table = 'Producto_alquiler'
         ordering = ['id']
+
 
 
 class TipoDeProducto(models.Model):
@@ -268,23 +271,48 @@ class PreferenceContact(models.Model):
         verbose_name_plural='Como prefire ser contactado'
         db_table='Como prefire ser contactado'
         ordering=['id']
-
-
+    
 def generate_random_radicado():
     return random.randint(100000, 999999)
 
+class product_or_services_name(models.Model):
+    product_or_services_name = models.CharField(max_length= 100, verbose_name= 'Nombre del producto/servicio')
+
+    def __str__(self):
+        return self.product_or_services_name
+    
+    class Meta:
+        verbose_name= 'Nombre de producto/servicio'
+        verbose_name_plural='Nombre de productos/servicios'
+        db_table= 'Nombre de producto/servicio'
+        ordering= ['id']
+        
+
+
 class loyalty(models.Model):
+    PROD_SER_CHOICES = (
+    ('Atencion al cliente', 'Atencion al cliente'),
+    ('bebidas ', 'bebidas'),
+    ('banquetes','banquetes'),
+    ('decoracion','decoracion'),
+    
+)
+
+
     full_name = models.CharField(max_length=100, verbose_name='Nombres y apellidos')
     email = models.EmailField(verbose_name='Correo electrónico')
     phone = PhoneNumberField(verbose_name='Número de teléfono', region='CO')
     type_pqrsd = models.ForeignKey(TypePqrsd, on_delete=models.CASCADE,verbose_name='Tipo de PQRSD')
     incident_date = models.DateField(verbose_name='Fecha de incidente')
     detailed_description = models.TextField(max_length=300, verbose_name='Descripción detallada')
-    product_or_services_name = models.CharField(max_length=50, verbose_name='Nombre de producto/servicio')
+    product_or_services_name = models.CharField( max_length=200,verbose_name='Producto o servicio', choices=PROD_SER_CHOICES,default='Atencion_al _cliente' )    
     filing_number = models.PositiveIntegerField(verbose_name='Guarde el Número de radicado para consultar el estado de su PQRSD', default=generate_random_radicado,)  
     preference_contact = models.ForeignKey(PreferenceContact, on_delete=models.CASCADE, verbose_name='Como prefiere ser contactad@', help_text='&nbsp')
 
-    def __str__(self):
+        
+
+
+    def _str_(self):
         return str(self.filing_number)
 
     def save(self, *args, **kwargs):
@@ -298,7 +326,6 @@ class loyalty(models.Model):
         verbose_name_plural = 'Fidelizaciones'
         db_table = 'fidelizacion'
         ordering = ['id']
-
   
 
 class StatePqrsd(models.Model):
@@ -319,6 +346,8 @@ class StatePqrsd(models.Model):
         db_table = 'estado_pqrsd'
         ordering = ['id']
 
+
+
 class Cotizacion(models.Model):
     name = models.CharField(max_length=100, verbose_name="Nombre Completo")
     email = models.EmailField(verbose_name="Correo Electrónico")
@@ -327,9 +356,14 @@ class Cotizacion(models.Model):
     event_date = models.DateField(verbose_name="Fecha del Evento")
     event_duration = models.PositiveIntegerField(verbose_name="Duración del Evento (en horas)")
     event_location = models.CharField(max_length=100, verbose_name="Sede del Evento")
+    salon_number = models.CharField(max_length=100, verbose_name='Número del salon')
     number_of_guests = models.PositiveIntegerField(verbose_name="Cantidad de Invitados")
-    required_services = models.CharField(max_length=200, verbose_name="Servicios Requeridos")
+    menu = models.CharField(max_length=20, verbose_name="Menú")
+    childrens_menu = models.PositiveIntegerField(max_length=20, verbose_name="Cantidad de Menús Infantiles")
+    additional_entries = models.CharField(max_length=20, verbose_name="Entradas Adicionales")
     additional_comments = models.TextField(verbose_name="Comentarios Adicionales")
+    additional_services = models.CharField(max_length=200, verbose_name="Servicios Adicionales")
+    required_services = models.TextField(max_length=200, verbose_name="Servicios Requeridos del Paquete Base")
 
     def __str__(self):
         return self.name

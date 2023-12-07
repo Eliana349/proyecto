@@ -1,0 +1,121 @@
+header {
+    background: linear-gradient(90deg,rgba(57,140,198,1), rgb(57, 198, 111));
+    color: #ffffff;
+    text-align: center;
+    padding: 15px ;
+}
+
+#redes{
+    text-align: end;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+}
+
+nav li {
+    display: inline;
+    margin: 20px;
+    text-decoration: none;
+}
+
+nav li:hover{
+    text-decoration: underline;
+}
+
+nav a {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+#titulo{
+    margin-top: 50px;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+form {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; /* Espacio entre los elementos */
+}
+
+/* Estilos para cada campo */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+}
+
+.form-group label {
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="date"],
+input[type="time"],
+select,
+textarea,
+input[type="number"] {
+    background-color: #f6f6f6;
+    border: none;
+    color: #0d0d0d;
+    padding: 10px 15px; /* Reducir el padding */
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 5px;
+    width: 200px; /* Reducir el ancho */
+    border: 2px solid #f6f6f6;
+    border-radius: 5px;
+    transition: all 0.5s ease-in-out;
+}
+
+textarea {
+    height: 60px;
+    width: 95%;
+}
+
+/* Estilos específicos para los campos izquierdos */
+.form-group.left {
+    align-self: flex-start;
+}
+
+/* Estilos para el botón de envío */
+.form-submit {
+    background-color: #088395;
+    border: none;
+    color: #000;
+    padding: 15px 40px; /* Ajustar el padding */
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    text-transform: uppercase;
+    font-size: 13px;
+    box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
+    border-radius: 5px;
+    margin: 10px;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+    margin-left: 840px;
+}
+
+.form-submit:hover {
+    background-color: #71a4f0;
+}
+
+
+footer {
+    background: linear-gradient(90deg,rgba(57,140,198,1), rgb(57, 198, 111));
+    color: #000000;
+    text-align: center;
+    padding: 10px 0;
+}
+

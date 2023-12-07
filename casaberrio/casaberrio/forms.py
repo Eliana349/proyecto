@@ -7,34 +7,54 @@ import re
 from django.utils import timezone
 from django.core.exceptions import ValidationError 
 
+    
+    
 
 class RegisterForm(forms.Form):
-    Names = forms.CharField(required=True, label='Nombres',
-                                max_length=50, min_length=4)
-    surnames = forms.CharField(required=True, label='Apellidos',
-                                    max_length=50, min_length=2)
-    username = forms.CharField(required=True, label='Nombre de usuario',
-                                 max_length=50,
-                                widget=forms.TextInput(attrs={
-                                    'class':'form-control'
-                                }))
-    email = forms.EmailField(required=True, label='Correo electronico',
-                                 widget=forms.EmailInput(attrs={
-                                    'class': 'form-control',
-                                    'id': 'email',
-                                    'placeholder': 'Ejemplo@gmail.com'
-                                 }))
-    phone =PhoneNumberField(required=True, label='Numero de celular', widget=forms.TextInput, region="CO")
-    password = forms.CharField(required=True, max_length=10,label=' contraseña',
-                               widget=forms.PasswordInput(attrs={
-                                'class': 'form-control'
-                               }))
-
-
-    confirm_password = forms.CharField (required=True, max_length=10, label='Confirmar contraseña',
-                                 widget=forms.PasswordInput (attrs={
-                                    'class': 'form-control'
-                                 }))
+    Names = forms.CharField(
+        required=True,
+        label='Nombres',
+        max_length=50,
+        min_length=4
+    )
+    surnames = forms.CharField(
+        required=True,
+        label='Apellidos',
+        max_length=50,
+        min_length=2
+    )
+    username = forms.CharField(
+        required=True,
+        label='Nombre de usuario',
+        max_length=50,
+        widget=forms.TextInput(attrs={'class': 'form-control'})
+    )
+    email = forms.EmailField(
+        required=True,
+        label='Correo electrónico',
+        widget=forms.EmailInput(attrs={
+            'class': 'form-control',
+            'id': 'email',
+            'placeholder': 'Ejemplo@gmail.com'
+        })
+    )
+    phone =PhoneNumberField(
+        required=True, 
+        label='Numero de celular', 
+        widget=forms.TextInput, region="CO")
+    
+    password = forms.CharField(
+        required=True,
+        max_length=10,
+        label='Contraseña',
+        widget=forms.PasswordInput(attrs={'class': 'form-control'})
+    )
+    confirm_password = forms.CharField(
+        required=True,
+        max_length=10,
+        label='Confirmar contraseña',
+        widget=forms.PasswordInput(attrs={'class': 'form-control'})
+    )
 
     def clean_username(self):
         username = self.cleaned_data.get('username')
@@ -45,21 +65,31 @@ class RegisterForm(forms.Form):
         return username      
 
     def clean_email(self):
-            email = self.cleaned_data.get('email')
+        email = self.cleaned_data.get('email')
 
-            if User.objects.filter(email=email).exists():
-                raise forms.ValidationError('El email ya se encuentra en uso')
+        if User.objects.filter(email=email).exists():
+            raise forms.ValidationError('El email ya se encuentra en uso')
 
-            return email
-
-
+        return email
 
     def clean(self):
         cleaned_data = super().clean()
 
-        if cleaned_data.get('confirm_password') != cleaned_data.get('password'):
+        password = cleaned_data.get('password')
+        confirm_password = cleaned_data.get('confirm_password')
+
+        if confirm_password != password:
             self.add_error('confirm_password', 'Las contraseñas no coinciden')
 
+        # Validaciones para una contraseña segura
+        if len(password) < 8:
+            raise ValidationError('La contraseña debe tener al menos 8 caracteres.')
+
+        if not any(char.isdigit() for char in password):
+            raise ValidationError('La contraseña debe contener al menos un número.')
+
+
+        return cleaned_data
 
 GENERO_CHOICES = (
     ('M', 'Masculino'),
@@ -84,7 +114,13 @@ CAMPUS = (
     ('O', 'Teusaquillo'),
 )
 
-
+PROD_SER_CHOICES = (
+    ('Atencion al cliente', 'Atencion al cliente'),
+    ('bebidas ', 'bebidas'),
+    ('banquetes','banquetes'),
+    ('decoracion','decoracion'),
+    
+)
 
 
 
@@ -213,12 +249,14 @@ class formularioFedelizacion(forms.ModelForm):
         label='Teléfono',
         widget=forms.TextInput(attrs={'type': 'tel'}) 
     )
+    product_or_services_name = forms.ChoiceField(choices=PROD_SER_CHOICES ,label='Producto o servicio ')
+
     class Meta:
         model = loyalty
         fields = ['full_name','email','phone','type_pqrsd','incident_date','detailed_description','product_or_services_name','filing_number','preference_contact']
         widgets = {
             'email': forms.TextInput(attrs={'placeholder': 'Ejemplo@gmail.com'}),
-            
+            'detailed_description': forms.TextInput(attrs={'placeholder': 'Descripción de lo sucedido'})
 
 
             }
@@ -244,7 +282,7 @@ DRINK = (
 
 STATEPQRSD = (
     ('P'), ('Pendiente'),
-    ('R'), ('Resvisado'),
+    ('R'), ('Revisado'),
     ('C'), ('Contestado'),
 )
 
@@ -312,24 +350,84 @@ class CotizacionForm(forms.ModelForm):
         ('sede2', 'Teusaquillo'),
         ('sede3', 'Comuneros'),
     )
-    
+
     event_location = forms.ChoiceField(
         choices=SEDES_CHOICES,
         label="Sede del Evento"
     )
     
+    SALON_CHOICES ={
+        ('salon1', 'Salón 1'),
+        ('salon2', 'Salón 2'),
+        ('salon3', 'Salón 3'),
+    }
+
+    salon_number = forms.ChoiceField(
+        choices=SALON_CHOICES,
+        label="Número de Salon"
+    )
+    
+
     required_services = forms.MultipleChoiceField(
         choices=[
-            ('servicio1', 'Catering'),
-            ('servicio2', 'Decoración'),
-            ('servicio3', 'Música'),
-            ('servicio4', 'Mobiliario y Equipamiento'),
-            ('servicio5', 'Personal de Servicio'),
-            ('servicio6', 'Fotografía y Video'),
+            ('servicio1', 'Buffet'),
+            ('servicio2', 'Pastel'),
+            ('servicio3', 'Sonido Dj - Animación'),
+            ('servicio4', 'Sillas'),
+            ('servicio5', 'Centros de Mesa'),
+            ('servicio6', 'Fotografía Digital'),
+            ('servicio7', 'Mezcladores, hielos y gaseosas'),
+            ('servicio8', 'Coctel'),
+            ('servicio9', 'Servicio de meseros por 7 horas'),
+            ('servicio10', 'Champañas'),
         ],
         widget=forms.CheckboxSelectMultiple,
-        label="Servicios Requeridos"
+        label="Servicios Requeridos del Paquete Base"
     )
+
+    MENU_CHOICES = (
+        ('menu1', 'Menú #1'),
+        ('menu2', 'Menú #2'),
+        ('menu3', 'Menú #3'),
+        ('menu4', 'Menú #4'),
+        ('menu5', 'Menú #5'),
+        ('menu6', 'Menú #6'),
+    )
+
+    menu= forms.ChoiceField(
+        choices=MENU_CHOICES,
+        label="Menu"
+    )
+
+    ADDITIONAL_ENTRIES_CHOICES={
+        ('entrada1', 'Vol au vent de atún o pollo'),
+        ('entrada2', 'Melón con fresas a la miel'),
+        ('entrada3', 'Macedoniod de fruta variada'),
+        ('entrada4', 'Canapés de atún o pollo'),
+        ('entrada5', 'Ninguna'),
+    }
+
+    additional_entries=forms.ChoiceField(
+        choices=ADDITIONAL_ENTRIES_CHOICES,
+        label="Entradas Adicionales"
+    )
+
+    additional_services= forms.MultipleChoiceField(
+        choices=[
+            ('servicio1', 'Decoración Escalera en Flores Naturales'),
+            ('servicio2', 'Kit Hora de Carnaval con Accesorios'),
+            ('servicio3', 'Fiesta Temática'),
+            ('servicio4', 'Otros - Filmación'),
+            ('servicio5', 'Foto Registro Enmarcado 40x50 cms'),
+            ('servicio6', 'Libro de Firmas'),
+            ('servicio7', 'Videos Retrospectivos'),
+            ('servicio8', 'Video Beam - Telón'),
+            ('servicio9', 'Whisky'),
+        ],
+        widget=forms.CheckboxSelectMultiple,
+        label="Servicios Adicionales"
+    )
+
     class Meta:
         model = Cotizacion
         fields = '__all__'

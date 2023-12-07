@@ -21,10 +21,7 @@ html {
     font-weight: 400;
   }
   
-  
-  
-  
-  
+
   /* STRUCTURE */
   
   .wrapper {
@@ -40,7 +37,7 @@ html {
   #formContent {
     -webkit-border-radius: 10px 10px 10px 10px;
     border-radius: 10px 10px 10px 10px;
-    background: #ffffff46;
+    background: #ffffff71;
     padding: 30px;
     width: 90%;
     max-width: 450px;

@@ -23,6 +23,8 @@ from . import views
 from django.contrib.auth import views as auth_views
 
 from .views import generate_excel_report
+from .views import custom_excel_report, redireccionar_admin
+
 
 
 
@@ -53,12 +55,16 @@ urlpatterns = [
     path('home/home2.html', views.home_two),
     path('home/home2.htmls', views.home_two),
     path('home/home.html', LogoutView.as_view(), name='logout'),
-    path('home/cotizacion.html', views.crear_cotizacion, name='cotizacion.html'),  
+    path('home/cotizacion.html', views.cotizacion_vista, name='cotizacion.html'), 
+    path('home/cotizaciones', views.crear_cotizacion, name='cotizaciones.html'),
     path('reset_password/', auth_views.PasswordResetView.as_view(), name='password_reset'),
     path('reset_password_sent/', auth_views.PasswordResetDoneView.as_view(), name='password_reset_done'),
     path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
     path('reset_password_complete/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
     path('generate-excel-report/', generate_excel_report, name='generate_excel_report'),
+    path('redireccionar_admin/', redireccionar_admin, name='redireccionar_admin'),
+    path('custom_excel_report/', custom_excel_report, name='custom_excel_report'),
+
 
 
 

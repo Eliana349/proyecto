@@ -31,6 +31,9 @@
                             <li><a href="alquiler.html">Alquiler</a></li>
                             <li><a href="pqrs.html">PQRS</a></li>
                             <li><a href="home.html">Cerrar sesion</a></li>
+                            {% if user.is_staff %}
+                            <li><a href="{% url 'redireccionar_admin' %}">Ir al admin </a></li>
+                            {% endif %}
                         </ul>
                     </nav>        
                 </div>
@@ -47,19 +50,19 @@
                     <div class="col-lg-4" id="santaisabel">
                         <img src="/static/img/Santa Isabel.jpg" alt="santaisabel">
                         <h1>Santa Isabel</h1>
-                        <p>Contamos con 5 salones perfectamente acondicionados para realizar tu evento perfecto.</p>
+                        <p>Contamos con 5 salones perfectamente acondicionados para realizar tu evento perfecto. <br> Avenida Cra 30 #1F-40</p>
                     </div>
                     <div class="col-lg-4" id="teusaquillo">
                         <img src="/static/img/Teusaquillo.jpg" alt="teusaquillo">
                         <h1>Teusaquillo</h1>
-                        <p>Siempre acompañados del mejor equipo para ayudarles a que su velada sea inolvidable.</p>
+                        <p>Siempre acompañados del mejor equipo para ayudarles a que su velada sea inolvidable. <br> Avenida Calle 32 #15-66</p>
                     </div>
                     <div class="col-lg-4" id="comuneros">
                         <img src="/static/img/Comuneros.jpg" alt="comuneros">
                         <h1>Comuneros</h1>
-                        <p>Somos lideres en el alquiler de salones para eventos y recepciones.</p>
+                        <p>Somos lideres en el alquiler de salones para eventos y recepciones. <br>  <br>Avenida Cra 30 #4a-15</p>
                     </div>
-                </div>    
+                </div>   
             </div>
         </section>
         <br>
