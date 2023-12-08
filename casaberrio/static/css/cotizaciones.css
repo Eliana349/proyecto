@@ -40,8 +40,9 @@ nav a {
 form {
     margin-top: 20px;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between; /* Espacio entre los elementos */
+    flex-wrap: wrap; 
+    margin-left: 900px;
+    justify-content: center;
 }
 
 /* Estilos para cada campo */
@@ -79,13 +80,13 @@ input[type="number"] {
 }
 
 textarea {
-    height: 60px;
-    width: 95%;
+    height: 50px;
+    width: 450px;
 }
 
 /* Estilos específicos para los campos izquierdos */
 .form-group.left {
-    align-self: flex-start;
+    margin-left: 125px;
 }
 
 /* Estilos para el botón de envío */
@@ -94,17 +95,13 @@ textarea {
     border: none;
     color: #000;
     padding: 15px 40px; /* Ajustar el padding */
-    text-align: center;
     text-decoration: none;
-    display: inline-block;
     text-transform: uppercase;
-    font-size: 13px;
     box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
     border-radius: 5px;
     margin: 10px;
     transition: all 0.3s ease-in-out;
     cursor: pointer;
-    margin-left: 840px;
 }
 
 .form-submit:hover {

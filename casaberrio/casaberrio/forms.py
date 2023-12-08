@@ -344,6 +344,14 @@ class CotizacionForm(forms.ModelForm):
         widget=forms.DateInput(attrs={'type': 'date'}),
         label="Fecha del Evento"
     )
+
+    def clean_fecha(self):
+        fecha = self.cleaned_data.get('fecha')
+
+        if fecha < timezone.now().date():
+            raise ValidationError('La fecha no puede ser anterior al día actual.')
+        
+        return fecha
     
     SEDES_CHOICES = (
         ('sede1', 'Santa Isabel'),
@@ -427,6 +435,33 @@ class CotizacionForm(forms.ModelForm):
         widget=forms.CheckboxSelectMultiple,
         label="Servicios Adicionales"
     )
+
+    TEMATICA_CHOICES = (
+    ('Campestre', 'Campestre'),
+    ('Neon', 'Neon'),
+    ('Alfombra_Roja', 'Alfombra Roja'),
+    ('Personaje_Disney', 'Personaje Disney'),
+    ('Flores', 'Flores'),
+    ('Noche_estrellas', 'Noche de Estrellas'),
+    ('Tropical', 'Tropical'),
+    ('Mariposas', 'Mariposas'),
+
+    )  
+
+    theme = forms.ChoiceField(
+        choices=TEMATICA_CHOICES,
+        label='Tematica'
+    )
+
+    NECESIDAD_CHOICES = (
+    ('Campo_silla_de_redas', 'Campo silla de ruedas'),
+    ('Comunicador_de_lenguaje_de_señas ', 'Comunicador de lenguaje de señas '),
+
+    )
+
+    special_need = forms.ChoiceField(
+        choices=NECESIDAD_CHOICES,
+        label='Necesidad especial ')
 
     class Meta:
         model = Cotizacion

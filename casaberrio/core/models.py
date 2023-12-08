@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django import forms
 from phonenumber_field.modelfields import PhoneNumberField
 import random
@@ -354,16 +355,24 @@ class Cotizacion(models.Model):
     phone_number = models.CharField(max_length=10, verbose_name="Número de Teléfono")
     event_type = models.CharField(max_length=100, verbose_name="Tipo de Evento")
     event_date = models.DateField(verbose_name="Fecha del Evento")
-    event_duration = models.PositiveIntegerField(verbose_name="Duración del Evento (en horas)")
+    event_duration = models.PositiveIntegerField(
+        verbose_name="Duración del Evento (horas)",
+        validators=[
+            MinValueValidator(4, message='La duración debe ser como mínimo 4 horas.'),
+            MaxValueValidator(7, message='La duración no puede ser mayor a 7 horas.'),
+        ]
+    )
     event_location = models.CharField(max_length=100, verbose_name="Sede del Evento")
     salon_number = models.CharField(max_length=100, verbose_name='Número del salon')
     number_of_guests = models.PositiveIntegerField(verbose_name="Cantidad de Invitados")
     menu = models.CharField(max_length=20, verbose_name="Menú")
     childrens_menu = models.PositiveIntegerField(max_length=20, verbose_name="Cantidad de Menús Infantiles")
-    additional_entries = models.CharField(max_length=20, verbose_name="Entradas Adicionales")
+    additional_entries = models.CharField(max_length=20, verbose_name="Entradas Adicionales", default='Ninguna')
     additional_comments = models.TextField(verbose_name="Comentarios Adicionales")
     additional_services = models.CharField(max_length=200, verbose_name="Servicios Adicionales")
     required_services = models.TextField(max_length=200, verbose_name="Servicios Requeridos del Paquete Base")
+    theme = models.CharField(max_length=200, verbose_name='Tematica',default='Mariposas')
+    special_need = models.CharField( max_length=200,verbose_name='Necesidad especial',default='Campo_silla_de_ruedas')
 
     def __str__(self):
         return self.name
@@ -374,5 +383,4 @@ class Cotizacion(models.Model):
         db_table = 'cotizacion'
         ordering = ['id']
     
-
     
