@@ -6,12 +6,21 @@ header {
   padding: 15px ;
 }
 
+label {
+  font-size: 20px; /* Ajusta el tamaño de la letra según tus necesidades */
+}
 
-
+/* Estilos para la navegación */
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
 
 nav ul li {
   display: inline;
   margin: 20px;
+  font-size: 20px;
 }
 
 nav ul li a {
@@ -26,11 +35,26 @@ nav ul li a {
 
 /* Estilos para los métodos de pago */
 .payment-methods {
-  margin-top: 15px;
+  margin-top: 5px;
   text-align: center;
 }
 
+.payment-methods a {
+  text-decoration: none;
+  color: rgba(14, 158, 122, 0.6);
+  border: 2px solid rgba(14, 158, 122, 0.6);
+  border-radius: 8px;
+  padding: 10px 20px;
+  display: inline-block;
+  font-weight: bold;
+  transition: background-color 0.3s, color 0.3s;
+  width: 500px;
+}
 
+.payment-methods a:hover {
+  background-color: rgba(14, 158, 122, 0.6);
+  color: #fff;
+}
 
 
 #payment-tab-card.active-tab {
@@ -41,9 +65,10 @@ nav ul li a {
 
 }
 
-
-
-
+#payment-tab-card.active-tab form {
+  display: inline-block;
+  flex-direction: column;
+}
 
 #payment-tab-card.active-tab input[type="submit"] {
   background-color: #088395;
@@ -66,68 +91,120 @@ nav ul li a {
 }
 
 
-
-.imagen-div {
-  width: 900px;
-  height: 700px;
-  float: left;
-  margin-left: 100px; 
-  margin-right: 1px;
-}
-
-#payment-tab-card.active-tab form {
-  
-  width: 700px; /* Ajusta el ancho según tus necesidades */
-  margin-left: 0px;
-  margin-right: auto;
-}
-
-
-
-
-/* Estilos para los campos que deben estar en línea */
-input[type="text"],
-input[type="email"],
-input[type="number"],
-input[type="tel"],
-select,
-textarea,
-input[type="date"] {
-  display: inline-block; /* o display: inline; */
-  margin: 5px;
-  width: 300px; /* Ajusta el ancho según tus necesidades */
-  border: 2px solid #f6f6f6;
+input[type="text"], input[type="email"], input[type="number"], select, textarea {
+  display: inline-block;
   background-color: #f6f6f6;
+  border: none;
   color: #0d0d0d;
   padding: 15px 32px;
   text-align: center;
   text-decoration: none;
   font-size: 16px;
+  margin: 5px;
+  width: 310px;
+  border: 2px solid #f6f6f6;
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -ms-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
   transition: all 0.5s ease-in-out;
-  border-radius: 5px;
+  -webkit-border-radius: 5px 5px 5px 5px;
+  border-radius: 5px 5px 5px 5px;
 }
 
-/* Ajustar el ancho según tus necesidades */
+.imagen-div {
+  width: 900px;
+  height: 700px;
+  float: left;
+  margin-left: 200px; 
+  margin-right: 1px;
+}
 
-/* Estilos específicos para el campo de fecha */
-input[type="date"] {
+#payment-tab-card.active-tab form {
+  display: inline-block;
+  flex-direction: column;
+  width: 450px; 
+  margin-left: 100px; 
+  margin-right: 1px;
+}
+
+
+
+
+input[type="email"], input[type="number"], input[type="tel"] {
+  background-color: #f6f6f6;
+  border: none;
+  color: #0d0d0d;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 5px;
+  width: 300;
+  border: 2px solid #f6f6f6;
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-inout;
+  -ms-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+  -webkit-border-radius: 5px 5px 5px 5px;
+  border-radius: 5px 5px 5px 5px;
+}
+input[type=date] {
+  background-color: #f6f6f6;
+  border: none;
+  color: #0d0d0d;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 5px;
   width: 300px;
-}
+  border: 2px solid #f6f6f6;
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -ms-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+  -webkit-border-radius: 5px 5px 5px 5px;
+  border-radius: 5px 5px 5px 5px;
+  }
+  
+  input[type=tel] {
+  background-color: #f6f6f6;
+  border: none;
+  color: #0d0d0d;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 5px;
+  width: 300px;
+  border: 2px solid #f6f6f6;
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -ms-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+  -webkit-border-radius: 5px 5px 5px 5px;
+  border-radius: 5px 5px 5px 5px;
+  }
 
-/* Estilos para el botón de envío */
-input[type="submit"] {
+input[type="button"], input[type="submit"], input[type="reset"] {
   background-color: #088395;
   border: none;
-  color: #000000;
-  padding: 10px 20px;
-  font-weight: bold;
-  margin-top: 5px;
-  cursor: pointer;
-  border-radius: 5px;
-  transition: background-color 0.3s ease-in-out;
-}
-
-/* Efecto hover para el botón de envío */
-input[type="submit"]:hover {
-  background-color: #1cceea;
+  color: #000;
+  padding: 15px 80px;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 13px;
+  box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
+  display: flex;
+  justify-content: center;
+  margin: 5px 20px 40px 20px;
+  transition: all 0.3s ease-in-out;
 }
