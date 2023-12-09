@@ -35,13 +35,15 @@ class Reserva(models.Model):
     event_date = models.DateField( verbose_name='Fecha de evento')
     event_start_time = models.TimeField(verbose_name='Hora inicial del evento')
     end_time_of_the_event = models.TimeField(verbose_name='Hora final del evento')
-    theme = models.CharField(max_length=200, verbose_name='Tematica',choices=TEMATICA_CHOICES,default='Mariposas')
-    description = models.CharField(max_length=500,  verbose_name='Descripcion', help_text= 'Descipcion  ')
-    special_need = models.CharField( max_length=200,verbose_name='Necesidad especial', choices=NECECIDAD_CHOICES,default='Campo_silla_de_redas' )
     eventType = models.CharField (max_length=200, verbose_name='Tipo de evento')
+    theme = models.CharField(max_length=200, verbose_name='Tematica',choices=TEMATICA_CHOICES,default='Mariposas')
+    special_need = models.CharField( max_length=200,verbose_name='Necesidad especial', choices=NECECIDAD_CHOICES,default='Campo_silla_de_redas' )
     campus = models.CharField (max_length=200, verbose_name='Sede' )
     lounge = models.CharField(max_length=200,verbose_name='Salón' )
-    
+    Total_value = forms.IntegerField(
+    widget=forms.NumberInput,
+    label='Valor Total'
+)
     
     def __str__(self):
         return str(self.event_date)

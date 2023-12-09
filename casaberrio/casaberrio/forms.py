@@ -191,18 +191,27 @@ class formularioReserva(forms.ModelForm):
         label='Hora final '
     )
 
-    theme = forms.ChoiceField(choices=TEMATICA_CHOICES ,label='Tematica')
-    description = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Descripcion','rows': 5, 'cols': 100}), label='')
-    special_need = forms.ChoiceField(choices=NECECIDAD_CHOICES ,label='Necesidad especial ')
     eventType = forms.ChoiceField(choices=TIPO_EVENTO,label='Tipo de evento')
+    theme = forms.ChoiceField(choices=TEMATICA_CHOICES ,label='Tematica')
+    special_need = forms.ChoiceField(choices=NECECIDAD_CHOICES ,label='Necesidad especial ')
     campus = forms.ChoiceField(choices=CAMPUS,label='Lugar del evento')
     lounge = forms.ChoiceField(choices=SALON,label='Numero de salon')
-    
+    Total_value = forms.IntegerField(
+    widget=forms.NumberInput,
+    label='Valor Total'
+)
 
-    
     class Meta:
-        model = Reserva  
-        fields = ['name','lastname','email', 'phone', 'gender','event_date','event_start_time','end_time_of_the_event','theme','special_need','eventType','campus','lounge','description']
+        model = Reserva
+        fields = ['name', 'lastname', 'email', 'phone', 'gender', 'event_date', 'event_start_time',
+                  'end_time_of_the_event', 'eventType', 'theme', 'special_need', 'campus', 'lounge', 'Total_value']
+    
+    
+    
+    
+    
+    
+    
     def clean(self):
         cleaned_data = super().clean()
         event_start_time = cleaned_data.get('event_start_time')
@@ -229,19 +238,6 @@ class formularioPSE(forms.ModelForm):
         class Meta:
             full_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Nombres Completos'}),label='Nombres Completos')
             
-
-
-
-
-        
-class formularioTarjetaDeCD(forms.ModelForm):
-    expiration = forms.CharField(widget=forms.DateInput(attrs={'placeholder': '25/10'}),label='Vencimiento')
-    class Meta:
-        model = TarjetaDeCD
-        fields = ['full_name','card_number','expiration']     
-
-
-
           
 class formularioFedelizacion(forms.ModelForm):
     incident_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}),label='Fecha de incidente')

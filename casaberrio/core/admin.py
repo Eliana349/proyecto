@@ -26,23 +26,6 @@ admin.site.register(Cotizacion)
 
 
 
-class TarjetaDeCDAdminForm(forms.ModelForm):
-    class Meta:
-        model = TarjetaDeCD
-        fields = ['full_name', 'card_number']
-        widgets = {
-            'expiration': forms.TextInput(attrs={'disabled': 'disabled'}),
-            'card_number': forms.TextInput(attrs={'disabled': 'disabled'}),
-            'full_name': forms.TextInput(attrs={'disabled': 'disabled'}),
-        }
-
-
-class TarjetaDeCDAdmin(admin.ModelAdmin):
-    form = TarjetaDeCDAdminForm
-
-admin.site.register(TarjetaDeCD, TarjetaDeCDAdmin)
-
-
 class PSEAdminForm(forms.ModelForm):
     class Meta:
         model = PSE
