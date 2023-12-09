@@ -1,8 +1,13 @@
 /* Estilos para el header */
 header {
-  background: linear-gradient(90deg, rgba(57, 140, 198, 1), rgb(57, 198, 111));
+  background: linear-gradient(90deg,rgba(57,140,198,1), rgb(57, 198, 111));
   color: #ffffff;
-  padding: 10px 0;
+  text-align: center;
+  padding: 15px ;
+}
+
+label {
+  font-size: 20px; /* Ajusta el tamaño de la letra según tus necesidades */
 }
 
 /* Estilos para la navegación */
@@ -15,6 +20,7 @@ nav ul {
 nav ul li {
   display: inline;
   margin: 20px;
+  font-size: 20px;
 }
 
 nav ul li a {

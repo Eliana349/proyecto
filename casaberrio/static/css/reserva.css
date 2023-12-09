@@ -1,7 +1,11 @@
+
 header {
-  background: linear-gradient(90deg, rgba(57, 140, 198, 1), rgb(57, 198, 111));
+  background: linear-gradient(90deg,rgba(57,140,198,1), rgb(57, 198, 111));
   color: #ffffff;
-  padding: 10px 0;}
+  text-align: center;
+  padding: 15px ;
+}
+
 
 .col-lg-2 img {
   height: 100px;
@@ -96,7 +100,7 @@ input[type=text] {
   display: inline-block;
   font-size: 16px;
   margin: 5px;
-  width: 260px;
+  width: 290px;
   border: 2px solid #f6f6f6;
   -webkit-transition: all 0.5s ease-in-out;
   -moz-transition: all 0.5s ease-in-out;
@@ -141,7 +145,7 @@ select {
   display: inline-block;
   font-size: 16px;
   margin: 10px !important;
-  width: 255px;
+  width: 300px;
   border: 2px solid #f6f6f6;
   -webkit-transition: all 0.5s ease-in-out;
   -moz-transition: all 0.5s ease-in-out;
@@ -186,7 +190,7 @@ select {
   display: inline-block;
   font-size: 16px;
   margin: 5px;
-  width: 200px;
+  width: 217px;
   border: 2px solid #f6f6f6;
   -webkit-transition: all 0.5s ease-in-out;
   -moz-transition: all 0.5s ease-in-out;
@@ -208,7 +212,7 @@ select {
   display: inline-block;
   font-size: 16px;
   margin: 5px;
-  width: 260px;
+  width: 290px;
   border: 2px solid #f6f6f6;
   -webkit-transition: all 0.5s ease-in-out;
   -moz-transition: all 0.5s ease-in-out;
@@ -246,7 +250,7 @@ input[type="time" i] {
   display: inline-block;
   font-size: 16px;
   margin: 5px;
-  width: 130px;
+  width: 150px;
   border: 2px solid #f6f6f6;
   -webkit-transition: all 0.5s ease-in-out;
   -moz-transition: all 0.5s ease-in-out;
@@ -289,4 +293,27 @@ input[type="date"], input[type="time"], input[type="tel"] {
 .reserved-dates {
   background-color: #FFCCCC; /* Cambia el color de fondo a rojo claro */
   color: #555; /* Cambia el color del texto */
+}
+
+
+
+input[type="number" i] {
+  background-color: #f6f6f6;
+  border: none;
+  color: #0d0d0d;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 5px;
+  width: 275px;
+  border: 2px solid #f6f6f6;
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -ms-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+  -webkit-border-radius: 5px 5px 5px 5px;
+  border-radius: 5px 5px 5px 5px;
 }

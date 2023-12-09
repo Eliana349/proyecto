@@ -151,6 +151,9 @@
                         <h1>DESCUBRE LA MAGIA DE NUESTRO PAQUETE BASE</h1>
                         <p>¡Nos emociona ofrecerte un paquete que hará de tu evento una experiencia inolvidable! Con nuestro paquete base, disfrutarás de:</p>
                     </div>
+                    <a href="cotizaciones">
+                      <button>¡Cotiza ahora mismo!</button>
+                    </a>
                     <ul id="lista_paquete">
                         <li>Salon por maximo 7 horas</li>
                         <li>Buffet</li>
@@ -436,20 +439,6 @@
 
 
      </section>
-     <section id="titulo">
-             <h1>FORMULARIO COTIZACIÓN</h1>
-            <p>A continuación encontrarás un formulario en el cual puedes realizar una cotización. Por favor, proporciona la información requerida para ayudarnos a crear una cotización precisa que se adapte a tus necesidades.</p>
-     </section>
-        <section id="bg_formulario">
-            <form method="post" id="formulario" action="" onsubmit="confirmarEnvio()">
-                {% csrf_token %} <!-- Agrega el token CSRF para la seguridad -->
-                {{ form.as_p }} <!-- Renderiza el formulario en el HTML -->
-
-                <div>
-                    <button type="submit">Enviar Cotización</button>
-                </div>
-            </form>
-        </section>
         <section id="personalizacion_eventos">
             <div class="container">
                 <div class="row">
@@ -492,96 +481,68 @@
             </div>
       </section>
     </main>
-    <footer class="text-center text-lg-start" style="background-color: rgba(57, 140, 198, 1); color: white;">
-        <!-- Section: Social media -->
-        <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
-        
-    
-        <!-- Right -->
-        <div>
-            <a href="" class="me-4 text-reset">
-            <i class="fab fa-facebook-f"></i>
-            </a>
-            <a href="" class="me-4 text-reset">
-            <i class="fab fa-twitter"></i>
-            </a>
-            <a href="" class="me-4 text-reset">
-            <i class="fab fa-google"></i>
-            </a>
-            <a href="" class="me-4 text-reset">
-            <i class="fab fa-instagram"></i>
-            </a>
-            <a href="" class="me-4 text-reset">
-            <i class="fab fa-linkedin"></i>
-            </a>
-            <a href="" class="me-4 text-reset">
-            <i class="fab fa-github"></i>
-            </a>
-        </div>
-        <!-- Right -->
-        </section>
-        <!-- Section: Social media -->
-    
-        <!-- Section: Links  -->
-        <section class="">
-        <div class="container text-center text-md-start mt-5">
-            <!-- Grid row -->
-            <div class="row mt-3">
-            <!-- Grid column -->
-            <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
-                <!-- Content -->
-                <h6 class="text-uppercase fw-bold mb-4">
-                <i class="fas fa-gem me-3"></i>Casa Berrio
-                </h6>
-                <p>
-                    Aqui podras encontrar todas nuestras redes sociales,
-                    tanto como nuestras ubicaciones de las diferentes casas
-                    de eventos 
-                </p>
-            </div>
-            <!-- Grid column -->
-    
-            <!-- Grid column -->
-          
-            <!-- Grid column -->
-    
-            <!-- Grid column -->
-            <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
-                <!-- Links -->
-                <h6 class="text-uppercase fw-bold mb-4">
-                    ENLACES ÚTILES
-                </h6>
-                <p>
-                <a href="reservas.html" class="text-reset">Reservas</a>
-                </p>
-                <p>
-                <a href="alquiler.html" class="text-reset">Alquileres</a>
-                </p>
-                <p>
-                <a href="nosotros.html" class="text-reset">Nosotros</a>
-                </p>
-                <p>
-                <a href="pqrs.html" class="text-reset">Ayuda</a>
-                </p>
-            </div>
-
-            <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
-                <h6 class="text-uppercase fw-bold mb-4">Contactos</h6>
-                <p><i class="fas fa-home me-3"></i>  Bogotá, Colombia</p>
-                <p>
-                <i class="fas fa-envelope me-3"></i>
-                casaberrio@gmail.com
-                </p>
-                <p><i class="fas fa-phone me-3"></i> + 01 234 567 88</p>
-                <p><i class="fas fa-print me-3"></i> + 01 234 567 89</p>
-            </div>
-            </div>
-        </div>
-        </section>
-        <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
-        © 2023 Copyright:
-        <a class="text-reset fw-bold" href="https://www.instagram.com/salonescasaberrio/?igshid=YmMyMTA2M2Y%3D">CasaBerrio.com</a>
-        </div>
-    </footer>
+    <footer class="text-center text-lg-start" style="background: linear-gradient(90deg,rgba(57,140,198,1), rgb(57, 198, 111))">
+      <!-- Section: Links  -->
+      <section class="">
+          <br>
+          <div class="container text-center text-md-start mt-5">
+              <!-- Grid row -->
+              <div class="row mt-3">
+                  <!-- Grid column -->
+                  <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                      <!-- Content -->
+                      <h4 class="text-uppercase fw-bold mb-4">
+                          <i class="fas fa-gem me-3"></i>Casa Berrio
+                      </h4>
+                      <p><h5>
+                          Aquí podrás encontrar todas nuestras redes sociales,
+                          así como nuestras ubicaciones de los diferentes eventos.</h5>
+                      </p>
+                  </div>
+                  <!-- Grid column -->
+  
+                  <!-- Grid column -->
+                  <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+                      <!-- Links -->
+                      <h4 class="text-uppercase fw-bold mb-4">
+                          ENLACES ÚTILES
+                      </h4>
+                      <p><h5>
+                          <a href="reservas.html" class="text-reset">Reservas</a></h5>
+                      </p>
+                      <p><h5>
+                          <a href="alquiler.html" class="text-reset">Alquileres</a></h5>
+                      </p>
+                      <p><h5>
+                          <a href="nosotros.html" class="text-reset">Nosotros</a></h5>
+                      </p>
+                      <p><h5>
+                          <a href="pqrs.html" class="text-reset">Ayuda</a></h5>
+                      </p>
+                  </div>
+  
+                  <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                      <h4 class="text-uppercase fw-bold mb-4">Contactos</h4>
+                      <p><h5><i class="fas fa-home me-3"></i>  Bogotá, Colombia</p></h5>
+                      <p>
+                      <h5><i class="fas fa-envelope me-3"></i>
+                          casaberrio@gmail.com</h5>
+                      </p>
+                      <p><h5><i class="fas fa-phone me-3"></i> + 01 234 567 88</p></h5>
+                      <p><h5><i class="fas fa-print me-3"></i> + 01 234 567 89</p></h5>
+                      
+                      <p><i class="fas fa-phone me-3"><a id="whatsapp" href="https://api.whatsapp.com/send?phone=573202929806&text=%C2%A1Hola%20Casa%20Berrio!%20Deseo%20mas%20informaci%C3%B3n%2C%20me%20gustar%C3%ADa%20hablar%20de%20un%20evento%20que%20quiero%20cotizar."><img src="/static/img/whatsapp.png" alt="whatsapp" height="35px">whatsapp</a>
+                      </p>
+                      <a href="https://es-la.facebook.com/EventosCasaBerrio/"><img src="/static/img/Facebook.png" alt="facebook" style="height: 30px;"></a>
+                  <a href="https://www.instagram.com/salonescasaberrio/?igshid=YmMyMTA2M2Y%3D"><img src="/static/img/instagram.png" alt="instagram"  style="height: 30px;"></a>
+              </div>
+                  </div>
+      </section>
+      <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+          <!-- Right -->
+          © 2023 Copyright:
+          <a class="text-reset fw-bold" href="https://www.instagram.com/salonescasaberrio/?igshid=YmMyMTA2M2Y%3D">CasaBerrio.com</a>
+      </div>
+  </footer>
 </body>
 </html>

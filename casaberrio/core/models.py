@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django import forms
 from phonenumber_field.modelfields import PhoneNumberField
 import random
@@ -34,13 +35,15 @@ class Reserva(models.Model):
     event_date = models.DateField( verbose_name='Fecha de evento')
     event_start_time = models.TimeField(verbose_name='Hora inicial del evento')
     end_time_of_the_event = models.TimeField(verbose_name='Hora final del evento')
-    theme = models.CharField(max_length=200, verbose_name='Tematica',choices=TEMATICA_CHOICES,default='Mariposas')
-    description = models.CharField(max_length=500,  verbose_name='Descripcion', help_text= 'Descipcion  ')
-    special_need = models.CharField( max_length=200,verbose_name='Necesidad especial', choices=NECECIDAD_CHOICES,default='Campo_silla_de_redas' )
     eventType = models.CharField (max_length=200, verbose_name='Tipo de evento')
+    theme = models.CharField(max_length=200, verbose_name='Tematica',choices=TEMATICA_CHOICES,default='Mariposas')
+    special_need = models.CharField( max_length=200,verbose_name='Necesidad especial', choices=NECECIDAD_CHOICES,default='Campo_silla_de_redas' )
     campus = models.CharField (max_length=200, verbose_name='Sede' )
     lounge = models.CharField(max_length=200,verbose_name='Salón' )
-    
+    Total_value = forms.IntegerField(
+    widget=forms.NumberInput,
+    label='Valor Total'
+)
     
     def __str__(self):
         return str(self.event_date)
@@ -50,6 +53,81 @@ class Reserva(models.Model):
         verbose_name_plural = 'Reservas'
         db_table = 'Reserva'
         ordering = ['id']  
+
+
+
+class Cotizacion(models.Model):
+    name = models.CharField(max_length=100, verbose_name="Nombre Completo")
+    email = models.EmailField(verbose_name="Correo Electrónico")
+    phone_number = models.CharField(max_length=10, verbose_name="Número de Teléfono")
+    event_type = models.CharField(max_length=100, verbose_name="Tipo de Evento")
+    event_date = models.DateField(verbose_name="Fecha del Evento")
+    event_duration = models.PositiveIntegerField(
+        verbose_name="Duración del Evento (horas)",
+        validators=[
+            MinValueValidator(4, message='La duración debe ser como mínimo 4 horas.'),
+            MaxValueValidator(7, message='La duración no puede ser mayor a 7 horas.'),
+        ]
+    )
+    event_location = models.CharField(max_length=100, verbose_name="Sede del Evento")
+    salon_number = models.CharField(max_length=100, verbose_name='Número del salon')
+    number_of_guests = models.PositiveIntegerField(verbose_name="Cantidad de Invitados")
+    menu = models.CharField(max_length=20, verbose_name="Menú")
+    childrens_menu = models.PositiveIntegerField(max_length=20, verbose_name="Cantidad de Menús Infantiles")
+    additional_entries = models.CharField(max_length=20, verbose_name="Entradas Adicionales", default='Ninguna')
+    additional_comments = models.TextField(verbose_name="Comentarios Adicionales")
+    additional_services = models.CharField(max_length=200, verbose_name="Servicios Adicionales")
+    required_services = models.TextField(max_length=200, verbose_name="Servicios Requeridos del Paquete Base")
+    theme = models.CharField(max_length=200, verbose_name='Tematica',default='Mariposas')
+    special_need = models.CharField( max_length=200,verbose_name='Necesidad especial',default='Campo_silla_de_ruedas')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'cotización'
+        verbose_name_plural = 'cotizaciones'
+        db_table = 'cotizacion'
+        ordering = ['id']
+    
+    
+
+class Cotizacion(models.Model):
+    name = models.CharField(max_length=100, verbose_name="Nombre Completo")
+    email = models.EmailField(verbose_name="Correo Electrónico")
+    phone_number = models.CharField(max_length=10, verbose_name="Número de Teléfono")
+    event_type = models.CharField(max_length=100, verbose_name="Tipo de Evento")
+    event_date = models.DateField(verbose_name="Fecha del Evento")
+    event_duration = models.PositiveIntegerField(
+        verbose_name="Duración del Evento (horas)",
+        validators=[
+            MinValueValidator(4, message='La duración debe ser como mínimo 4 horas.'),
+            MaxValueValidator(7, message='La duración no puede ser mayor a 7 horas.'),
+        ]
+    )
+    event_location = models.CharField(max_length=100, verbose_name="Sede del Evento")
+    salon_number = models.CharField(max_length=100, verbose_name='Número del salon')
+    number_of_guests = models.PositiveIntegerField(verbose_name="Cantidad de Invitados")
+    menu = models.CharField(max_length=20, verbose_name="Menú")
+    childrens_menu = models.PositiveIntegerField(max_length=20, verbose_name="Cantidad de Menús Infantiles")
+    additional_entries = models.CharField(max_length=20, verbose_name="Entradas Adicionales", default='Ninguna')
+    additional_comments = models.TextField(verbose_name="Comentarios Adicionales")
+    additional_services = models.CharField(max_length=200, verbose_name="Servicios Adicionales")
+    required_services = models.TextField(max_length=200, verbose_name="Servicios Requeridos del Paquete Base")
+    theme = models.CharField(max_length=200, verbose_name='Tematica',default='Mariposas')
+    special_need = models.CharField( max_length=200,verbose_name='Necesidad especial',default='Campo_silla_de_ruedas')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'cotización'
+        verbose_name_plural = 'cotizaciones'
+        db_table = 'cotizacion'
+        ordering = ['id']
+    
+    
+
             
 class TypeId(models.Model):
     type_id = models.CharField(max_length=100, verbose_name='Tipo de identificacion')
@@ -347,31 +425,16 @@ class StatePqrsd(models.Model):
         ordering = ['id']
 
 
+class DetalleCompra(models.Model):
+    cotizacion = models.ForeignKey(Cotizacion, on_delete=models.CASCADE, related_name='detalles_compra')
+    Product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    cantidad = models.PositiveIntegerField()
+    precio_unitario = models.DecimalField(max_digits=10, decimal_places=2)
+    subtotal = models.DecimalField(max_digits=10, decimal_places=2)
 
-class Cotizacion(models.Model):
-    name = models.CharField(max_length=100, verbose_name="Nombre Completo")
-    email = models.EmailField(verbose_name="Correo Electrónico")
-    phone_number = models.CharField(max_length=10, verbose_name="Número de Teléfono")
-    event_type = models.CharField(max_length=100, verbose_name="Tipo de Evento")
-    event_date = models.DateField(verbose_name="Fecha del Evento")
-    event_duration = models.PositiveIntegerField(verbose_name="Duración del Evento (en horas)")
-    event_location = models.CharField(max_length=100, verbose_name="Sede del Evento")
-    salon_number = models.CharField(max_length=100, verbose_name='Número del salon')
-    number_of_guests = models.PositiveIntegerField(verbose_name="Cantidad de Invitados")
-    required_services = models.CharField(max_length=200, verbose_name="Servicios Requeridos del Paquete Base")
-    menu = models.CharField(max_length=20, verbose_name="Menú")
-    childrens_menu = models.CharField(max_length=20, verbose_name="Menú Infantil")
-    additional_services = models.CharField(max_length=200, verbose_name="Servicios Adicionales")
-    additional_comments = models.TextField(verbose_name="Comentarios Adicionales")
+    def save(self, *args, **kwargs):
+        self.subtotal = self.cantidad * self.precio_unitario
+        super().save(*args, **kwargs)
 
     def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name = 'cotización'
-        verbose_name_plural = 'cotizaciones'
-        db_table = 'cotizacion'
-        ordering = ['id']
-    
-
-    
+        return f"{self.cantidad} x {self.producto.nombre}"
