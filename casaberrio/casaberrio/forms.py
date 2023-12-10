@@ -2,7 +2,7 @@ from typing import Any
 from django import forms
 from django.contrib.auth.models import User 
 from phonenumber_field.formfields import PhoneNumberField
-from core.models import Reserva,PSE,TarjetaDeCD,loyalty,Inventory,Carrito,Product, Cotizacion
+from core.models import Reserva,PSE,TarjetaDeCD,loyalty,Inventory,Carrito,Product, Cotizacion,TipoDeProducto
 import re
 from django.utils import timezone
 from django.core.exceptions import ValidationError 
@@ -301,7 +301,7 @@ EQUIPAMENT = (
 )
 
 class formularioCarrito(forms.ModelForm):
-    elementos_alquilar = forms.CharField(widget=forms.Textarea(attrs={'readonly': 'readonly'}))
+    elementos_alquilar = forms.CharField(widget=forms.Textarea(attrs={'readonly': 'readonly', 'name' : 'elementos_alquilar', 'id' : 'elementos_alquilar'}))
     date_start = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
     date_finish = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
     class Meta:
@@ -313,11 +313,10 @@ class formularioCarrito(forms.ModelForm):
         
 
 class formularioTipo(forms.ModelForm):
-    Tipo = forms.ChoiceField()
-    cantidad = forms.IntegerField()
+    cantidad = forms.IntegerField(widget=forms.NumberInput(), label='')
     class Meta:
-        model = Product
-        fields = ['Tipo'] 
+        model = TipoDeProducto
+        fields = ['cantidad'] 
 
 class CotizacionForm(forms.ModelForm):
     

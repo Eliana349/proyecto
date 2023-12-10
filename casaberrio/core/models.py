@@ -208,7 +208,7 @@ class Category(models.Model):
         verbose_name = 'Categoria alquiler'
         verbose_name_plural = 'Categorias alquileres'
         db_table = 'categoria_alquilar'
-        ordering = ['id']  
+        ordering = ['id']
 
 
 class Product(models.Model):
@@ -216,8 +216,6 @@ class Product(models.Model):
     nombre = models.CharField(max_length=50)
     created_at = models.DateTimeField(auto_now_add=True)
     categoria = models.ForeignKey(Category, on_delete=models.CASCADE)
-    precio =  models.PositiveIntegerField ()
-    cantidad = models.PositiveIntegerField()
     
     
     def __str__(self):
@@ -230,11 +228,11 @@ class Product(models.Model):
         ordering = ['id']
 
 
-
 class TipoDeProducto(models.Model):
     nombre = models.CharField(max_length=20)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     precio = models.DecimalField(max_digits=8, decimal_places=0)
+    cantidad = models.IntegerField(verbose_name='cantidad')
     created_at = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
@@ -262,6 +260,18 @@ class Carrito(models.Model):
         verbose_name_plural = 'Alquileres'
         db_table = 'Alquiler'
         ordering = ['id']
+
+class TypeOFinput(models.Model):
+    type_of_input = models.CharField(max_length=100,verbose_name= 'Tipo de insumo')
+    
+    def __str__(self):
+        return self.type_of_input
+
+    class Meta:
+        verbose_name='Tipo de insumo'
+        verbose_name_plural='Tipo de insumos'
+        db_table='Tipo de insumo'
+        ordering=['id']
 
 class TypeOFinput(models.Model):
     type_of_input = models.CharField(max_length=100,verbose_name= 'Tipo de insumo')

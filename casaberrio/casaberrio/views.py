@@ -260,6 +260,23 @@ def inventario_view(request):
             messages.error(request, 'Usuario o contraseña incorrectos')
         
     return render(request,  'pqrs.html', {'form':contact_form})
+
+
+@login_required
+def inventario_view(request):
+    contact_form = formularioInventario()
+    
+    if request.method == 'POST':
+        contact_form = formularioInventario(data=request.POST)
+        
+        if contact_form.is_valid():
+            contact_form.save()
+            return redirect('home2')
+            
+        else:
+            messages.error(request, 'Usuario o contraseña incorrectos')
+        
+    return render(request,  'pqrs.html', {'form':contact_form})
    
 
 @login_required
@@ -269,25 +286,49 @@ def alquiler_view(request):
     contact_formtipo = Product.objects.all()
     contact_form = formularioTipo(request.POST or None)
     contact_form_carrito = formularioCarrito(request.POST or None)
-    if contact_form.is_valid():
-        Tipo = TipoDeProducto.objects.get(id=1)
-        tipo = contact_form.cleaned_data.get('Tipo')
-        number = contact_form.cleaned_data.get('cantidad')
-        opciones_nuevas = f'{Tipo}  :  {number}'
-        opciones_anteriores = contact_form_carrito.data.get('elementos_alquilar', opciones_nuevas)
-        opciones_actualizadas = f'{opciones_anteriores}\n{opciones_anteriores}'
-        contact_form_carrito = formularioCarrito({'elementos_alquilar': opciones_actualizadas})
-    else:
-        messages.error(request, 'Las opciones son invalidas')
 
-        
-    return render(request,  'alquiler.html', {
-        'Mesas':contact_form, 
-        'Carrito':contact_form_carrito,
+    if contact_form.is_valid():
+        Tipo = request.POST.get('option1')
+        number = contact_form.cleaned_data.get('cantidad')
+        filterr = TipoDeProducto.objects.get(nombre=Tipo)
+        price = filterr.precio
+        precio = number * price
+        producto = filterr.product
+        opciones_nuevas = f'{producto}  :  {Tipo}  :  {number}  :  ${precio}'
+        opciones_guardadas = request.session.get('opciones_alquiler', [])
+        opciones_guardadas.append(opciones_nuevas)
+        request.session['opciones_alquiler'] = opciones_guardadas
+        opciones_en_carrito = '\n'.join(opciones_guardadas)
+        contact_form_carrito = formularioCarrito({'elementos_alquilar': opciones_en_carrito})
+    else:
+        messages.error(request, 'Las opciones son inválidas')
+
+    return render(request, 'alquiler.html', {
+        'cantidad': contact_form, 
+        'Carrito': contact_form_carrito,
         'products': contact_formtipo,
-        'Categoria':contact_formcategoria,
-        'Tipo':contact_form_tipoP,
+        'Categoria': contact_formcategoria,
+        'Tipo': contact_form_tipoP,
     })
+
+def precio_total(request):
+    contact_form = formularioTipo(request.POST or None)
+    if contact_form.is_valid():
+        cantidad = contact_form.cleaned_data.get('cantidad')
+        precio = TipoDeProducto.precio
+        cantidad = TipoDeProducto.cantidad
+        opciones_guardadas = request.session.get('opciones_alquiler', [])
+        opciones_guardadas.append(cantidad)
+        request.session['opciones_alquiler'] = opciones_guardadas
+        for price,amount in zip(precio,opciones_guardadas):
+            price_amount = amount * price
+            return price_amount  
+
+def limpiar_sesion(request):
+    del request.session['opciones_alquiler']
+    
+    return HttpResponse("Sesión limpiada")    
+        
 
 @login_required
 def productos(request):

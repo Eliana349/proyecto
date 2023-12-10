@@ -64,6 +64,7 @@ urlpatterns = [
     path('generate-excel-report/', generate_excel_report, name='generate_excel_report'),
     path('redireccionar_admin/', redireccionar_admin, name='redireccionar_admin'),
     path('custom_excel_report/', custom_excel_report, name='custom_excel_report'),
+    path('limpiar_sesion/', views.limpiar_sesion, name='limpiar_sesion')
 
 
 

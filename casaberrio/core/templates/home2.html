@@ -35,7 +35,23 @@
                             <li><a href="{% url 'redireccionar_admin' %}">Ir al admin </a></li>
                             {% endif %}
                         </ul>
-                    </nav>        
+                    </nav>
+                    <div class="tres-rayitas">
+
+                        <div class="menu-icon" id="menu-icon">
+                          <div class="bar"></div>
+                          <div class="bar"></div>
+                          <div class="bar"></div>
+                        </div>
+                        
+                        <div class="menu" id="menu">
+                          <a class="menu-a" href="{% url 'generate_excel_report' %}">Historial de ventas</a>
+                          <a class="menu-a" href="#">Historial de alquiler</a>
+                          <a class="menu-a" href="#">Historial de nose</a>
+                        </div>
+                        
+                        <script src="{% static 'js/prueba.js' %}"></script>
+                    </div>               
                 </div>
            </div> 
         </div>

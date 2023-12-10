@@ -279,7 +279,7 @@ label {
   color: rgba(57,140,198,1);
 }
   
-input[type=button], input[type=submit], input[type=reset]  {
+[type=button], input[type=submit], input[type=reset]  {
     background-color: rgba(57, 140, 198, 1);;
     border: none;
     color: white;
@@ -295,12 +295,12 @@ input[type=button], input[type=submit], input[type=reset]  {
 
 
   
-input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover  {
+[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover  {
     background-color: #39ace7;
 }
 
   
-input[type=button]:active, input[type=submit]:active, input[type=reset]:active  {
+[type=button]:active, input[type=submit]:active, input[type=reset]:active  {
     transform: scale(0.95);
 }
   
@@ -398,4 +398,8 @@ textarea{
   transition: all 0.5s ease-in-out;
   -webkit-border-radius: 5px 5px 5px 5px;
   border-radius: 5px 5px 5px 5px;
+}
+
+#elementos_alquilar{
+  resize: none;
 }
