@@ -1,7 +1,19 @@
 from django.contrib import admin
 from .models import *
 from django import forms
+from core.models import PQRS  # Ajusta la ruta según la ubicación real de tu modelo
 
+class PQRSAdmin(admin.ModelAdmin):
+    list_display = ['tipo', 'descripcion', 'estado', 'respuesta']
+    list_filter = ['tipo', 'estado']
+    search_fields = ['tipo', 'descripcion']
+
+    fieldsets = [
+        ('Información General', {'fields': ['tipo', 'descripcion', 'estado']}),
+        ('Respuesta', {'fields': ['respuesta']}),
+    ]
+
+admin.site.register(PQRS, PQRSAdmin)
 
 
 admin.site.register(Inventory)
