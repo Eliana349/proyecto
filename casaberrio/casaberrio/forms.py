@@ -55,6 +55,10 @@ class RegisterForm(forms.Form):
         label='Confirmar contraseña',
         widget=forms.PasswordInput(attrs={'class': 'form-control'})
     )
+    checkbox = forms.BooleanField(
+        widget=forms.CheckboxInput(attrs={'class': 'checkbox-order'}),
+        label='Acepto y estoy de acuerdo con los términos y condiciones'
+    )
 
     def clean_username(self):
         username = self.cleaned_data.get('username')
@@ -143,13 +147,13 @@ TEMATICA_CHOICES = (
 NECECIDAD_CHOICES = (
     ('Campo_silla_de_redas', 'Campo silla de redas'),
     ('Comunicador_de_lenguaje_de_señas ', 'Comunicador de lenguaje de señas '),
+    ('Ninguno', 'Ninguno'),
 
     )
 
 class formularioReserva(forms.ModelForm):
     
-    name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Nombres'}),label='', max_length=50,min_length=3)
-    lastname = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Apellidos'}), label='',max_length=50,min_length=3)
+    name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': ''}),label='Nombre y Apellido ', max_length=50,min_length=3)
     email = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Correo electronico'}), label='')
     phone = PhoneNumberField(label='',widget=forms.TextInput(attrs={'placeholder':'Telefono ','type': 'tel'})   )
     gender = forms.ChoiceField(choices=GENERO_CHOICES,label='')
@@ -202,7 +206,7 @@ class formularioReserva(forms.ModelForm):
 )
     class Meta:
         model = Reserva
-        fields = ['name', 'lastname', 'email', 'phone', 'gender', 'event_date', 'event_start_time',
+        fields = ['name', 'email', 'phone', 'gender', 'event_date', 'event_start_time',
                   'end_time_of_the_event', 'eventType', 'theme', 'special_need', 'campus', 'lounge', 'Total_value']
 
     

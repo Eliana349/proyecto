@@ -24,14 +24,11 @@
     {% csrf_token %}
 
     <div class="form-group">
-        <label for="{{ reserva_form.name.id_for_label }}">Nombres:</label>
+        <label for="{{ reserva_form.name.id_for_label }}">Nombre y Apellido :</label>
         {{ reserva_form.name }}
     </div>
 
-    <div class="form-group">
-        <label for="{{ reserva_form.lastname.id_for_label }}">Apellidos:</label>
-        {{ reserva_form.lastname }}
-    </div>
+   
 
     <div class="form-group">
         <label for="{{ reserva_form.email.id_for_label }}">Correo electrónico:</label>
