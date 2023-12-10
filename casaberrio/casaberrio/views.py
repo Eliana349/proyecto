@@ -303,8 +303,6 @@ def obtener_fechas_reservas_anteriores():
     reservas_anteriores = Reserva.objects.filter(event_date__lt=timezone.now().date())
     return [reserva.event_date for reserva in reservas_anteriores]
 
-
-@login_required
 def reservas_view(request):
     reserva = get_object_or_404(Reserva, cotizacion_id=cotizacion_id)
 

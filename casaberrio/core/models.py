@@ -61,6 +61,8 @@ class Reserva(models.Model):
     ('Campo_silla_de_redas', 'Campo silla de redas'),
     ('Comunicador_de_lenguaje_de_señas ', 'Comunicador de lenguaje de señas '),
 )
+
+
     cotizacion = models.ForeignKey(Cotizacion, on_delete=models.CASCADE)
 
     name = models.CharField(max_length=50,verbose_name='Nombres', )

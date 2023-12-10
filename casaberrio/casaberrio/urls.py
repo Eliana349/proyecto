@@ -32,6 +32,9 @@ from .views import generate_excel_report_loyalty
 from .views import generate_excel_report_carrito
 from .views import pse_view
 
+from .views import home_two
+
+
 
 
 
@@ -78,11 +81,6 @@ urlpatterns = [
     path('reserva/<int:cotizacion_id>/', views.reserva, name='reserva'),
     path('reserva/<int:cotizacion_id>/PSE.html', pse_view, name='pse_view'),
     
-             
-
-
-
-
 
 ]
 
