@@ -415,6 +415,22 @@ class loyalty(models.Model):
         db_table = 'fidelizacion'
         ordering = ['id']
 
+class PQRS(models.Model):
+    TIPO_CHOICES = [
+        ('P', 'Petición'),
+        ('Q', 'Queja'),
+        ('R', 'Reclamo'),
+        ('S', 'Sugerencia'),
+    ]
+
+    tipo = models.CharField(max_length=1, choices=TIPO_CHOICES)
+    descripcion = models.TextField()
+    estado = models.CharField(max_length=50, default='Pendiente')
+    respuesta = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.get_tipo_display()} - {self.estado}"
+
     
   
 
@@ -437,20 +453,7 @@ class StatePqrsd(models.Model):
         ordering = ['id']
 
 
-class PQRS(models.Model):
-    TIPO_CHOICES = [
-        ('P', 'Petición'),
-        ('Q', 'Queja'),
-        ('R', 'Reclamo'),
-        ('S', 'Sugerencia'),
-    ]
 
-    tipo = models.CharField(max_length=1, choices=TIPO_CHOICES)
-    descripcion = models.TextField()
-    estado = models.CharField(max_length=50, default='Pendiente')
-
-    def __str__(self):
-        return f"{self.get_tipo_display()} - {self.estado}"
     
 
 
