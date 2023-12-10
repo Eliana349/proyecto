@@ -45,11 +45,13 @@
                         </div>
                         
                         <div class="menu" id="menu">
-                          <a class="menu-a" href="{% url 'generate_excel_report' %}">Historial de ventas</a>
-                          <a class="menu-a" href="#">Historial de alquiler</a>
-                          <a class="menu-a" href="{% url 'generate_excel_report_pse' %}">Historial de Ventas</a>
-                          <a class="menu-a" href="#">Historial de alquiler</a>
-                          <a class="menu-a" href="#">Historial de alquiler</a>
+                          <a class="menu-a" href="{% url 'generate_excel_report' %}">Reporte de Reservas</a>
+                          <a class="menu-a" href="{% url 'generate_excel_report_carrito' %}">Reporte de alquiler</a>
+                          <a class="menu-a" href="{% url 'generate_excel_report_pse' %}">Reporte de Ventas</a>
+                          <a class="menu-a" href="{% url 'custom_excel_report' %}">Reporte de Inventario</a>
+                          <a class="menu-a" href="{% url 'generate_excel_report_loyalty' %}">Reporte de PQRSD</a>
+                          <a class="menu-a" href="{% url 'generate_excel_report_cotizacion' %}">Reporte de cotizacion</a>
+
 
                         </div>
                         {% endif %}  

@@ -10,16 +10,123 @@ from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from core.models import *
 from django.core.mail import send_mail
-
-
 import openpyxl
 from django.http import HttpResponse
 from django.contrib.auth.decorators import user_passes_test
 from django.urls import reverse
 from openpyxl import Workbook
 from core.models import Product
+from core.models import loyalty
+
 from openpyxl.styles import NamedStyle
 
+
+
+
+
+def generate_excel_report_carrito(request):
+    # Crear un nuevo libro de Excel y una hoja de cálculo
+    workbook = openpyxl.Workbook()
+    sheet = workbook.active
+
+    # Escribir encabezados en la primera fila
+    headers = ['Nombre de usuario', 'Fecha de inicio', 'Fecha de finalización', 'Elementos seleccionados', 'Precio Total']
+    for col_num, header in enumerate(headers, 1):
+        sheet.cell(row=1, column=col_num, value=header)
+
+    # Obtener datos de la base de datos y escribir en el archivo Excel
+    alquileres = Carrito.objects.all()
+    for row_num, alquiler in enumerate(alquileres, 1):
+        data = [
+            str(alquiler.nombre_usuario), alquiler.date_start, alquiler.date_finish,
+            alquiler.elementos_alquilar, alquiler.precio_total
+        ]
+
+        # Escribir los datos en las celdas de Excel
+        for col_num, value in enumerate(data, 1):
+            sheet.cell(row=row_num + 1, column=col_num, value=value)
+
+    # Crear la respuesta HTTP con el archivo adjunto
+    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = 'attachment; filename=reporte_carrito.xlsx'
+    workbook.save(response)
+
+    return response
+
+
+
+
+def generate_excel_report_loyalty(request):
+    # Crear un nuevo libro de Excel y una hoja de cálculo
+    workbook = openpyxl.Workbook()
+    sheet = workbook.active
+
+    # Escribir encabezados en la primera fila
+    headers = ['Nombres y apellidos', 'Correo electrónico', 'Número de teléfono', 'Tipo de PQRSD',
+               'Fecha de incidente', 'Descripción detallada', 'Producto o servicio', 'Número de radicado',
+               'Cómo prefiere ser contactad@']
+
+    for col_num, header in enumerate(headers, 1):
+        sheet.cell(row=1, column=col_num, value=header)
+
+    # Obtener datos de la base de datos y escribir en el archivo Excel
+    fidelizaciones = loyalty.objects.all()
+    for row_num, fidelizacion in enumerate(fidelizaciones, 1):
+        data = [
+            fidelizacion.full_name, fidelizacion.email, fidelizacion.phone, fidelizacion.type_pqrsd,
+            fidelizacion.incident_date, fidelizacion.detailed_description, fidelizacion.product_or_services_name,
+            fidelizacion.filing_number, fidelizacion.preference_contact,
+        ]
+
+        # Escribir los datos en las celdas de Excel
+        for col_num, value in enumerate(data, 1):
+            sheet.cell(row=row_num + 1, column=col_num, value=value)
+
+    # Crear la respuesta HTTP con el archivo adjunto
+    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = 'attachment; filename=reporte_fidelizaciones.xlsx'
+    workbook.save(response)
+
+    return response
+
+
+
+
+def generate_excel_report_cotizacion(request):
+    # Crear un nuevo libro de Excel y una hoja de cálculo
+    workbook = openpyxl.Workbook()
+    sheet = workbook.active
+
+    # Escribir encabezados en la primera fila
+    headers = ['Nombre Completo', 'Correo Electrónico', 'Número de Teléfono', 'Tipo de Evento', 'Fecha del Evento',
+               'Duración del Evento (horas)', 'Sede del Evento', 'Número del salón', 'Cantidad de Invitados', 'Menú',
+               'Cantidad de Menús Infantiles', 'Entradas Adicionales', 'Comentarios Adicionales', 'Servicios Adicionales',
+               'Servicios Requeridos del Paquete Base', 'Tematica', 'Necesidad especial']
+
+    for col_num, header in enumerate(headers, 1):
+        sheet.cell(row=1, column=col_num, value=header)
+
+    # Obtener datos de la base de datos y escribir en el archivo Excel
+    cotizaciones = Cotizacion.objects.all()
+    for row_num, cotizacion in enumerate(cotizaciones, 1):
+        data = [
+            cotizacion.name, cotizacion.email, cotizacion.phone_number, cotizacion.event_type,
+            cotizacion.event_date, cotizacion.event_duration, cotizacion.event_location,
+            cotizacion.salon_number, cotizacion.number_of_guests, cotizacion.menu,
+            cotizacion.childrens_menu, cotizacion.additional_entries, cotizacion.additional_comments,
+            cotizacion.additional_services, cotizacion.required_services, cotizacion.theme, cotizacion.special_need
+        ]
+
+        # Escribir los datos en las celdas de Excel
+        for col_num, value in enumerate(data, 1):
+            sheet.cell(row=row_num + 1, column=col_num, value=value)
+
+    # Crear la respuesta HTTP con el archivo adjunto
+    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = 'attachment; filename=reporte_cotizaciones.xlsx'
+    workbook.save(response)
+
+    return response
 
 
 def generate_excel_report_pse(request):
