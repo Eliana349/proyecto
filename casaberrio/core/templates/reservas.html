@@ -1,4 +1,3 @@
-{% block content %}
   {% load static %}
   <!DOCTYPE html>
   <html lang="en">
@@ -34,13 +33,80 @@
           <div class="div-div">
               <img src="{% static 'img/globos.jpg' %}" alt="User Icon" class="imagen-div">
           </div>
-          <form method="post" class="div-form">
-              <h1>Realiza Tu Reserva</h1><br>
-              {% csrf_token %}
-              {{ reserva_form.as_p }}
-              <input type="submit" class="btn btn-primary" value="Enviar Reserva" required>
-          </form>
-      </div>
-  </body>
-  </html>
-{% endblock %}
+          <!-- tu_template.html -->
+<form method="post" class="div-form">
+    <h1>Realiza Tu Reserva</h1><br>
+    {% csrf_token %}
+
+    <div class="form-group">
+        <label for="{{ reserva_form.name.id_for_label }}">Nombres:</label>
+        {{ reserva_form.name }}
+    </div>
+
+    <div class="form-group">
+        <label for="{{ reserva_form.lastname.id_for_label }}">Apellidos:</label>
+        {{ reserva_form.lastname }}
+    </div>
+
+    <div class="form-group">
+        <label for="{{ reserva_form.email.id_for_label }}">Correo electrónico:</label>
+        {{ reserva_form.email }}
+    </div>
+
+    <div class="form-group">
+        <label for="{{ reserva_form.phone.id_for_label }}">Número de celular:</label>
+        {{ reserva_form.phone }}
+    </div>
+
+    <div class="form-group">
+        <label for="{{ reserva_form.gender.id_for_label }}">Género:</label>
+        {{ reserva_form.gender }}
+    </div>
+
+    <div class="form-group">
+        <label for="{{ reserva_form.event_date.id_for_label }}">Fecha de evento:</label>
+        {{ reserva_form.event_date }}
+    </div>
+
+    <div class="form-group">
+        <label for="{{ reserva_form.event_start_time.id_for_label }}">Hora inicial del evento:</label>
+        {{ reserva_form.event_start_time }}
+    </div>
+
+    <div class="form-group">
+        <label for="{{ reserva_form.end_time_of_the_event.id_for_label }}">Hora final del evento:</label>
+        {{ reserva_form.end_time_of_the_event }}
+    </div>
+
+    <div class="form-group">
+        <label for="{{ reserva_form.eventType.id_for_label }}">Tipo de evento:</label>
+        {{ reserva_form.eventType }}
+    </div>
+
+    <div class="form-group">
+        <label for="{{ reserva_form.theme.id_for_label }}">Tematica:</label>
+        {{ reserva_form.theme }}
+    </div>
+
+    <div class="form-group">
+        <label for="{{ reserva_form.special_need.id_for_label }}">Necesidad especial:</label>
+        {{ reserva_form.special_need }}
+    </div>
+
+    <div class="form-group">
+        <label for="{{ reserva_form.campus.id_for_label }}">Sede:</label>
+        {{ reserva_form.campus }}
+    </div>
+
+    <div class="form-group">
+        <label for="{{ reserva_form.lounge.id_for_label }}">Salón:</label>
+        {{ reserva_form.lounge }}
+    </div>
+
+    <div class="form-group">
+        <label for="{{ reserva_form.Total_value.id_for_label }}">Total Value:</label>
+        {{ reserva_form.Total_value }}
+    </div>
+
+    <input type="submit" class="btn btn-primary" value="Enviar Reserva" required>
+</form>
