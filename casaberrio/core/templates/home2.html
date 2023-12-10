@@ -37,7 +37,7 @@
                         </ul>
                     </nav>
                     <div class="tres-rayitas">
-
+                        {% if user.is_staff %}
                         <div class="menu-icon" id="menu-icon">
                           <div class="bar"></div>
                           <div class="bar"></div>
@@ -52,7 +52,7 @@
                           <a class="menu-a" href="#">Historial de alquiler</a>
 
                         </div>
-                        
+                        {% endif %}  
                         
                         <script src="{% static 'js/prueba.js' %}"></script>
                     </div>               
