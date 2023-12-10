@@ -17,8 +17,10 @@ from django.urls import reverse
 from openpyxl import Workbook
 from core.models import Product
 from core.models import loyalty
-
 from openpyxl.styles import NamedStyle
+from django.shortcuts import get_object_or_404
+
+
 
 
 
@@ -304,6 +306,8 @@ def obtener_fechas_reservas_anteriores():
 
 @login_required
 def reservas_view(request):
+    reserva = get_object_or_404(Reserva, cotizacion_id=cotizacion_id)
+
     if request.method == 'POST':
         contact_form = formularioReserva(data=request.POST)
 
@@ -326,9 +330,9 @@ def reservas_view(request):
     return render(request, 'reservas.html', {'form': contact_form})
 
 @login_required
-def pse_view(request):
+def pse_view(request, cotizacion_id):
     contact_form = formularioPSE()
-    
+
     if request.method == 'POST':
         contact_form = formularioPSE(data=request.POST)
         
@@ -350,7 +354,7 @@ def pse_view(request):
         else:
             messages.error(request, 'Usuario o contraseña incorrectos')
         
-    return render(request, 'PSE.html', {'form': contact_form})
+    return render(request, 'PSE.html', {'form': contact_form, 'cotizacion_id': cotizacion_id})
 
 @login_required
 def tajetacd_view(request):
@@ -480,19 +484,119 @@ def nosotros(request):
     })
 
 def crear_cotizacion(request):
+    form = CotizacionForm(request.POST or None)
     if request.method == 'POST':
         form = CotizacionForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('reservas.html')  # Redirige a una página de éxito
-    else:
-        form = CotizacionForm()
-    
+            cotizacion = form.save()
+
+            valor_total = 0
+            duracion = form.cleaned_data['event_duration']
+            if duracion == 4: 
+                valor_total += 1000
+            elif duracion == 5:
+                valor_total += 1200
+            elif duracion == 6:
+                valor_total += 1400
+            elif duracion == 7:
+                valor_total += 1600
+
+            salon = form.cleaned_data['salon_number']
+            valor_total += 800
+
+            cantidad_invitados = form.cleaned_data['number_of_guests']
+            if 40 <= cantidad_invitados <= 69:
+                valor_total += 500
+                valor_total += 200 #valor adicional del menu
+                valor_total += 100 #valor adicional de las entradas
+            elif  70 <= cantidad_invitados <= 99:
+                valor_total += 700
+                valor_total += 400 #valor adicional del menu
+                valor_total += 200 #valor adicional de las entradas
+            elif  100 <= cantidad_invitados <= 129:
+                valor_total += 900
+                valor_total += 600 #valor adicional del menu
+                valor_total += 300 #valor adicional de las entradas
+            elif  130 <= cantidad_invitados <= 159:
+                valor_total += 1100
+                valor_total += 800 #valor adicional del menu
+                valor_total += 400 #valor adicional de las entradas
+            elif  160 <= cantidad_invitados <= 180:
+                valor_total += 1300
+                valor_total += 1000 #valor adicional del menu
+                valor_total += 500  #valor adicional de las entradas
+
+            paquete_base = form.cleaned_data['required_services']
+            for servicio in paquete_base:
+                if servicio == 'servicio1':
+                 valor_total += 300
+                elif servicio == 'servicio2':
+                    valor_total += 600
+                elif servicio == 'servicio3':
+                    valor_total += 100
+                elif servicio == 'servicio4':
+                    valor_total += 150
+                elif servicio == 'servicio5':
+                    valor_total += 250
+                elif servicio == 'servicio6':
+                    valor_total += 120
+                elif servicio == 'servicio7':
+                    valor_total += 180
+                elif servicio == 'servicio8':
+                    valor_total += 500
+                elif servicio == 'servicio9':
+                    valor_total += 100 
+
+            servicios_adicionales = form.cleaned_data['additional_services']
+            for servicio in servicios_adicionales:
+                if servicio == 'servicio1':
+                 valor_total += 300
+                elif servicio == 'servicio2':
+                    valor_total += 200
+                elif servicio == 'servicio3':
+                    valor_total += 400
+                elif servicio == 'servicio4':
+                    valor_total += 350
+                elif servicio == 'servicio5':
+                    valor_total += 150
+                elif servicio == 'servicio6':
+                    valor_total += 125
+                elif servicio == 'servicio7':
+                    valor_total += 400
+                elif servicio == 'servicio8':
+                    valor_total += 225
+                elif servicio == 'servicio9':
+                    valor_total += 600           
+            return redirect('reserva', cotizacion_id=cotizacion.id)
+
     return render(request, 'cotizaciones.html', {'form': form})
 
 def cotizacion_vista(request):
-    return render(request, 'cotizacion.html',{
-    })
+    return render(request, 'cotizacion.html', {})
 
+def reserva(request, cotizacion_id):
+    cotizacion = get_object_or_404(Cotizacion, id=cotizacion_id)
 
+    if request.method == 'POST':
+        reserva_form = formularioReserva(request.POST)
+        if reserva_form.is_valid():
+            reserva = reserva_form.save(commit=False)
+            reserva.cotizacion = cotizacion
+            reserva.save()
+            return redirect('PSE.html')
 
+    else:
+        reserva_form = formularioReserva(initial={
+            'name': cotizacion.name,
+            'email': cotizacion.email,
+            'phone': cotizacion.phone_number,
+            'eventType': cotizacion.event_type,
+            'campus': cotizacion.event_location,
+            'theme': cotizacion.theme,
+            'special_need': cotizacion.special_need,
+            'lounge': cotizacion.salon_number,
+        })
+
+    return render(request, 'reservas.html', {'reserva_form': reserva_form, 'cotizacion': cotizacion})
+
+    

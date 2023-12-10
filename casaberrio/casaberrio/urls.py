@@ -24,11 +24,13 @@ from django.contrib.auth import views as auth_views
 
 from .views import generate_excel_report
 from .views import custom_excel_report, redireccionar_admin
+from django.views.generic import RedirectView
 
 from .views import generate_excel_report_pse
 from .views import generate_excel_report_cotizacion
 from .views import generate_excel_report_loyalty
 from .views import generate_excel_report_carrito
+from .views import pse_view
 
 
 
@@ -73,7 +75,10 @@ urlpatterns = [
     path('generate_excel_report_cotizacion/', generate_excel_report_cotizacion, name='generate_excel_report_cotizacion'),
     path('generate_excel_report_loyalty/', generate_excel_report_loyalty, name='generate_excel_report_loyalty'),
     path('generate_excel_report_carrito/', generate_excel_report_carrito, name='generate_excel_report_carrito'),
-
+    path('reserva/<int:cotizacion_id>/', views.reserva, name='reserva'),
+    path('reserva/<int:cotizacion_id>/PSE.html', pse_view, name='pse_view'),
+    
+             
 
 
 

@@ -200,13 +200,11 @@ class formularioReserva(forms.ModelForm):
     widget=forms.NumberInput,
     label='Valor Total'
 )
-
     class Meta:
         model = Reserva
         fields = ['name', 'lastname', 'email', 'phone', 'gender', 'event_date', 'event_start_time',
                   'end_time_of_the_event', 'eventType', 'theme', 'special_need', 'campus', 'lounge', 'Total_value']
-    
-    
+
     
     
     
@@ -373,16 +371,15 @@ class CotizacionForm(forms.ModelForm):
 
     required_services = forms.MultipleChoiceField(
         choices=[
-            ('servicio1', 'Buffet'),
-            ('servicio2', 'Pastel'),
-            ('servicio3', 'Sonido Dj - Animación'),
-            ('servicio4', 'Sillas'),
-            ('servicio5', 'Centros de Mesa'),
-            ('servicio6', 'Fotografía Digital'),
-            ('servicio7', 'Mezcladores, hielos y gaseosas'),
-            ('servicio8', 'Coctel'),
-            ('servicio9', 'Servicio de meseros por 7 horas'),
-            ('servicio10', 'Champañas'),
+            ('servicio1', 'Pastel'),
+            ('servicio2', 'Sonido Dj - Animación'),
+            ('servicio3', 'Sillas'),
+            ('servicio4', 'Centros de Mesa'),
+            ('servicio5', 'Fotografía Digital'),
+            ('servicio6', 'Mezcladores, hielos y gaseosas'),
+            ('servicio7', 'Coctel'),
+            ('servicio8', 'Servicio de meseros por 7 horas'),
+            ('servicio9', 'Champañas'),
         ],
         widget=forms.CheckboxSelectMultiple,
         label="Servicios Requeridos del Paquete Base"
@@ -407,7 +404,6 @@ class CotizacionForm(forms.ModelForm):
         ('entrada2', 'Melón con fresas a la miel'),
         ('entrada3', 'Macedoniod de fruta variada'),
         ('entrada4', 'Canapés de atún o pollo'),
-        ('entrada5', 'Ninguna'),
     }
 
     additional_entries=forms.ChoiceField(
