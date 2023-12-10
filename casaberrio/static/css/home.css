@@ -372,7 +372,9 @@ footer {
   color: #000000;
   font-size: 18px;
   padding: 20px;
-  width: 100%;
+  width: 110%;
+  text-align: left;
+
 }
 
 .menu-a:hover{
