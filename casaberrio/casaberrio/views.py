@@ -480,10 +480,89 @@ def nosotros(request):
     })
 
 def crear_cotizacion(request):
+    form = CotizacionForm(request.POST or None)
     if request.method == 'POST':
         form = CotizacionForm(request.POST)
         if form.is_valid():
             form.save()
+
+            valor_total = 0
+            duracion = form.cleaned_data['event_duration']
+            if duracion == 4: 
+                valor_total += 1000
+            elif duracion == 5:
+                valor_total += 1200
+            elif duracion == 6:
+                valor_total += 1400
+            elif duracion == 7:
+                valor_total += 1600
+
+            salon = form.cleaned_data['salon_number']
+            valor_total += 800
+
+            cantidad_invitados = form.cleaned_data['number_of_guests']
+            if 40 <= cantidad_invitados <= 69:
+                valor_total += 500
+                valor_total += 200 #valor adicional del menu
+                valor_total += 100 #valor adicional de las entradas
+            elif  70 <= cantidad_invitados <= 99:
+                valor_total += 700
+                valor_total += 400 #valor adicional del menu
+                valor_total += 200 #valor adicional de las entradas
+            elif  100 <= cantidad_invitados <= 129:
+                valor_total += 900
+                valor_total += 600 #valor adicional del menu
+                valor_total += 300 #valor adicional de las entradas
+            elif  130 <= cantidad_invitados <= 159:
+                valor_total += 1100
+                valor_total += 800 #valor adicional del menu
+                valor_total += 400 #valor adicional de las entradas
+            elif  160 <= cantidad_invitados <= 180:
+                valor_total += 1300
+                valor_total += 1000 #valor adicional del menu
+                valor_total += 500  #valor adicional de las entradas
+
+            paquete_base = form.cleaned_data['required_services']
+            for servicio in paquete_base:
+                if servicio == 'servicio1':
+                 valor_total += 300
+                elif servicio == 'servicio2':
+                    valor_total += 600
+                elif servicio == 'servicio3':
+                    valor_total += 100
+                elif servicio == 'servicio4':
+                    valor_total += 150
+                elif servicio == 'servicio5':
+                    valor_total += 250
+                elif servicio == 'servicio6':
+                    valor_total += 120
+                elif servicio == 'servicio7':
+                    valor_total += 180
+                elif servicio == 'servicio8':
+                    valor_total += 500
+                elif servicio == 'servicio9':
+                    valor_total += 100 
+
+            servicios_adicionales = form.cleaned_data['additional_services']
+            for servicio in servicios_adicionales:
+                if servicio == 'servicio1':
+                 valor_total += 300
+                elif servicio == 'servicio2':
+                    valor_total += 200
+                elif servicio == 'servicio3':
+                    valor_total += 400
+                elif servicio == 'servicio4':
+                    valor_total += 350
+                elif servicio == 'servicio5':
+                    valor_total += 150
+                elif servicio == 'servicio6':
+                    valor_total += 125
+                elif servicio == 'servicio7':
+                    valor_total += 400
+                elif servicio == 'servicio8':
+                    valor_total += 225
+                elif servicio == 'servicio9':
+                    valor_total += 600           
             return redirect('reservas.html')  # Redirige a una página de éxito
     else:
         form = CotizacionForm()
