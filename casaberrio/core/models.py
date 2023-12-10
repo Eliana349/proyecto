@@ -9,6 +9,53 @@ from datetime import *
 
 
 
+
+
+class Reserva(models.Model):
+    TEMATICA_CHOICES = (
+    ('Campestre', 'Campestre'),
+    ('Neon', 'Neon'),
+    ('Alfombra_Roja', 'Alfombra Roja'),
+    ('Personaje_Disney', 'Personaje Disney'),
+    ('Flores', 'Flores'),
+    ('Noche_estrellas', 'Noche de Estrellas'),
+    ('Tropical', 'Tropical'),
+    ('Mariposas', 'Mariposas'),
+)
+    NECECIDAD_CHOICES = (
+    ('Campo_silla_de_redas', 'Campo silla de redas'),
+    ('Comunicador_de_lenguaje_de_señas ', 'Comunicador de lenguaje de señas '),
+)
+
+    name = models.CharField(max_length=50,verbose_name='Nombres', )
+    lastname = models.CharField(max_length=50, verbose_name='Apellidos')
+    email = models.EmailField(max_length=50, verbose_name='Correo electronico')
+    phone = PhoneNumberField(verbose_name='Numero de celular',region='CO')
+    gender = models.CharField(max_length=30, verbose_name='Genero')
+    event_date = models.DateField( verbose_name='Fecha de evento')
+    event_start_time = models.TimeField(verbose_name='Hora inicial del evento')
+    end_time_of_the_event = models.TimeField(verbose_name='Hora final del evento')
+    eventType = models.CharField (max_length=200, verbose_name='Tipo de evento')
+    theme = models.CharField(max_length=200, verbose_name='Tematica',choices=TEMATICA_CHOICES,default='Mariposas')
+    special_need = models.CharField( max_length=200,verbose_name='Necesidad especial', choices=NECECIDAD_CHOICES,default='Campo_silla_de_redas' )
+    campus = models.CharField (max_length=200, verbose_name='Sede' )
+    lounge = models.CharField(max_length=200,verbose_name='Salón' )
+    Total_value = forms.IntegerField(
+    widget=forms.NumberInput,
+    label='Valor Total'
+)
+    
+    def __str__(self):
+        return str(self.event_date)
+    
+    class Meta:
+        verbose_name = 'Reserva'
+        verbose_name_plural = 'Reservas'
+        db_table = 'Reserva'
+        ordering = ['id']  
+
+
+
 class Cotizacion(models.Model):
     name = models.CharField(max_length=100, verbose_name="Nombre Completo")
     email = models.EmailField(verbose_name="Correo Electrónico")
@@ -43,54 +90,42 @@ class Cotizacion(models.Model):
         db_table = 'cotizacion'
         ordering = ['id']
     
-
-
-
-class Reserva(models.Model):
-    TEMATICA_CHOICES = (
-    ('Campestre', 'Campestre'),
-    ('Neon', 'Neon'),
-    ('Alfombra_Roja', 'Alfombra Roja'),
-    ('Personaje_Disney', 'Personaje Disney'),
-    ('Flores', 'Flores'),
-    ('Noche_estrellas', 'Noche de Estrellas'),
-    ('Tropical', 'Tropical'),
-    ('Mariposas', 'Mariposas'),
-)
-    NECECIDAD_CHOICES = (
-    ('Campo_silla_de_redas', 'Campo silla de redas'),
-    ('Comunicador_de_lenguaje_de_señas ', 'Comunicador de lenguaje de señas '),
-)
-    cotizacion = models.ForeignKey(Cotizacion, on_delete=models.CASCADE)
-
-    name = models.CharField(max_length=50,verbose_name='Nombres', )
-    lastname = models.CharField(max_length=50, verbose_name='Apellidos')
-    email = models.EmailField(max_length=50, verbose_name='Correo electronico')
-    phone = PhoneNumberField(verbose_name='Numero de celular',region='CO')
-    gender = models.CharField(max_length=30, verbose_name='Genero')
-    event_date = models.DateField( verbose_name='Fecha de evento')
-    event_start_time = models.TimeField(verbose_name='Hora inicial del evento')
-    end_time_of_the_event = models.TimeField(verbose_name='Hora final del evento')
-    eventType = models.CharField (max_length=200, verbose_name='Tipo de evento')
-    theme = models.CharField(max_length=200, verbose_name='Tematica',choices=TEMATICA_CHOICES,default='Mariposas')
-    special_need = models.CharField( max_length=200,verbose_name='Necesidad especial', choices=NECECIDAD_CHOICES,default='Campo_silla_de_redas' )
-    campus = models.CharField (max_length=200, verbose_name='Sede' )
-    lounge = models.CharField(max_length=200,verbose_name='Salón' )
-    Total_value = forms.IntegerField(
-    widget=forms.NumberInput,
-    label='Valor Total'
-)
     
+
+class Cotizacion(models.Model):
+    name = models.CharField(max_length=100, verbose_name="Nombre Completo")
+    email = models.EmailField(verbose_name="Correo Electrónico")
+    phone_number = models.CharField(max_length=10, verbose_name="Número de Teléfono")
+    event_type = models.CharField(max_length=100, verbose_name="Tipo de Evento")
+    event_date = models.DateField(verbose_name="Fecha del Evento")
+    event_duration = models.PositiveIntegerField(
+        verbose_name="Duración del Evento (horas)",
+        validators=[
+            MinValueValidator(4, message='La duración debe ser como mínimo 4 horas.'),
+            MaxValueValidator(7, message='La duración no puede ser mayor a 7 horas.'),
+        ]
+    )
+    event_location = models.CharField(max_length=100, verbose_name="Sede del Evento")
+    salon_number = models.CharField(max_length=100, verbose_name='Número del salon')
+    number_of_guests = models.PositiveIntegerField(verbose_name="Cantidad de Invitados")
+    menu = models.CharField(max_length=20, verbose_name="Menú")
+    childrens_menu = models.PositiveIntegerField(max_length=20, verbose_name="Cantidad de Menús Infantiles")
+    additional_entries = models.CharField(max_length=20, verbose_name="Entradas Adicionales", default='Ninguna')
+    additional_comments = models.TextField(verbose_name="Comentarios Adicionales")
+    additional_services = models.CharField(max_length=200, verbose_name="Servicios Adicionales")
+    required_services = models.TextField(max_length=200, verbose_name="Servicios Requeridos del Paquete Base")
+    theme = models.CharField(max_length=200, verbose_name='Tematica',default='Mariposas')
+    special_need = models.CharField( max_length=200,verbose_name='Necesidad especial',default='Campo_silla_de_ruedas')
+
     def __str__(self):
-        return str(self.event_date)
-    
+        return self.name
+
     class Meta:
-        verbose_name = 'Reserva'
-        verbose_name_plural = 'Reservas'
-        db_table = 'Reserva'
-        ordering = ['id']  
-
-
+        verbose_name = 'cotización'
+        verbose_name_plural = 'cotizaciones'
+        db_table = 'cotizacion'
+        ordering = ['id']
+    
     
 
             
