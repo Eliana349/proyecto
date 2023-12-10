@@ -1,0 +1,62 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/ventas.css' %}">
+    <title>Casa Berrio</title>
+    <link rel="icon" href="{% static 'img/LogoCasaBerrio (1).png' %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <header>
+        <div class="container"> 
+            <div class="row">
+                <div class="col-lg-1 justify-content-lg-start"><img src="/static/img/casaberrio.png" alt="casaberrio" height="100px"></div>
+                <div class="col-lg-10 d-flex justify-content-center p-4">
+                    <nav>
+                        <ul>
+                            <li><a href="home2.html">Inicio</a></li>
+                            <li><a href="nosotros.html">Nosotros</a></li>
+                            <li><a href="cotizacion.html">Cotizaciones</a></li>
+                            <li><a href="alquiler.html">Alquiler</a></li>
+                            <li><a href="pqrs.html">PQRS</a></li>
+                            <li><a href="home.html">Cerrar sesion</a></li>
+                        </ul>
+                    </nav>        
+                </div>
+           </div> 
+        </div>
+    </header>
+    <div class="container1 payment-form">
+      <div class="div-div">
+        <img src="{% static 'img/casaberrio4.png' %}" alt="User Icon" class="imagen-div">
+      </div>
+        <div class="row mb-4">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="page-title">Registro de Pago PSE</h1>
+                {% csrf_token %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-7 mx-auto">
+                <div class="payment-card">
+                    <div class="payment-methods"> 
+                        
+                    </div>
+                    <div class="tab-content">
+                        <div id="payment-tab-card" class="active-tab">
+                            <form role="form1" method="post">
+                                {% csrf_token %}
+                                {{ form }}
+                                <input type="submit" class="confirm-button" value="Confirmar Pago" onclick="alert('Contactando con su banco')">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

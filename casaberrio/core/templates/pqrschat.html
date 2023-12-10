@@ -1,0 +1,32 @@
+<!-- templates/pqrs.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PQRS Chat</title>
+</head>
+<body>
+    <ul id="chat"></ul>
+    <input type="text" id="messageInput" />
+    <button onclick="sendMessage()">Enviar</button>
+
+    <script>
+        const chat = document.getElementById('chat');
+        const messageInput = document.getElementById('messageInput');
+        const wsPath = 'ws://' + window.location.host + '/ws/pqrs/some_room/';
+        const ws = new WebSocket(wsPath);
+
+        ws.onmessage = function(event) {
+            const message = JSON.parse(event.data).message;
+            const li = document.createElement('li');
+            li.innerHTML = message;
+            chat.appendChild(li);
+        };
+
+        function sendMessage() {
+            const message = messageInput.value;
+            ws.send(JSON.stringify({ 'message': message }));
+            messageInput.value = '';
+        }
+    </script>
+</body>
+</html>
