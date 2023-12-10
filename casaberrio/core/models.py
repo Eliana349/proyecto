@@ -40,10 +40,13 @@ class Reserva(models.Model):
     special_need = models.CharField( max_length=200,verbose_name='Necesidad especial', choices=NECECIDAD_CHOICES,default='Campo_silla_de_redas' )
     campus = models.CharField (max_length=200, verbose_name='Sede' )
     lounge = models.CharField(max_length=200,verbose_name='Salón' )
-    Total_value = models.IntegerField()
-
+    Total_value = forms.IntegerField(
+    widget=forms.NumberInput,
+    label='Valor Total'
+)
+    
     def __str__(self):
-        return self.name
+        return str(self.event_date)
     
     class Meta:
         verbose_name = 'Reserva'
@@ -411,6 +414,8 @@ class loyalty(models.Model):
         verbose_name_plural = 'Fidelizaciones'
         db_table = 'fidelizacion'
         ordering = ['id']
+
+    
   
 
 class StatePqrsd(models.Model):
@@ -430,6 +435,23 @@ class StatePqrsd(models.Model):
         verbose_name_plural = 'Estados pqrsd'
         db_table = 'estado_pqrsd'
         ordering = ['id']
+
+
+class PQRS(models.Model):
+    TIPO_CHOICES = [
+        ('P', 'Petición'),
+        ('Q', 'Queja'),
+        ('R', 'Reclamo'),
+        ('S', 'Sugerencia'),
+    ]
+
+    tipo = models.CharField(max_length=1, choices=TIPO_CHOICES)
+    descripcion = models.TextField()
+    estado = models.CharField(max_length=50, default='Pendiente')
+
+    def __str__(self):
+        return f"{self.get_tipo_display()} - {self.estado}"
+    
 
 
 class DetalleCompra(models.Model):

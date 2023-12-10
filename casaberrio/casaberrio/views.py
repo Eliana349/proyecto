@@ -10,155 +10,15 @@ from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from core.models import *
 from django.core.mail import send_mail
+
+
 import openpyxl
 from django.http import HttpResponse
 from django.contrib.auth.decorators import user_passes_test
 from django.urls import reverse
 from openpyxl import Workbook
 from core.models import Product
-from core.models import loyalty
-
 from openpyxl.styles import NamedStyle
-
-
-
-
-
-def generate_excel_report_carrito(request):
-    # Crear un nuevo libro de Excel y una hoja de cálculo
-    workbook = openpyxl.Workbook()
-    sheet = workbook.active
-
-    # Escribir encabezados en la primera fila
-    headers = ['Nombre de usuario', 'Fecha de inicio', 'Fecha de finalización', 'Elementos seleccionados', 'Precio Total']
-    for col_num, header in enumerate(headers, 1):
-        sheet.cell(row=1, column=col_num, value=header)
-
-    # Obtener datos de la base de datos y escribir en el archivo Excel
-    alquileres = Carrito.objects.all()
-    for row_num, alquiler in enumerate(alquileres, 1):
-        data = [
-            str(alquiler.nombre_usuario), alquiler.date_start, alquiler.date_finish,
-            alquiler.elementos_alquilar, alquiler.precio_total
-        ]
-
-        # Escribir los datos en las celdas de Excel
-        for col_num, value in enumerate(data, 1):
-            sheet.cell(row=row_num + 1, column=col_num, value=value)
-
-    # Crear la respuesta HTTP con el archivo adjunto
-    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-    response['Content-Disposition'] = 'attachment; filename=reporte_carrito.xlsx'
-    workbook.save(response)
-
-    return response
-
-
-
-
-def generate_excel_report_loyalty(request):
-    # Crear un nuevo libro de Excel y una hoja de cálculo
-    workbook = openpyxl.Workbook()
-    sheet = workbook.active
-
-    # Escribir encabezados en la primera fila
-    headers = ['Nombres y apellidos', 'Correo electrónico', 'Número de teléfono', 'Tipo de PQRSD',
-               'Fecha de incidente', 'Descripción detallada', 'Producto o servicio', 'Número de radicado',
-               'Cómo prefiere ser contactad@']
-
-    for col_num, header in enumerate(headers, 1):
-        sheet.cell(row=1, column=col_num, value=header)
-
-    # Obtener datos de la base de datos y escribir en el archivo Excel
-    fidelizaciones = loyalty.objects.all()
-    for row_num, fidelizacion in enumerate(fidelizaciones, 1):
-        data = [
-            fidelizacion.full_name, fidelizacion.email, fidelizacion.phone, fidelizacion.type_pqrsd,
-            fidelizacion.incident_date, fidelizacion.detailed_description, fidelizacion.product_or_services_name,
-            fidelizacion.filing_number, fidelizacion.preference_contact,
-        ]
-
-        # Escribir los datos en las celdas de Excel
-        for col_num, value in enumerate(data, 1):
-            sheet.cell(row=row_num + 1, column=col_num, value=value)
-
-    # Crear la respuesta HTTP con el archivo adjunto
-    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-    response['Content-Disposition'] = 'attachment; filename=reporte_fidelizaciones.xlsx'
-    workbook.save(response)
-
-    return response
-
-
-
-
-def generate_excel_report_cotizacion(request):
-    # Crear un nuevo libro de Excel y una hoja de cálculo
-    workbook = openpyxl.Workbook()
-    sheet = workbook.active
-
-    # Escribir encabezados en la primera fila
-    headers = ['Nombre Completo', 'Correo Electrónico', 'Número de Teléfono', 'Tipo de Evento', 'Fecha del Evento',
-               'Duración del Evento (horas)', 'Sede del Evento', 'Número del salón', 'Cantidad de Invitados', 'Menú',
-               'Cantidad de Menús Infantiles', 'Entradas Adicionales', 'Comentarios Adicionales', 'Servicios Adicionales',
-               'Servicios Requeridos del Paquete Base', 'Tematica', 'Necesidad especial']
-
-    for col_num, header in enumerate(headers, 1):
-        sheet.cell(row=1, column=col_num, value=header)
-
-    # Obtener datos de la base de datos y escribir en el archivo Excel
-    cotizaciones = Cotizacion.objects.all()
-    for row_num, cotizacion in enumerate(cotizaciones, 1):
-        data = [
-            cotizacion.name, cotizacion.email, cotizacion.phone_number, cotizacion.event_type,
-            cotizacion.event_date, cotizacion.event_duration, cotizacion.event_location,
-            cotizacion.salon_number, cotizacion.number_of_guests, cotizacion.menu,
-            cotizacion.childrens_menu, cotizacion.additional_entries, cotizacion.additional_comments,
-            cotizacion.additional_services, cotizacion.required_services, cotizacion.theme, cotizacion.special_need
-        ]
-
-        # Escribir los datos en las celdas de Excel
-        for col_num, value in enumerate(data, 1):
-            sheet.cell(row=row_num + 1, column=col_num, value=value)
-
-    # Crear la respuesta HTTP con el archivo adjunto
-    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-    response['Content-Disposition'] = 'attachment; filename=reporte_cotizaciones.xlsx'
-    workbook.save(response)
-
-    return response
-
-
-def generate_excel_report_pse(request):
-    # Crear un nuevo libro de Excel y una hoja de cálculo
-    workbook = openpyxl.Workbook()
-    sheet = workbook.active
-
-    # Escribir encabezados en la primera fila
-    headers = ['Tipo de persona', 'Seleccione su Banco', 'Nombre Completo', 'Tipo de Identificación', 'Numero de identificacion', 'Correo electronico', 'Numero de telefono']
-    for col_num, header in enumerate(headers, 1):
-        sheet.cell(row=1, column=col_num, value=header)
-
-    # Obtener datos de la base de datos y escribir en el archivo Excel
-    pse_accounts = PSE.objects.all()
-    for row_num, pse_account in enumerate(pse_accounts, 1):
-        data = [
-            str(pse_account.type_person), str(pse_account.select_bank), pse_account.full_name,
-            str(pse_account.type_id), str(pse_account.identification_number), pse_account.email,
-            str(pse_account.phone_number)
-        ]
-
-        # Escribir los datos en las celdas de Excel
-        for col_num, value in enumerate(data, 1):
-            sheet.cell(row=row_num + 1, column=col_num, value=value)
-
-    # Crear la respuesta HTTP con el archivo adjunto
-    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-    response['Content-Disposition'] = 'attachment; filename=reporte_pse.xlsx'
-    workbook.save(response)
-
-    return response
-
 
 
 def es_admin(user):
@@ -211,7 +71,7 @@ def generate_excel_report(request):
     sheet = workbook.active
 
     # Escribir encabezados en la primera fila
-    headers = ['Nombres', 'Apellidos', 'Correo electrónico', 'Número de celular', 'Género','Fecha de evento', 'Hora inicial', 'Hora final', 'Tematica',  'Necesidad especial', 'Tipo de evento', 'Sede', 'Salón']
+    headers = ['Nombres', 'Apellidos', 'Correo electrónico', 'Número de celular', 'Género', 'Fecha de evento', 'Hora inicial', 'Hora final', 'Tematica', 'Descripción', 'Necesidad especial', 'Tipo de evento', 'Sede', 'Salón']
     for col_num, header in enumerate(headers, 1):
         sheet.cell(row=1, column=col_num, value=header)
 
@@ -480,89 +340,10 @@ def nosotros(request):
     })
 
 def crear_cotizacion(request):
-    form = CotizacionForm(request.POST or None)
     if request.method == 'POST':
         form = CotizacionForm(request.POST)
         if form.is_valid():
             form.save()
-
-            valor_total = 0
-            duracion = form.cleaned_data['event_duration']
-            if duracion == 4: 
-                valor_total += 1000
-            elif duracion == 5:
-                valor_total += 1200
-            elif duracion == 6:
-                valor_total += 1400
-            elif duracion == 7:
-                valor_total += 1600
-
-            salon = form.cleaned_data['salon_number']
-            valor_total += 800
-
-            cantidad_invitados = form.cleaned_data['number_of_guests']
-            if 40 <= cantidad_invitados <= 69:
-                valor_total += 500
-                valor_total += 200 #valor adicional del menu
-                valor_total += 100 #valor adicional de las entradas
-            elif  70 <= cantidad_invitados <= 99:
-                valor_total += 700
-                valor_total += 400 #valor adicional del menu
-                valor_total += 200 #valor adicional de las entradas
-            elif  100 <= cantidad_invitados <= 129:
-                valor_total += 900
-                valor_total += 600 #valor adicional del menu
-                valor_total += 300 #valor adicional de las entradas
-            elif  130 <= cantidad_invitados <= 159:
-                valor_total += 1100
-                valor_total += 800 #valor adicional del menu
-                valor_total += 400 #valor adicional de las entradas
-            elif  160 <= cantidad_invitados <= 180:
-                valor_total += 1300
-                valor_total += 1000 #valor adicional del menu
-                valor_total += 500  #valor adicional de las entradas
-
-            paquete_base = form.cleaned_data['required_services']
-            for servicio in paquete_base:
-                if servicio == 'servicio1':
-                 valor_total += 300
-                elif servicio == 'servicio2':
-                    valor_total += 600
-                elif servicio == 'servicio3':
-                    valor_total += 100
-                elif servicio == 'servicio4':
-                    valor_total += 150
-                elif servicio == 'servicio5':
-                    valor_total += 250
-                elif servicio == 'servicio6':
-                    valor_total += 120
-                elif servicio == 'servicio7':
-                    valor_total += 180
-                elif servicio == 'servicio8':
-                    valor_total += 500
-                elif servicio == 'servicio9':
-                    valor_total += 100 
-
-            servicios_adicionales = form.cleaned_data['additional_services']
-            for servicio in servicios_adicionales:
-                if servicio == 'servicio1':
-                 valor_total += 300
-                elif servicio == 'servicio2':
-                    valor_total += 200
-                elif servicio == 'servicio3':
-                    valor_total += 400
-                elif servicio == 'servicio4':
-                    valor_total += 350
-                elif servicio == 'servicio5':
-                    valor_total += 150
-                elif servicio == 'servicio6':
-                    valor_total += 125
-                elif servicio == 'servicio7':
-                    valor_total += 400
-                elif servicio == 'servicio8':
-                    valor_total += 225
-                elif servicio == 'servicio9':
-                    valor_total += 600           
             return redirect('reservas.html')  # Redirige a una página de éxito
     else:
         form = CotizacionForm()

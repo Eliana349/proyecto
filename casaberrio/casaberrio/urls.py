@@ -25,10 +25,6 @@ from django.contrib.auth import views as auth_views
 from .views import generate_excel_report
 from .views import custom_excel_report, redireccionar_admin
 
-from .views import generate_excel_report_pse
-from .views import generate_excel_report_cotizacion
-from .views import generate_excel_report_loyalty
-from .views import generate_excel_report_carrito
 
 
 
@@ -68,11 +64,7 @@ urlpatterns = [
     path('generate-excel-report/', generate_excel_report, name='generate_excel_report'),
     path('redireccionar_admin/', redireccionar_admin, name='redireccionar_admin'),
     path('custom_excel_report/', custom_excel_report, name='custom_excel_report'),
-    path('limpiar_sesion/', views.limpiar_sesion, name='limpiar_sesion'),
-    path('generar_reporte_pse/', generate_excel_report_pse, name='generate_excel_report_pse'),
-    path('generate_excel_report_cotizacion/', generate_excel_report_cotizacion, name='generate_excel_report_cotizacion'),
-    path('generate_excel_report_loyalty/', generate_excel_report_loyalty, name='generate_excel_report_loyalty'),
-    path('generate_excel_report_carrito/', generate_excel_report_carrito, name='generate_excel_report_carrito'),
+    path('limpiar_sesion/', views.limpiar_sesion, name='limpiar_sesion')
 
 
 

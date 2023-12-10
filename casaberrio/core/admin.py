@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import *
 from django import forms
-
+from .models import PQRS
 
 
 admin.site.register(Inventory)
@@ -24,6 +24,11 @@ admin.site.register(Cotizacion)
 
 
 
+class PQRSAdmin(admin.ModelAdmin):
+    list_display = ['tipo', 'descripcion', 'estado']
+    list_filter = ['tipo', 'estado']
+
+admin.site.register(PQRS, PQRSAdmin)
 
 
 class PSEAdminForm(forms.ModelForm):
