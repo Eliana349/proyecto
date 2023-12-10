@@ -26,6 +26,7 @@ from .views import generate_excel_report
 from .views import custom_excel_report, redireccionar_admin
 
 
+from .views import generate_excel_report_pse
 
 
 
@@ -64,8 +65,8 @@ urlpatterns = [
     path('generate-excel-report/', generate_excel_report, name='generate_excel_report'),
     path('redireccionar_admin/', redireccionar_admin, name='redireccionar_admin'),
     path('custom_excel_report/', custom_excel_report, name='custom_excel_report'),
-    path('limpiar_sesion/', views.limpiar_sesion, name='limpiar_sesion')
-
+    path('limpiar_sesion/', views.limpiar_sesion, name='limpiar_sesion'),
+    path('generar_reporte_pse/', generate_excel_report_pse, name='generate_excel_report_pse'),
 
 
 

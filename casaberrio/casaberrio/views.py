@@ -21,6 +21,39 @@ from core.models import Product
 from openpyxl.styles import NamedStyle
 
 
+
+def generate_excel_report_pse(request):
+    # Crear un nuevo libro de Excel y una hoja de cálculo
+    workbook = openpyxl.Workbook()
+    sheet = workbook.active
+
+    # Escribir encabezados en la primera fila
+    headers = ['Tipo de persona', 'Seleccione su Banco', 'Nombre Completo', 'Tipo de Identificación', 'Numero de identificacion', 'Correo electronico', 'Numero de telefono']
+    for col_num, header in enumerate(headers, 1):
+        sheet.cell(row=1, column=col_num, value=header)
+
+    # Obtener datos de la base de datos y escribir en el archivo Excel
+    pse_accounts = PSE.objects.all()
+    for row_num, pse_account in enumerate(pse_accounts, 1):
+        data = [
+            str(pse_account.type_person), str(pse_account.select_bank), pse_account.full_name,
+            str(pse_account.type_id), str(pse_account.identification_number), pse_account.email,
+            str(pse_account.phone_number)
+        ]
+
+        # Escribir los datos en las celdas de Excel
+        for col_num, value in enumerate(data, 1):
+            sheet.cell(row=row_num + 1, column=col_num, value=value)
+
+    # Crear la respuesta HTTP con el archivo adjunto
+    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = 'attachment; filename=reporte_pse.xlsx'
+    workbook.save(response)
+
+    return response
+
+
+
 def es_admin(user):
     return user.is_authenticated and user.is_staff
 
@@ -71,7 +104,7 @@ def generate_excel_report(request):
     sheet = workbook.active
 
     # Escribir encabezados en la primera fila
-    headers = ['Nombres', 'Apellidos', 'Correo electrónico', 'Número de celular', 'Género', 'Fecha de evento', 'Hora inicial', 'Hora final', 'Tematica', 'Descripción', 'Necesidad especial', 'Tipo de evento', 'Sede', 'Salón']
+    headers = ['Nombres', 'Apellidos', 'Correo electrónico', 'Número de celular', 'Género','Fecha de evento', 'Hora inicial', 'Hora final', 'Tematica',  'Necesidad especial', 'Tipo de evento', 'Sede', 'Salón']
     for col_num, header in enumerate(headers, 1):
         sheet.cell(row=1, column=col_num, value=header)
 

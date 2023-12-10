@@ -40,13 +40,10 @@ class Reserva(models.Model):
     special_need = models.CharField( max_length=200,verbose_name='Necesidad especial', choices=NECECIDAD_CHOICES,default='Campo_silla_de_redas' )
     campus = models.CharField (max_length=200, verbose_name='Sede' )
     lounge = models.CharField(max_length=200,verbose_name='Salón' )
-    Total_value = forms.IntegerField(
-    widget=forms.NumberInput,
-    label='Valor Total'
-)
-    
+    Total_value = models.IntegerField()
+
     def __str__(self):
-        return str(self.event_date)
+        return self.name
     
     class Meta:
         verbose_name = 'Reserva'
