@@ -46,7 +46,7 @@
         </section>
         <section id="bg_formulario">
             <img src="/static/img/bautizos.png" alt="" width="900PX" style="margin-left: 25px; position: absolute; border-radius: 10px; margin-top: 75px;">
-            <form method="post" class="horizontal-form">
+            <form method="post" class="horizontal-form" onsubmit="return confirmSubmit()">
                 {% csrf_token %}
                 <div class="form-group">
                     {{ form.name.label_tag }}
@@ -181,7 +181,7 @@
                 </div>
 
                 <div>
-                    <button type="submit" class="form-submit" onsubmit="return confirmSubmit">Enviar Cotización</button>
+                    <button type="submit" class="form-submit">Enviar Cotización</button>
                 </div>
 
                 <script>

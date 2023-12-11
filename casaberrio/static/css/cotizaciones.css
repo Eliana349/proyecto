@@ -109,9 +109,12 @@ textarea {
 }
 
 .styled-table {
-    width: 100%;
+    width: 90%;
     border-collapse: collapse;
-    margin-top: 20px;
+    margin-top: 10px;
+    margin-left: 100px;
+    margin-bottom: 10px;
+    background-color: #c4c4c4;
 }
 
 .styled-table th, .styled-table td {
