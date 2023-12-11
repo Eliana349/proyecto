@@ -10,25 +10,11 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-    <header>
-        <div class="container"> 
-            <div class="row">
-                <div class="col-lg-1 justify-content-lg-start"><img src="/static/img/casaberrio.png" alt="casaberrio" height="100px"></div>
-                <div class="col-lg-10 d-flex justify-content-center p-4">
-                    <nav>
-                        <ul>
-                            <li><a href="home2.html">Inicio</a></li>
-                            <li><a href="nosotros.html">Nosotros</a></li>
-                            <li><a href="cotizacion.html">Cotizaciones</a></li>
-                            <li><a href="alquiler.html">Alquiler</a></li>
-                            <li><a href="pqrs.html">PQRS</a></li>
-                            <li><a href="home.html">Cerrar sesion</a></li>
-                        </ul>
-                    </nav>        
-                </div>
-           </div> 
-        </div>
-    </header>
+    <div id="link">
+        <a id="link-div" href="{% url 'home2' %}">
+            <img id="imagen-font" src="{% static 'img/cancelar.png' %}" alt="">
+            <label for="">Regresar</label>
+        </a>
     <div class="container1 payment-form">
       <div class="div-div">
         <img src="{% static 'img/casaberrio4.png' %}" alt="User Icon" class="imagen-div">
@@ -47,9 +33,10 @@
                     </div>
                     <div class="tab-content">
                         <div id="payment-tab-card" class="active-tab">
-                            <form role="form1" method="post">
+                            <form method="post" action="">
                                 {% csrf_token %}
-                                {{ form }}
+                                {{ form.as_p }}
+                                
                                 <input type="submit" class="confirm-button" value="Confirmar Pago" onclick="alert('Contactando con su banco')">
                             </form>
                         </div>

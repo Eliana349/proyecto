@@ -208,3 +208,24 @@ input[type="button"], input[type="submit"], input[type="reset"] {
   margin: 5px 20px 40px 20px;
   transition: all 0.3s ease-in-out;
 }
+#link{
+  margin-left: 50px;
+}
+
+#imagen-font{
+  width: 60px;
+  height: 55px;
+  margin-left: 50px;
+  padding: 5px;
+  cursor: pointer;
+}
+
+#link-div{
+  color: black;
+  text-decoration: underline;
+  padding: 5px;
+}
+
+label{
+  cursor: pointer;
+}

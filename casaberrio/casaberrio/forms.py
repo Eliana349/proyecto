@@ -235,12 +235,19 @@ class formularioReserva(forms.ModelForm):
    
         
 class formularioPSE(forms.ModelForm):
+    cotizacion_id = forms.IntegerField(widget=forms.HiddenInput(), required=False)
+    full_name = forms.CharField(
+        widget=forms.TextInput(attrs={'placeholder': 'Nombres Completos'}),
+        label='Nombres Completos'
+    )
+    Total_value = forms.IntegerField(
+        widget=forms.NumberInput,
+        label='Valor Total'
+    )
+
     class Meta:
         model = PSE
-        fields = ['type_person','select_bank','full_name','type_id','identification_number','email','phone_number']
-        class Meta:
-            full_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Nombres Completos'}),label='Nombres Completos')
-            
+        fields = ['cotizacion_id', 'type_person', 'select_bank', 'full_name', 'type_id', 'identification_number', 'email', 'phone_number', 'Total_value']
           
 class formularioFedelizacion(forms.ModelForm):
     incident_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}),label='Fecha de incidente')

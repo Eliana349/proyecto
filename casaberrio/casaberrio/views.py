@@ -329,30 +329,41 @@ def reservas_view(request):
 
 @login_required
 def pse_view(request, cotizacion_id):
-    contact_form = formularioPSE()
+    cotizacion = get_object_or_404(Cotizacion, id=cotizacion_id)
 
     if request.method == 'POST':
-        contact_form = formularioPSE(data=request.POST)
-        
-        if contact_form.is_valid():
-            # Guardar el formulario
-            contacto = contact_form.save()
+        pse_form = formularioPSE(request.POST)
+        if pse_form.is_valid():
+            pse_instance = pse_form.save(commit=False)
+            pse_instance.cotizacion = cotizacion
+            pse_instance.save()
 
             # Envía un correo electrónico de confirmación
             subject = 'Confirmación de Pago PSE'
             message = '¡Gracias por tu pago! Tu transacción ha sido procesada con éxito.'
             from_email = 'casaberrio23@gmail.com'  # Cambia esto al correo desde el cual deseas enviar
-            recipient_list = [contacto.email]  # Ajusta según el nombre real de tu campo de correo electrónico
+            recipient_list = [pse_instance.email]  # Ajusta según el nombre real de tu campo de correo electrónico
 
             send_mail(subject, message, from_email, recipient_list, fail_silently=False)
 
             # Redirige a la página de inicio o a donde desees después de un envío exitoso
             return redirect('home2')
-            
         else:
-            messages.error(request, 'Usuario o contraseña incorrectos')
-        
-    return render(request, 'PSE.html', {'form': contact_form, 'cotizacion_id': cotizacion_id})
+            for field, error in pse_form.errors.items():
+                messages.error(request, f"{field}: {error}")
+
+    else:
+        # Inicializa el formulario PSE con los datos de la cotización
+        pse_form = formularioPSE(initial={
+            'cotizacion_id': cotizacion.id,
+            'full_name': cotizacion.name,
+            'email': cotizacion.email,
+            'phone_number': cotizacion.phone_number,
+            'Total_value': cotizacion.valor_total,
+            # Agrega otros campos según sea necesario
+        })
+
+    return render(request, 'PSE.html', {'form': pse_form, 'cotizacion_id': cotizacion_id})
 
 @login_required
 def tajetacd_view(request):

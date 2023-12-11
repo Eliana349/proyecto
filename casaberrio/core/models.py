@@ -133,8 +133,11 @@ class PSE(models.Model):
     identification_number= models.PositiveIntegerField(verbose_name='Numero de indentificacion')
     email = models.EmailField(verbose_name='Correo electronico')
     phone_number = PhoneNumberField(verbose_name='Numero de telefono')
+    Total_value= models.IntegerField()
+    cotizacion = models.ForeignKey(Cotizacion, on_delete=models.CASCADE, null=True, blank=True, verbose_name='Cotización')
+
     
-    def __str__(self):
+    def _str_(self):
         return self.full_name
 
     class Meta:
