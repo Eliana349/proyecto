@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from phonenumber_field.formfields import PhoneNumberField
 from core.models import Reserva,PSE,TarjetaDeCD,loyalty,Inventory,Carrito,Product, Cotizacion,TipoDeProducto
 import re
+from datetime import date
 from django.utils import timezone
 from django.core.exceptions import ValidationError 
 
@@ -337,18 +338,27 @@ class CotizacionForm(forms.ModelForm):
         label="Tipo de Evento"
     )
     
+    def clean_event_date(self):
+        event_date = self.cleaned_data.get('event_date')
+
+        if event_date and event_date < date.today():
+            raise forms.ValidationError("La fecha no puede ser anterior al día actual")
+
+        return event_date
+
     event_date = forms.DateField(
         widget=forms.DateInput(attrs={'type': 'date'}),
         label="Fecha del Evento"
     )
 
-    def clean_fecha(self):
-        fecha = self.cleaned_data.get('fecha')
+    def clean_event_duration(self):
+        event_duration = self.cleaned_data.get('event_duration')
 
-        if fecha < timezone.now().date():
-            raise ValidationError('La fecha no puede ser anterior al día actual.')
-        
-        return fecha
+        # Validar el rango de horas (4 a 7)
+        if not (4 <= event_duration <= 7):
+            raise forms.ValidationError("La duración del evento debe estar en el rango de 4 a 7 horas.")
+
+        return event_duration
     
     SEDES_CHOICES = (
         ('Santa Isabel', 'Santa Isabel'),
@@ -372,6 +382,14 @@ class CotizacionForm(forms.ModelForm):
         label="Número de Salon"
     )
     
+    def clean_number_of_guests(self):
+        number_of_guests = self.cleaned_data.get('number_of_guests')
+
+        # Validar el rango de cantidad de invitados (40 a 180)
+        if not (40 <= number_of_guests <= 180):
+            raise forms.ValidationError("La cantidad de invitados debe estar en el rango de 40 a 180.")
+
+        return number_of_guests
 
     required_services = forms.MultipleChoiceField(
         choices=[
@@ -452,7 +470,7 @@ class CotizacionForm(forms.ModelForm):
     NECESIDAD_CHOICES = (
     ('Campo_silla_de_redas', 'Campo silla de ruedas'),
     ('Comunicador_de_lenguaje_de_señas ', 'Comunicador de lenguaje de señas '),
-
+    ('Ninguna', 'Ninguna')
     )
 
     special_need = forms.ChoiceField(

@@ -71,11 +71,46 @@
                 <div class="form-group">
                     {{ form.event_date.label_tag }}
                     {{ form.event_date }}
+                    {% if form.event_date.errors %}
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                var errorMessage = "{{ form.event_date.errors|escapejs }}";
+                                if (errorMessage) {
+                                    errorMessage = errorMessage.replace(/<[^>]*>/g, ''); 
+                                    alert("Error: " + errorMessage.trim());
+                                }
+                            });
+                        </script>
+                    {% endif %}
                 </div>
         
                 <div class="form-group">
                     {{ form.event_duration.label_tag }}
                     {{ form.event_duration }}
+                    {% if form.event_duration.errors %}
+                        <script>
+                            // JavaScript para validar el rango de horas al enviar el formulario
+                            document.addEventListener('DOMContentLoaded', function() {
+                                var eventDurationInput = document.getElementById('{{ form.event_duration.id_for_label }}');
+                                var errorMessage = "{{ form.event_duration.errors|escapejs }}";
+                
+                                if (errorMessage) {
+                                    errorMessage = errorMessage.replace(/<[^>]*>/g, ''); // Eliminar tags HTML
+                                    alert("Error: " + errorMessage.trim());
+                                    eventDurationInput.value = ''; // Limpiar el valor del campo en caso de error
+                                } else {
+                                    // Validar el rango de horas (4 a 7) antes de enviar el formulario
+                                    document.querySelector('form').addEventListener('submit', function(event) {
+                                        var eventDurationValue = parseInt(eventDurationInput.value);
+                                        if (isNaN(eventDurationValue) || eventDurationValue < 4 || eventDurationValue > 7) {
+                                            alert("Error: La duración del evento debe estar en el rango de 4 a 7 horas.");
+                                            event.preventDefault(); // Detener el envío del formulario
+                                        }
+                                    });
+                                }
+                            });
+                        </script>
+                    {% endif %}
                 </div>
         
                 <div class="form-group">
@@ -91,6 +126,18 @@
                 <div class="form-group">
                     {{ form.number_of_guests.label_tag }}
                     {{ form.number_of_guests }}
+                    {% if form.number_of_guests.errors %}
+                        <script>
+                            // JavaScript para mostrar la ventana emergente al cargar la página
+                            document.addEventListener('DOMContentLoaded', function() {
+                                var errorMessage = "{{ form.number_of_guests.errors|escapejs }}";
+                                if (errorMessage) {
+                                    errorMessage = errorMessage.replace(/<[^>]*>/g, ''); // Eliminar tags HTML
+                                    alert("Error: " + errorMessage.trim());
+                                }
+                            });
+                        </script>
+                    {% endif %}
                 </div>
         
                 <div class="form-group">
@@ -134,8 +181,16 @@
                 </div>
 
                 <div>
-                    <button type="submit" class="form-submit">Enviar Cotización</button>
+                    <button type="submit" class="form-submit" onsubmit="return confirmSubmit">Enviar Cotización</button>
                 </div>
+
+                <script>
+                    function confirmSubmit() {
+                        var confirmation = confirm("¿Desea continuar con la reserva?");
+                        // No importa si el usuario selecciona "Aceptar" o "Cancelar", el formulario se enviará
+                    }
+                </script>
+
             </form>
         </section>
         <section>
