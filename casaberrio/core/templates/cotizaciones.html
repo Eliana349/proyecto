@@ -193,13 +193,16 @@
 
             </form>
         </section>
+        <div style="text-align: center; margin-top: 20px;">
+            <h1>VISUALIZACIÓN DE TUS COTIZACIONES</h1>
+            <p>Para poder visulizar tu cotización y su precio, tendras que volver aqui despues de enviar el formulario y digitar en la parte de "Buscar" tu nombre.</p>
+        </div>
         <section>
             <table id="Cotizacion" class="styled-table">
                 <thead>
                     <tr>
                         <th>Id</th>
                         <th>Nombre</th>
-                        <th>Email</th>
                         <th>Fecha del Evento</th>
                         <th>Sede del Evento</th>
                         <th>Valor Total</th>
@@ -211,7 +214,6 @@
                     <tr>
                         <td>{{ cotizacion.id }}</td>
                         <td>{{ cotizacion.name }}</td>
-                        <td>{{ cotizacion.email }}</td>
                         <td>{{ cotizacion.event_date }}</td>
                         <td>{{ cotizacion.event_location }}</td>
                         <td>{{ cotizacion.valor_total }}</td>
