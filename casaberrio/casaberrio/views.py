@@ -598,6 +598,8 @@ def reserva(request, cotizacion_id):
             'theme': cotizacion.theme,
             'special_need': cotizacion.special_need,
             'lounge': cotizacion.salon_number,
+            'Total_value': cotizacion.valor_total,
+
         })
 
     return render(request, 'reservas.html', {'reserva_form': reserva_form, 'cotizacion': cotizacion})
