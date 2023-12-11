@@ -38,25 +38,15 @@ nav ul li a {
 
 /* Estilos para el formulario dentro de div-form */
 .div-form {
-  margin: 70px 150px;
+  margin: 7px 150px;
 }
 
-/* Estilos para div2 */
-.div2 {
-  border-radius: 25px;
-  background: rgb(255, 255, 255);
-  padding: 50px;
-  width: 100%;
-  max-width: 100%;
-  box-shadow: 0 30px 60px 0 rgba(138, 136, 136, 0.3);
-  text-align: center;
-  margin: 0 150px;
-}
+
 
 
 .imagen-div {
-  width: 500px;
-  height: 500px;
+  width: 700px;
+  height: 700px;
   margin-left: 20px;
 }
 

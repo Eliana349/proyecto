@@ -379,7 +379,23 @@ class loyalty(models.Model):
         db_table = 'fidelizacion'
         ordering = ['id']
   
+class PQRS(models.Model):
+    TIPOS_PQRS = [
+        ('P', 'Petición'),
+        ('Q', 'Queja'),
+        ('R', 'Reclamo'),
+        ('S', 'Sugerencia'),
+    ]
 
+    tipo = models.CharField(max_length=1, choices=TIPOS_PQRS)
+    descripcion = models.TextField()
+    respuesta = models.TextField(blank=True, null=True)
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+    fidelizacion = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.get_tipo_display()} - {self.fecha_creacion}"
+    
 class StatePqrsd(models.Model):
     ESTADO_CHOICES = (
         ('Pendiente', 'Pendiente'),

@@ -1,7 +1,14 @@
 from django.contrib import admin
 from .models import *
 from django import forms
+from .models import PQRS
 
+@admin.register(PQRS)
+class PQRSAdmin(admin.ModelAdmin):
+    list_display = ('tipo', 'fecha_creacion', 'fidelizacion')
+    list_filter = ('tipo', 'fidelizacion')
+    search_fields = ('tipo', 'descripcion')
+    readonly_fields = ('fecha_creacion',)
 
 
 admin.site.register(Inventory)
