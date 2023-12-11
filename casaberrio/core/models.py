@@ -62,13 +62,13 @@ class Reserva(models.Model):
     NECECIDAD_CHOICES = (
     ('Campo_silla_de_redas', 'Campo silla de redas'),
     ('Comunicador_de_lenguaje_de_señas ', 'Comunicador de lenguaje de señas '),
+    ('Ninguno', 'Ninguno'),
 )
 
 
     cotizacion = models.ForeignKey(Cotizacion, on_delete=models.CASCADE)
 
-    name = models.CharField(max_length=50,verbose_name='Nombres', )
-    lastname = models.CharField(max_length=50, verbose_name='Apellidos')
+    name = models.CharField(max_length=50,verbose_name='Nombres Completos', )
     email = models.EmailField(max_length=50, verbose_name='Correo electronico')
     phone = PhoneNumberField(verbose_name='Numero de celular',region='CO')
     gender = models.CharField(max_length=30, verbose_name='Genero')
