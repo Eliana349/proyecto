@@ -19,6 +19,7 @@ from core.models import Product
 from core.models import loyalty
 from openpyxl.styles import NamedStyle
 from django.shortcuts import get_object_or_404
+from decimal import Decimal
 
 
 
@@ -439,23 +440,29 @@ def alquiler_view(request):
     contact_formtipo = Product.objects.all()
     contact_form = formularioTipo(request.POST or None)
     contact_form_carrito = formularioCarrito(request.POST or None)
-
-    if contact_form.is_valid():
+    if contact_form_carrito.is_valid():
+        contact_form_carrito.save()
+        return redirect('psee')
+    t = Decimal(request.session.get('total_alquiler', 0))
+    if contact_form.is_valid(): 
         Tipo = request.POST.get('option1')
         number = contact_form.cleaned_data.get('cantidad')
         filterr = TipoDeProducto.objects.get(nombre=Tipo)
         price = filterr.precio
         precio = number * price
         producto = filterr.product
+        amount = filterr.cantidad
+        if number > amount:
+            return HttpResponse('<h1 style="color:red; font-size: 50px">CANTIDAD NO DISPONIBLE</h1>')
         opciones_nuevas = f'{producto}  :  {Tipo}  :  {number}  :  ${precio}'
+        t += precio
+        total = f'$ {t}'
         opciones_guardadas = request.session.get('opciones_alquiler', [])
         opciones_guardadas.append(opciones_nuevas)
         request.session['opciones_alquiler'] = opciones_guardadas
+        request.session['total_alquiler'] = float(t)
         opciones_en_carrito = '\n'.join(opciones_guardadas)
-        contact_form_carrito = formularioCarrito({'elementos_alquilar': opciones_en_carrito})
-    else:
-        messages.error(request, 'Las opciones son inválidas')
-
+        contact_form_carrito = formularioCarrito({'elementos_alquilar': opciones_en_carrito, 'precio_total':total})
     return render(request, 'alquiler.html', {
         'cantidad': contact_form, 
         'Carrito': contact_form_carrito,
@@ -463,25 +470,62 @@ def alquiler_view(request):
         'Categoria': contact_formcategoria,
         'Tipo': contact_form_tipoP,
     })
-
-def precio_total(request):
-    contact_form = formularioTipo(request.POST or None)
-    if contact_form.is_valid():
-        cantidad = contact_form.cleaned_data.get('cantidad')
-        precio = TipoDeProducto.precio
-        cantidad = TipoDeProducto.cantidad
-        opciones_guardadas = request.session.get('opciones_alquiler', [])
-        opciones_guardadas.append(cantidad)
-        request.session['opciones_alquiler'] = opciones_guardadas
-        for price,amount in zip(precio,opciones_guardadas):
-            price_amount = amount * price
-            return price_amount  
-
-def limpiar_sesion(request):
-    del request.session['opciones_alquiler']
     
+def limpiar_sesion(request):
+    if 'opciones_alquiler' in request.session:
+        del request.session['opciones_alquiler']
+    if 'total_alquiler' in request.session:
+        del request.session['total_alquiler']
     return HttpResponse("Sesión limpiada")    
         
+
+@login_required
+def alquiler_productsView(request):
+    product = Product.objects.all()
+    category = Category.objects.all()
+    tipo = TipoDeProducto.objects.all()
+    return render(request, 'alquiler_products.html', {
+        'producto':product,
+        'categoria': category,
+        'tipo':tipo
+    })
+    
+    
+@login_required
+def alquiler_historialView(request):
+    car = Carrito.objects.all()
+    return render(request, 'alquiler_historial.html', {
+        'carro': car,
+    })
+    
+    
+
+@login_required
+def ppsse_view(request):
+    contact_form = formularioPSE()
+
+    if request.method == 'POST':
+        contact_form = formularioPSE(data=request.POST)
+        
+        if contact_form.is_valid():
+            # Guardar el formulario
+            contacto = contact_form.save()
+
+            # Envía un correo electrónico de confirmación
+            subject = 'Confirmación de Pago PSE'
+            message = '¡Gracias por tu pago! Tu transacción ha sido procesada con éxito.'
+            from_email = 'casaberrio23@gmail.com'  # Cambia esto al correo desde el cual deseas enviar
+            recipient_list = [contacto.email]  # Ajusta según el nombre real de tu campo de correo electrónico
+
+            send_mail(subject, message, from_email, recipient_list, fail_silently=False)
+
+            # Redirige a la página de inicio o a donde desees después de un envío exitoso
+            return redirect('home2')
+            
+        else:
+            messages.error(request, 'Usuario o contraseña incorrectos')
+        
+    return render(request, 'ppsse.html', {'form': contact_form})
 
 @login_required
 def productos(request):

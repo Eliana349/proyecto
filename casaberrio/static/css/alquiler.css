@@ -232,6 +232,9 @@ li {
   border-radius: 20%;
 }
 
+#a{
+  text-decoration: none;
+}
 
 .mobiliario{
   background: white;
@@ -402,4 +405,63 @@ textarea{
 
 #elementos_alquilar{
   resize: none;
+}
+
+
+
+.tres-rayitas{
+  position: absolute;
+  left: 1670px;
+}
+
+.menu-icon {
+display: none;
+cursor: pointer;
+}
+
+.bar {
+width: 25px;
+height: 3px;
+background-color: #ffffff;
+margin: 6px 0;
+}
+
+.menu {
+display: flex;
+justify-content: space-around;
+background-color: rgb(255, 255, 255);
+box-shadow: 0 0 5px black;
+width: 200px;
+}
+
+.menu a {
+text-decoration: none;
+color: #000000;
+font-size: 18px;
+padding: 20px;
+width: 100%;
+}
+
+.menu-a:hover{
+  background-color: #cccccc;
+}
+
+.menu-a:active{
+  background-color: #828282;
+}
+
+@media screen and (max-width: 100000px) {
+.menu {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+}
+
+.menu.show {
+  display: flex;
+}
+
+.menu-icon {
+  display: block;
+}
 }

@@ -309,11 +309,11 @@ EQUIPAMENT = (
     ('Camara de humo', 'Camara de humo'),
     ('Lanza confetti', 'Lanza confetti'),
 )
-
 class formularioCarrito(forms.ModelForm):
     elementos_alquilar = forms.CharField(widget=forms.Textarea(attrs={'readonly': 'readonly', 'name' : 'elementos_alquilar', 'id' : 'elementos_alquilar'}))
     date_start = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
     date_finish = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+    precio_total = forms.CharField(widget=forms.Textarea(attrs={'readonly': 'readonly', 'name' : 'elementos' , 'id' : 'elementos', 'style': ' height: 34px; resize: none;'}))
     class Meta:
         model = Carrito
         fields = ['nombre_usuario','date_start','date_finish','elementos_alquilar','precio_total']

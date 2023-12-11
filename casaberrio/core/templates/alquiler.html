@@ -3,10 +3,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="Icon" href="{% static 'img/LogoCasaBerrio (1).png' %}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/alquiler.css' %}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-    <title>Alquiler</title>
+    <title>Casa Berrio</title>
 </head>
 <body id="body">
     <header id="header">
@@ -23,7 +24,21 @@
                             <li><a href="pqrs.html">PQRS</a></li>
                             <li><a href="home.html">Cerrar sesion</a></li>
                         </ul>
-                    </nav>        
+                    </nav>
+                    <div class="tres-rayitas">
+
+                        <div class="menu-icon" id="menu-icon">
+                          <div class="bar"></div>
+                          <div class="bar"></div>
+                          <div class="bar"></div>
+                        </div>
+                        
+                        <div class="menu" id="menu">
+                          <a class="menu-a" href="{% url 'historial' %}">Historial Alquiler</a>
+                        </div>
+                        
+                        <script src="{% static 'js/prueba.js' %}"></script>
+                    </div>        
                 </div>
            </div> 
         </div>
@@ -43,12 +58,14 @@
                 {{ Carrito.elementos_alquilar }}
                 <label id="label" for="">Total</label>
                 {{ Carrito.precio_total }}
-                <input type="submit" value="Enviar">
+                <input type="submit" value="Alquilar">
                 <button type="button" onclick="limpiarTextArea()">Limpiar</button>
   
                 <script>
                   function limpiarTextArea() {
                     var textarea = document.getElementById('elementos_alquilar');
+                    var textareaa = document.getElementById('elementos');
+                    textareaa.value = '';
                     textarea.value = '';
 
                     var xhr = new XMLHttpRequest();
@@ -63,7 +80,7 @@
         </div>
     </div>
     <div class="div1 ">
-        <h1>CATALOGO</h1>
+        <h1>ALQUILER</h1>
         <section>
             <div>
                 <ul class="ul-mobiliario">
@@ -72,9 +89,11 @@
                 {% for product in products %}
                     {% if category == product.categoria %}
                         <li class="mobiliario">
-                        {% if product.imagen %}
-                            <img class="img-mobiliario" id="mesas" src="{{ product.imagen.url }}" alt=""><br><h6>{{ product.nombre }}</h6>
-                        {% endif %}
+                            <a id="a" href="{% url 'products' %}#{{ product.nombre }}">
+                            {% if product.imagen %}
+                                <img class="img-mobiliario" id="mesas" src="{{ product.imagen.url }}" alt=""><br><h6>{{ product.nombre }}</h6>
+                            {% endif %}
+                            </a>
                       
                             <form class="form-catalogo" method="post">
                                 {% csrf_token %}
@@ -91,6 +110,7 @@
                                 {{ cantidad.cantidad }}
                                 <br>
                                 <input type="submit" value="Agregar al carrito">
+                            
                             </form>
                         </li>
                     {% endif %}
@@ -130,16 +150,16 @@
                     ENLACES ÚTILES
                 </h6>
                 <p>
-                <a href="#!" class="text-reset">Reservas</a>
+                <a href="{% url 'cotizaciones.html' %}" class="text-reset">Cotizaciones</a>
                 </p>
                 <p>
-                <a href="#!" class="text-reset">Alquileres</a>
+                <a href="{% url 'alquiler' %}" class="text-reset">Alquileres</a>
                 </p>
                 <p>
-                <a href="#!" class="text-reset">Nosotros</a>
+                <a href="{% url 'nosotros' %}" class="text-reset">Nosotros</a>
                 </p>
                 <p>
-                <a href="#!" class="text-reset">Ayuda</a>
+                <a href="{% url 'pqrs' %}" class="text-reset">Ayuda</a>
                 </p>
             </div>
             <!-- Grid column -->
@@ -161,7 +181,8 @@
         <div class="text-center p-4 copy" style="background-color: rgba(0, 0, 0, 0);">
             <a href="https://es-la.facebook.com/EventosCasaBerrio/"><img src="/static/img/Facebook.png" alt="facebook" height="35px"></a>
             <a href="https://www.instagram.com/salonescasaberrio/?igshid=YmMyMTA2M2Y%3D"><img src="/static/img/instagram.png" alt="instagram" height="35px"></a>
-        © 2023 Copyright: Gaes 4 SENA
+        © 2023 Copyright:
+        <a class="text-reset fw-bold" href="https://www.instagram.com/salonescasaberrio/?igshid=YmMyMTA2M2Y%3D">CasaBerrio.com</a>
         </div>
     </footer>
 </body>

@@ -177,6 +177,7 @@ class Category(models.Model):
 class Product(models.Model):
     imagen = models.ImageField(upload_to='products/', null=False, unique=True)
     nombre = models.CharField(max_length=50)
+    descripcion = models.TextField(max_length=1000, verbose_name='Descripcion del producto ')
     created_at = models.DateTimeField(auto_now_add=True)
     categoria = models.ForeignKey(Category, on_delete=models.CASCADE)
     
@@ -213,7 +214,7 @@ class Carrito(models.Model):
     date_start = models.DateTimeField(verbose_name='Fecha de inicio')
     date_finish = models.DateTimeField(verbose_name='Fecha de finalizacion')
     elementos_alquilar =  models.TextField(max_length=1000 , verbose_name='Elementos seleccionados')
-    precio_total = models.IntegerField(verbose_name='Precio Total')
+    precio_total = models.TextField(verbose_name='Precio Total', max_length=100)
     
     def __str__(self):
         return str(self.nombre_usuario)

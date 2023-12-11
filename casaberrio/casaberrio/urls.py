@@ -58,7 +58,7 @@ urlpatterns = [
     path('home/productos.html', views.productos),
     path('home/PSE.html', views.pse_view, name='tarjeta'),
     path('home/tarjetacd.html', views.tajetacd_view),
-    path('home/alquiler.html', views.alquiler_view),
+    path('home/alquiler.html', views.alquiler_view, name = 'alquiler'),
     path('home/pqrs.html', views.fidelizacion_view),
     path('home/nosotros.html', views.nosotros),
     path('home/home2.html', views.home_two),
@@ -81,6 +81,10 @@ urlpatterns = [
     path('reserva/<int:cotizacion_id>/', views.reserva, name='reserva'),
     path('reserva/<int:cotizacion_id>/PSE.html', pse_view, name='pse_view'),
     path('reserva/<int:cotizacion_id>/pse/', pse_view, name='pse_view'),
+    path('limpiar_sesion/', views.limpiar_sesion, name='limpiar_sesion'),
+    path('alquiler/products', views.alquiler_productsView, name='products'),
+    path('alquiler/historial', views.alquiler_historialView, name='historial'),
+    path('alquiler/pse', views.ppsse_view, name='psee'),
 
 ]
 
