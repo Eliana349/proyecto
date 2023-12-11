@@ -483,11 +483,11 @@ def nosotros(request):
 
 def crear_cotizacion(request):
     form = CotizacionForm(request.POST or None)
+    cotizaciones = Cotizacion.objects.all()
     if request.method == 'POST':
         form = CotizacionForm(request.POST)
         if form.is_valid():
-            cotizacion = form.save()
-
+            form.instance.state = 'En espera'
             valor_total = 0
             duracion = form.cleaned_data['event_duration']
             if duracion == 4: 
@@ -564,10 +564,15 @@ def crear_cotizacion(request):
                 elif servicio == 'servicio8':
                     valor_total += 225
                 elif servicio == 'servicio9':
-                    valor_total += 600           
+                    valor_total += 600    
+            else:
+                valor_total += 0   
+            cotizacion = form.save(commit=False)
+            cotizacion.valor_total = valor_total
+            cotizacion.save()   
             return redirect('reserva', cotizacion_id=cotizacion.id)
-
-    return render(request, 'cotizaciones.html', {'form': form})
+          
+    return render(request, 'cotizaciones.html', {'form': form,'cotizacions': cotizaciones})
 
 def cotizacion_vista(request):
     return render(request, 'cotizacion.html', {})

@@ -424,7 +424,8 @@ class CotizacionForm(forms.ModelForm):
             ('servicio9', 'Whisky'),
         ],
         widget=forms.CheckboxSelectMultiple,
-        label="Servicios Adicionales"
+        label="Servicios Adicionales",
+        required=False
     )
 
     TEMATICA_CHOICES = (
@@ -453,6 +454,10 @@ class CotizacionForm(forms.ModelForm):
     special_need = forms.ChoiceField(
         choices=NECESIDAD_CHOICES,
         label='Necesidad especial ')
+    
+    additional_comments = forms.CharField(widget=forms.Textarea, required=False, label="Comentarios Adicionales")
+    valor_total = forms.DecimalField(required=False)
+    state = forms.CharField(required=False)
 
     class Meta:
         model = Cotizacion

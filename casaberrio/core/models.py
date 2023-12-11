@@ -33,6 +33,8 @@ class Cotizacion(models.Model):
     required_services = models.TextField(max_length=200, verbose_name="Servicios Requeridos del Paquete Base")
     theme = models.CharField(max_length=200, verbose_name='Tematica',default='Mariposas')
     special_need = models.CharField( max_length=200,verbose_name='Necesidad especial',default='Campo_silla_de_ruedas')
+    valor_total = models.DecimalField(decimal_places=2, max_digits=10,default=0, null=True, verbose_name="Valor Total")
+    state = models.CharField(max_length=200, verbose_name='Estado', default='', null=True)
 
     def __str__(self):
         return self.name
