@@ -491,80 +491,80 @@ def crear_cotizacion(request):
             valor_total = 0
             duracion = form.cleaned_data['event_duration']
             if duracion == 4: 
-                valor_total += 1000
+                valor_total += 3500000
             elif duracion == 5:
-                valor_total += 1200
+                valor_total += 4000000
             elif duracion == 6:
-                valor_total += 1400
+                valor_total += 4500000
             elif duracion == 7:
-                valor_total += 1600
+                valor_total += 5000000
 
             salon = form.cleaned_data['salon_number']
-            valor_total += 800
+            valor_total += 1000000
 
             cantidad_invitados = form.cleaned_data['number_of_guests']
             if 40 <= cantidad_invitados <= 69:
-                valor_total += 500
-                valor_total += 200 #valor adicional del menu
-                valor_total += 100 #valor adicional de las entradas
+                valor_total += 1000000
+                valor_total += 800000 #valor adicional del menu
+                valor_total += 200000 #valor adicional de las entradas
             elif  70 <= cantidad_invitados <= 99:
-                valor_total += 700
-                valor_total += 400 #valor adicional del menu
-                valor_total += 200 #valor adicional de las entradas
+                valor_total += 1500000
+                valor_total += 1000000 #valor adicional del menu
+                valor_total += 400000 #valor adicional de las entradas
             elif  100 <= cantidad_invitados <= 129:
-                valor_total += 900
-                valor_total += 600 #valor adicional del menu
-                valor_total += 300 #valor adicional de las entradas
+                valor_total += 2000000
+                valor_total += 1200000 #valor adicional del menu
+                valor_total += 600000 #valor adicional de las entradas
             elif  130 <= cantidad_invitados <= 159:
-                valor_total += 1100
-                valor_total += 800 #valor adicional del menu
-                valor_total += 400 #valor adicional de las entradas
+                valor_total += 2500000
+                valor_total += 1500000 #valor adicional del menu
+                valor_total += 800000 #valor adicional de las entradas
             elif  160 <= cantidad_invitados <= 180:
-                valor_total += 1300
-                valor_total += 1000 #valor adicional del menu
-                valor_total += 500  #valor adicional de las entradas
+                valor_total += 3000000
+                valor_total += 1800000 #valor adicional del menu
+                valor_total += 1000000  #valor adicional de las entradas
 
             paquete_base = form.cleaned_data['required_services']
             for servicio in paquete_base:
-                if servicio == 'servicio1':
-                 valor_total += 300
-                elif servicio == 'servicio2':
-                    valor_total += 600
-                elif servicio == 'servicio3':
-                    valor_total += 100
-                elif servicio == 'servicio4':
-                    valor_total += 150
-                elif servicio == 'servicio5':
-                    valor_total += 250
-                elif servicio == 'servicio6':
-                    valor_total += 120
-                elif servicio == 'servicio7':
-                    valor_total += 180
-                elif servicio == 'servicio8':
-                    valor_total += 500
-                elif servicio == 'servicio9':
-                    valor_total += 100 
+                if servicio == 'Pastel':
+                 valor_total += 300000
+                elif servicio == 'Sonido Dj - Animación':
+                    valor_total += 600000
+                elif servicio == 'Sillas':
+                    valor_total += 100000
+                elif servicio == 'Centros de Mesa':
+                    valor_total += 150000
+                elif servicio == 'Fotografía Digital':
+                    valor_total += 250000
+                elif servicio == 'Mezcladores, hielos y gaseosas':
+                    valor_total += 120000
+                elif servicio == 'Coctel':
+                    valor_total += 180000
+                elif servicio == 'Servicio de meseros por 7 horas':
+                    valor_total += 500000
+                elif servicio == 'Champañas':
+                    valor_total += 150000
 
             servicios_adicionales = form.cleaned_data['additional_services']
             for servicio in servicios_adicionales:
-                if servicio == 'servicio1':
-                 valor_total += 300
-                elif servicio == 'servicio2':
-                    valor_total += 200
-                elif servicio == 'servicio3':
-                    valor_total += 400
-                elif servicio == 'servicio4':
-                    valor_total += 350
-                elif servicio == 'servicio5':
-                    valor_total += 150
-                elif servicio == 'servicio6':
-                    valor_total += 125
-                elif servicio == 'servicio7':
-                    valor_total += 400
-                elif servicio == 'servicio8':
-                    valor_total += 225
-                elif servicio == 'servicio9':
-                    valor_total += 600    
+                if servicio == 'Decoración Escalera en Flores Naturales':
+                 valor_total += 300000
+                elif servicio == 'Kit Hora de Carnaval con Accesorios':
+                    valor_total += 200000
+                elif servicio == 'Fiesta Temática':
+                    valor_total += 400000
+                elif servicio == 'Otros - Filmación':
+                    valor_total += 350000
+                elif servicio == 'Foto Registro Enmarcado 40x50 cms':
+                    valor_total += 150000
+                elif servicio == 'Libro de Firmas':
+                    valor_total += 125000
+                elif servicio == 'Videos Retrospectivos':
+                    valor_total += 400000
+                elif servicio == 'Video Beam - Telón':
+                    valor_total += 225000
+                elif servicio == 'Whisky':
+                    valor_total += 600000    
             else:
                 valor_total += 0   
             cotizacion = form.save(commit=False)

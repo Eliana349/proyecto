@@ -45,7 +45,7 @@
             <p>A continuación encontrarás un formulario en el cual puedes realizar una cotización. Por favor, proporciona la información requerida para ayudarnos a crear una cotización precisa que se adapte a tus necesidades.</p>
         </section>
         <section id="bg_formulario">
-            <img src="/static/img/15años.png" alt="" width="800PX" style="margin-left: 100px; position: absolute;">
+            <img src="/static/img/bautizos.png" alt="" width="900PX" style="margin-left: 25px; position: absolute; border-radius: 10px; margin-top: 75px;">
             <form method="post" class="horizontal-form">
                 {% csrf_token %}
                 <div class="form-group">
@@ -139,12 +139,14 @@
             </form>
         </section>
         <section>
-            <table id="Cotizacion" class="table">
+            <table id="Cotizacion" class="styled-table">
                 <thead>
                     <tr>
                         <th>Id</th>
                         <th>Nombre</th>
-                        <th>email</th>
+                        <th>Email</th>
+                        <th>Fecha del Evento</th>
+                        <th>Sede del Evento</th>
                         <th>Valor Total</th>
                         <th>Estado</th>
                     </tr>
@@ -155,6 +157,8 @@
                         <td>{{ cotizacion.id }}</td>
                         <td>{{ cotizacion.name }}</td>
                         <td>{{ cotizacion.email }}</td>
+                        <td>{{ cotizacion.event_date }}</td>
+                        <td>{{ cotizacion.event_location }}</td>
                         <td>{{ cotizacion.valor_total }}</td>
                         <td>{{ cotizacion.state }}</td>
                     </tr>
@@ -232,6 +236,16 @@
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
-    <script>new DataTable('#Cotizacion');</script>
+    <script>
+        $(document).ready(function() {
+    $('#Cotizacion').DataTable( {
+        dom: 'Blfrtip',
+        language: {
+            url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/es-ES.json',
+
+        },
+    } );
+} );
+    </script>
 </body>
 </html>

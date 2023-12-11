@@ -324,12 +324,12 @@ class CotizacionForm(forms.ModelForm):
     
 
     TIPOS_DE_EVENTO_CHOICES = (
-        ('evento1', 'Matrimonio'),
-        ('evento2', '15 años'),
-        ('evento3', 'Bautizos'),
-        ('evento4', 'Grados'),
-        ('evento5', 'Cumpleaños'),
-        ('evento6', 'Despedidas Empresariales'),
+        ('Matrimonio', 'Matrimonio'),
+        ('15 años', '15 años'),
+        ('Bautizos', 'Bautizos'),
+        ('Grados', 'Grados'),
+        ('Cumpleaños', 'Cumpleaños'),
+        ('Despedidas Empresariales', 'Despedidas Empresariales'),
     )
     
     event_type = forms.ChoiceField(
@@ -351,9 +351,9 @@ class CotizacionForm(forms.ModelForm):
         return fecha
     
     SEDES_CHOICES = (
-        ('sede1', 'Santa Isabel'),
-        ('sede2', 'Teusaquillo'),
-        ('sede3', 'Comuneros'),
+        ('Santa Isabel', 'Santa Isabel'),
+        ('Teusaquillo', 'Teusaquillo'),
+        ('Comuneros', 'Comuneros'),
     )
 
     event_location = forms.ChoiceField(
@@ -362,9 +362,9 @@ class CotizacionForm(forms.ModelForm):
     )
     
     SALON_CHOICES ={
-        ('salon1', 'Salón 1'),
-        ('salon2', 'Salón 2'),
-        ('salon3', 'Salón 3'),
+        ('Salón 1', 'Salón 1'),
+        ('Salón 2', 'Salón 2'),
+        ('Salón 3', 'Salón 3'),
     }
 
     salon_number = forms.ChoiceField(
@@ -375,27 +375,27 @@ class CotizacionForm(forms.ModelForm):
 
     required_services = forms.MultipleChoiceField(
         choices=[
-            ('servicio1', 'Pastel'),
-            ('servicio2', 'Sonido Dj - Animación'),
-            ('servicio3', 'Sillas'),
-            ('servicio4', 'Centros de Mesa'),
-            ('servicio5', 'Fotografía Digital'),
-            ('servicio6', 'Mezcladores, hielos y gaseosas'),
-            ('servicio7', 'Coctel'),
-            ('servicio8', 'Servicio de meseros por 7 horas'),
-            ('servicio9', 'Champañas'),
+            ('Pastel', 'Pastel'),
+            ('Sonido Dj - Animación', 'Sonido Dj - Animación'),
+            ('Sillas', 'Sillas'),
+            ('Centros de Mesa', 'Centros de Mesa'),
+            ('Fotografía Digital', 'Fotografía Digital'),
+            ('Mezcladores, hielos y gaseosas', 'Mezcladores, hielos y gaseosas'),
+            ('Coctel', 'Coctel'),
+            ('Servicio de meseros por 7 horas', 'Servicio de meseros por 7 horas'),
+            ('Champañas', 'Champañas'),
         ],
         widget=forms.CheckboxSelectMultiple,
         label="Servicios Requeridos del Paquete Base"
     )
 
     MENU_CHOICES = (
-        ('menu1', 'Menú #1'),
-        ('menu2', 'Menú #2'),
-        ('menu3', 'Menú #3'),
-        ('menu4', 'Menú #4'),
-        ('menu5', 'Menú #5'),
-        ('menu6', 'Menú #6'),
+        ('Menú #1', 'Menú #1'),
+        ('Menú #2', 'Menú #2'),
+        ('Menú #3', 'Menú #3'),
+        ('Menú #4', 'Menú #4'),
+        ('Menú #5', 'Menú #5'),
+        ('Menú #6', 'Menú #6'),
     )
 
     menu= forms.ChoiceField(
@@ -417,15 +417,15 @@ class CotizacionForm(forms.ModelForm):
 
     additional_services= forms.MultipleChoiceField(
         choices=[
-            ('servicio1', 'Decoración Escalera en Flores Naturales'),
-            ('servicio2', 'Kit Hora de Carnaval con Accesorios'),
-            ('servicio3', 'Fiesta Temática'),
-            ('servicio4', 'Otros - Filmación'),
-            ('servicio5', 'Foto Registro Enmarcado 40x50 cms'),
-            ('servicio6', 'Libro de Firmas'),
-            ('servicio7', 'Videos Retrospectivos'),
-            ('servicio8', 'Video Beam - Telón'),
-            ('servicio9', 'Whisky'),
+            ('Decoración Escalera en Flores Naturales', 'Decoración Escalera en Flores Naturales'),
+            ('Kit Hora de Carnaval con Accesorios', 'Kit Hora de Carnaval con Accesorios'),
+            ('Fiesta Temática', 'Fiesta Temática'),
+            ('Otros - Filmación', 'Otros - Filmación'),
+            ('Foto Registro Enmarcado 40x50 cms', 'Foto Registro Enmarcado 40x50 cms'),
+            ('Libro de Firmas', 'Libro de Firmas'),
+            ('Videos Retrospectivos', 'Videos Retrospectivos'),
+            ('Video Beam - Telón', 'Video Beam - Telón'),
+            ('Whisky', 'Whisky'),
         ],
         widget=forms.CheckboxSelectMultiple,
         label="Servicios Adicionales",
