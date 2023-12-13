@@ -25,8 +25,6 @@ from django.db import transaction
 
 
 
-
-
 def generate_excel_report_carrito(request):
     # Crear un nuevo libro de Excel y una hoja de cálculo
     workbook = openpyxl.Workbook()
@@ -41,8 +39,11 @@ def generate_excel_report_carrito(request):
     alquileres = Carrito.objects.all()
     for row_num, alquiler in enumerate(alquileres, 1):
         data = [
-            str(alquiler.nombre_usuario), alquiler.date_start, alquiler.date_finish,
-            alquiler.elementos_alquilar, alquiler.precio_total
+            str(alquiler.nombre_usuario),
+            alquiler.date_start.replace(tzinfo=None) if alquiler.date_start else None,
+            alquiler.date_finish.replace(tzinfo=None) if alquiler.date_finish else None,
+            alquiler.elementos_alquilar,
+            alquiler.precio_total
         ]
 
         # Escribir los datos en las celdas de Excel
@@ -58,10 +59,9 @@ def generate_excel_report_carrito(request):
 
 
 
-
 def generate_excel_report_loyalty(request):
     # Crear un nuevo libro de Excel y una hoja de cálculo
-    workbook = openpyxl.Workbook()
+    workbook = Workbook()
     sheet = workbook.active
 
     # Escribir encabezados en la primera fila
@@ -76,9 +76,10 @@ def generate_excel_report_loyalty(request):
     fidelizaciones = loyalty.objects.all()
     for row_num, fidelizacion in enumerate(fidelizaciones, 1):
         data = [
-            fidelizacion.full_name, fidelizacion.email, fidelizacion.phone, fidelizacion.type_pqrsd,
-            fidelizacion.incident_date, fidelizacion.detailed_description, fidelizacion.product_or_services_name,
-            fidelizacion.filing_number, fidelizacion.preference_contact,
+            fidelizacion.full_name, fidelizacion.email, str(fidelizacion.phone),  # Convert PhoneNumber to string
+            fidelizacion.type_pqrsd.name if fidelizacion.type_pqrsd else '',  # Assuming TypePqrsd has a 'name' field
+            fidelizacion.incident_date, fidelizacion.detailed_description,
+            fidelizacion.product_or_services_name, fidelizacion.filing_number, fidelizacion.preference_contact,
         ]
 
         # Escribir los datos en las celdas de Excel
@@ -91,8 +92,6 @@ def generate_excel_report_loyalty(request):
     workbook.save(response)
 
     return response
-
-
 
 
 def generate_excel_report_cotizacion(request):
@@ -211,7 +210,7 @@ def generate_excel_report(request):
     sheet = workbook.active
 
     # Escribir encabezados en la primera fila
-    headers = ['Nombres', 'Apellidos', 'Correo electrónico', 'Número de celular', 'Género','Fecha de evento', 'Hora inicial', 'Hora final', 'Tematica',  'Necesidad especial', 'Tipo de evento', 'Sede', 'Salón']
+    headers = ['Nombres Completos', 'Correo electrónico', 'Número de celular', 'Género','Fecha de evento', 'Hora inicial', 'Hora final', 'Tematica',  'Necesidad especial', 'Tipo de evento', 'Sede', 'Salón', 'Valor Total']
     for col_num, header in enumerate(headers, 1):
         sheet.cell(row=1, column=col_num, value=header)
 
@@ -219,10 +218,10 @@ def generate_excel_report(request):
     reservations = Reserva.objects.all()
     for row_num, reservation in enumerate(reservations, 1):
         data = [
-            reservation.name, reservation.lastname, reservation.email,
+            reservation.name, reservation.email,
             str(reservation.phone),  # Convertir PhoneNumber a cadena
             reservation.gender, reservation.event_date, reservation.event_start_time,
-            reservation.end_time_of_the_event, reservation.theme, reservation.description,
+            reservation.end_time_of_the_event, reservation.theme, 
             reservation.special_need, reservation.eventType, reservation.campus, reservation.lounge
         ]
 
