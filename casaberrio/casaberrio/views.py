@@ -20,7 +20,7 @@ from core.models import loyalty
 from openpyxl.styles import NamedStyle
 from django.shortcuts import get_object_or_404
 from decimal import Decimal
-
+from django.db import transaction
 
 
 
@@ -179,26 +179,23 @@ def custom_excel_report(request):
     date_style = NamedStyle(name='date_style', number_format='YYYY-MM-DD HH:MM:SS')
 
     # Añadir encabezados a la hoja de cálculo
-    headers = ['ID', 'Imagen', 'Nombre', 'Fecha de Creación', 'Categoría', 'Precio', 'Cantidad']
+    headers = ['ID', 'Nombre', 'Producto', 'Precio', 'Cantidad', 'Fecha de Creación']
     for col_num, header in enumerate(headers, 1):
         sheet.cell(row=1, column=col_num, value=header)
 
-    # Obtener datos del modelo
-    products = Product.objects.all()
+    # Obtener datos del modelo TipoDeProducto
+    tipo_productos = TipoDeProducto.objects.all()
 
-    # Llenar la hoja de cálculo con los datos del modelo
-    for row_num, product in enumerate(products, 2):
-        sheet.cell(row=row_num, column=1, value=product.id)
-        sheet.cell(row=row_num, column=2, value=str(product.imagen))
-        sheet.cell(row=row_num, column=3, value=product.nombre)
+    # Llenar la hoja de cálculo con los datos del modelo TipoDeProducto
+    for row_num, tipo_producto in enumerate(tipo_productos, 2):
+        sheet.cell(row=row_num, column=1, value=tipo_producto.id)
+        sheet.cell(row=row_num, column=2, value=tipo_producto.nombre)
+        sheet.cell(row=row_num, column=3, value=str(tipo_producto.product))
+        sheet.cell(row=row_num, column=4, value=tipo_producto.precio)
+        sheet.cell(row=row_num, column=5, value=tipo_producto.cantidad)
         
-        created_at_formatted = product.created_at.strftime('%Y-%m-%d %H:%M:%S')
-        sheet.cell(row=row_num, column=4, value=created_at_formatted).style = date_style
-
-        sheet.cell(row=row_num, column=5, value=str(product.categoria))
-        sheet.cell(row=row_num, column=6, value=product.precio)
-        sheet.cell(row=row_num, column=7, value=product.cantidad)
-        
+        created_at_formatted = tipo_producto.created_at.strftime('%Y-%m-%d %H:%M:%S')
+        sheet.cell(row=row_num, column=6, value=created_at_formatted).style = date_style
 
     # Crear una respuesta de Django con el contenido del libro de trabajo
     response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
@@ -433,6 +430,7 @@ def inventario_view(request):
     return render(request,  'pqrs.html', {'form':contact_form})
    
 
+
 @login_required
 def alquiler_view(request):
     contact_form_tipoP = TipoDeProducto.objects.all()
@@ -440,10 +438,27 @@ def alquiler_view(request):
     contact_formtipo = Product.objects.all()
     contact_form = formularioTipo(request.POST or None)
     contact_form_carrito = formularioCarrito(request.POST or None)
+
     if contact_form_carrito.is_valid():
-        contact_form_carrito.save()
+        with transaction.atomic():
+            # Restar la cantidad de productos alquilados del inventario
+            for opcion in request.session.get('opciones_alquiler', []):
+                _, tipo, cantidad, _ = opcion.split('  :  ')
+                tipo_producto = TipoDeProducto.objects.get(nombre=tipo)
+                tipo_producto.cantidad -= int(cantidad)
+                tipo_producto.save()
+
+            # Guardar el formulario del carrito
+            contact_form_carrito.save()
+
+            # Limpiar la sesión después de un alquiler exitoso
+            request.session.pop('opciones_alquiler', None)
+            request.session.pop('total_alquiler', None)
+
         return redirect('psee')
+
     t = Decimal(request.session.get('total_alquiler', 0))
+
     if contact_form.is_valid(): 
         Tipo = request.POST.get('option1')
         number = contact_form.cleaned_data.get('cantidad')
@@ -452,8 +467,10 @@ def alquiler_view(request):
         precio = number * price
         producto = filterr.product
         amount = filterr.cantidad
+
         if number > amount:
             return HttpResponse('<h1 style="color:red; font-size: 50px">CANTIDAD NO DISPONIBLE</h1>')
+
         opciones_nuevas = f'{producto}  :  {Tipo}  :  {number}  :  ${precio}'
         t += precio
         total = f'$ {t}'
@@ -462,7 +479,8 @@ def alquiler_view(request):
         request.session['opciones_alquiler'] = opciones_guardadas
         request.session['total_alquiler'] = float(t)
         opciones_en_carrito = '\n'.join(opciones_guardadas)
-        contact_form_carrito = formularioCarrito({'elementos_alquilar': opciones_en_carrito, 'precio_total':total})
+        contact_form_carrito = formularioCarrito({'elementos_alquilar': opciones_en_carrito, 'precio_total': total})
+
     return render(request, 'alquiler.html', {
         'cantidad': contact_form, 
         'Carrito': contact_form_carrito,
