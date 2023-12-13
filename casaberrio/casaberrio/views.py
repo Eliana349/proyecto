@@ -59,27 +59,25 @@ def generate_excel_report_carrito(request):
 
 
 
+
+
 def generate_excel_report_loyalty(request):
     # Crear un nuevo libro de Excel y una hoja de cálculo
-    workbook = Workbook()
+    workbook = openpyxl.Workbook()
     sheet = workbook.active
 
-    # Escribir encabezados en la primera fila
-    headers = ['Nombres y apellidos', 'Correo electrónico', 'Número de teléfono', 'Tipo de PQRSD',
-               'Fecha de incidente', 'Descripción detallada', 'Producto o servicio', 'Número de radicado',
-               'Cómo prefiere ser contactad@']
-
-    for col_num, header in enumerate(headers, 1):
+    # Escribir encabezados en la primera fila para el modelo loyalty
+    headers_loyalty = ['Nombres y apellidos', 'Correo electrónico', 'Número de teléfono', 'Tipo de PQRSD', 'Fecha de incidente', 'Descripción detallada', 'Producto o servicio', 'Número de radicado', 'Cómo prefiere ser contactad@']
+    for col_num, header in enumerate(headers_loyalty, 1):
         sheet.cell(row=1, column=col_num, value=header)
 
-    # Obtener datos de la base de datos y escribir en el archivo Excel
-    fidelizaciones = loyalty.objects.all()
-    for row_num, fidelizacion in enumerate(fidelizaciones, 1):
+    # Obtener datos de la base de datos para el modelo loyalty y escribir en el archivo Excel
+    loyalty_entries = loyalty.objects.all()
+    for row_num, entry in enumerate(loyalty_entries, 1):
         data = [
-            fidelizacion.full_name, fidelizacion.email, str(fidelizacion.phone),  # Convert PhoneNumber to string
-            fidelizacion.type_pqrsd.name if fidelizacion.type_pqrsd else '',  # Assuming TypePqrsd has a 'name' field
-            fidelizacion.incident_date, fidelizacion.detailed_description,
-            fidelizacion.product_or_services_name, fidelizacion.filing_number, fidelizacion.preference_contact,
+            entry.full_name, entry.email, str(entry.phone),
+            str(entry.type_pqrsd), str(entry.incident_date), entry.detailed_description,
+            entry.product_or_services_name, str(entry.filing_number), str(entry.preference_contact)
         ]
 
         # Escribir los datos en las celdas de Excel
@@ -88,11 +86,10 @@ def generate_excel_report_loyalty(request):
 
     # Crear la respuesta HTTP con el archivo adjunto
     response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-    response['Content-Disposition'] = 'attachment; filename=reporte_fidelizaciones.xlsx'
+    response['Content-Disposition'] = 'attachment; filename=reporte_loyalty.xlsx'
     workbook.save(response)
 
     return response
-
 
 def generate_excel_report_cotizacion(request):
     # Crear un nuevo libro de Excel y una hoja de cálculo
