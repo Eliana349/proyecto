@@ -1,0 +1,13 @@
+from datetime import datetime
+
+fecha_actual = datetime.now()
+primer_dia = datetime(fecha_actual.year, fecha_actual.month, 1)
+dia_antes = fecha_actual.replace(day=fecha_actual.day - 1)
+
+print("Primer dia del mes:", primer_dia)
+print("Dia anterior al actual:", dia_antes
+     )       
+
+
+
+(Primer día del mes: 2024-01-01 Día anterior al actual: 2024-01-22)
